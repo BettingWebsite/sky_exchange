@@ -1,0 +1,369 @@
+<style type="text/css">
+   table tr td {
+     font-size: 12px;
+   }
+ </style>
+ 
+ <!-- Left Column -->
+ <div class="col-left">
+   <!-- Sub Menu and Path -->
+   <div class="sub_path">
+     <!-- Path -->
+     <div class="path">
+       <!--<a href="#path-pop" class="path-back">...</a>-->
+       <ul>
+         <li class="path-last"><a>My Account</a></li>
+       </ul>
+     </div>
+     <!-- Path Pop Up-->
+     <ul id="path-pop" class="path-pop"></ul>
+     <!-- Sub Menu -->
+     <ul class="menu-list">
+       <li><a id="sub_menu_detail" href="#!profile">My Profile</a></li>
+       <li>
+         <a id="sub_menu_summary" href="#!bal_overview">Balance Overview</a>
+       </li>
+       <li>
+         <a id="sub_menu_accountCashStatement_log" href="#!statement"
+           >Account Statement
+         </a>
+       </li>
+       <!-- <li><a id="sub_menu_casino_resport" href="#!casinoreport">Casino Report</a></li> -->
+       <li><a id="sub_menu_my_bets" href="#!current_bets">My Bets</a></li>
+       <li>
+         <a id="sub_menu_activity_log" href="#!activity_log">Activity Log</a>
+       </li>
+     </ul>
+   </div>
+ </div>
+ <!-- Center Column -->
+ <div class="col-center report">
+   <!-- Loading Wrap -->
+   <!-- <div id="loading" class="loading-wrap" style="display:none">
+                     <ul class="loading">
+                         <li><img src="images/loading40.gif" alt="loading"></li>
+                         <li>Loading...</li>
+                     </ul>
+                 </div> -->
+   <div id="loading" class="overlay" style="display: none; margin-top: 100px">
+     <div class="loading-wrap">
+       <div class="loading">
+         <div class="loader">
+           <div class="ball ball-1"></div>
+           <div class="ball ball-2"></div>
+         </div>
+       </div>
+     </div>
+   </div>
+ 
+   <!-- Message -->
+   <div class="message-wrap success">
+     <a class="btn-close">Close</a>
+     <p></p>
+   </div>
+ 
+   <!-- Message -->
+   <div class="message-wrap success">
+     <a class="btn-close" href="javascript:history.back()">Close</a>
+     <p>Your cash out was successful !</p>
+   </div>
+   <h2 style="display: block;">My Bets</h2>
+   <ul class="tab col3">
+     <li><a href="#!current_bets">Current Bets</a></li>
+     <li><a href="#!bet_history">Bets History</a></li>
+     <li><a class="select" href="#!pnl">Profit &amp; Loss</a></li>
+   </ul>
+   <!-- Account Info -->
+   <div class="white-wrap">
+     <h3>Profit &amp; Loss - Main wallet</h3>
+     <ul class="acc-info">
+       <li class="user">{{currentUser.name}} ({{currentUser.userName}})</li>
+       <li class="time">{{currentDate | date: 'yyyy-MM-dd HH:mm:ss'}}</li>
+     </ul>
+
+     
+    <ul class="report-tab-wrap">
+      <li class="report-tab" id="reportType_exchange" data-ng-click="selectTab(0)" data-ng-class="{'select': selectedTab === 0}">
+          Exchange
+      </li>  
+      <li class="report-tab" id="reportType_casino" data-ng-click="selectTab(1)" data-ng-class="{'select': selectedTab === 1}">
+          Casino
+      </li>
+    </ul>
+     <!-- function -->
+     <div class="function-wrap">
+       <ul class="input-list">
+         <div id="statusCondition" style="display: none">
+           <li><label>Bet Status:</label></li>
+           <li>
+             <select name="betStatus" id="betStatus"></select>
+           </li>
+         </div>
+         <li><label>Period</label></li>
+         <li>
+           <input
+             id="startDate"
+             class="cal-input"
+             type="text"
+             placeholder="YYYY-MM-DD"
+             style="width: 150px"
+           />
+           <!-- <input  disabled="" class="time-input disable" type="text" placeholder="09:00"> -->
+           to
+           <input
+             id="endDate"
+             class="cal-input"
+             type="text"
+             placeholder="YYYY-MM-DD"
+             style="width: 150px"
+           />
+           <!-- <input id="endTime" disabled="" class="time-input disable" type="text" placeholder="08:59"> -->
+         </li>
+         <li style="display: none">(TimeZone:IST)</li>
+       </ul>
+       <ul class="input-list">
+         <li>
+           <a
+             id="today"
+            
+             data-ng-click="getProfitLossDate('today')"
+             class="btn"
+             >Just For Today</a
+           >
+         </li>
+         <li>
+           <a
+             id="yesterday"
+            
+             data-ng-click="getProfitLossDate('yesterday')"
+             class="btn"
+             >From Yesterday</a
+           >
+         </li>
+         <li>
+           <a
+             id="getPL"
+            
+             data-ng-click="getProfitLoss()"
+             class="btn-send"
+             >Get P &amp; L</a
+           >
+         </li>
+       </ul>
+     </div>
+     <!-- No Report Message -->
+     <div id="noReportMessage" data-ng-if="getProfitLossList.length==0">
+       <p>
+         Betting Profit &amp; Loss enables you to review the bets you have
+         placed. <br />Specify the time period during which your bets were
+         placed, the type of markets on which the bets were placed, and the
+         sport.
+       </p>
+       <p>
+         Betting Profit &amp; Loss is available online for the past 3 months.
+       </p>
+     </div>
+ 
+     <!-- function end-->
+   </div>
+   <!-- Report Table -->
+ 
+   <div
+     data-report="profitAndLossReport"
+     data-ng-if="getProfitLossList.length!=0"
+   >
+     <ul class="total-show">
+       <li>
+         Total P/L:
+         <span data-ng-class="(total<0)?'red':'green'"
+           >{{total | number : 2}}</span
+         >
+       </li>
+       <!-- <li id="sumOfQuery" class="sports-switch">{{total}}</li> -->
+       <li class="sports-switch">
+         <select name="sports">
+           <option value="0">All</option>
+         </select>
+       </li>
+     </ul>
+     <table class="table01" style="font-size: 13px">
+       <tbody>
+         <tr>
+           <th class="align-L">Market</th>
+           <th style="width: 15%">Start Time</th>
+           <th style="width: 15%">Settled date</th>
+           <th style="width: 18%">Profit/Loss</th>
+         </tr>
+         <tr data-ng-repeat-start="getPnL in getProfitLossList | startFrom:currentPage*pageSize | limitTo:pageSize; track by $index">
+           <td class="align-L">
+             {{getPnL.sportName | titlecase}}<img
+               class="fromto"
+               src="images/transparent.gif"
+               alt="getpnl"
+             /><strong>{{getPnL.eventName}}</strong
+             ><img
+               class="fromto"
+               src="images/transparent.gif"
+               alt="fromto"
+             />{{getPnL.betType === 'yes' || getPnL.betType === 'no'? 'Fancy Bet':getPnL.marketName}}
+           </td>
+           <td>{{getPnL.startTime}}</td>
+           <td>{{getPnL.settledDate}}</td>
+           <td>
+             <a
+               id="pl_{{$index}}"
+               class="expand-close"
+               data-ng-click="betDetails($index)"
+               ><span data-ng-class="(getPnL.netPL<0)?'red':'green'"
+                 >{{getPnL.netPL | number:2}}</span
+               ></a
+             >
+           </td>
+         </tr>
+         <tr
+           data-ng-repeat-end
+           id="pnl_{{$index}}"
+           class="expand"
+           style="display: none"
+         >
+           <td colspan="4">
+             <img
+               class="expand-arrow-R"
+               src="images/transparent.gif"
+               alt="tab"
+             />
+             <table class="table-commission" style="text-align: right">
+               <tbody>
+                 <tr>
+                   <th style="width: 12%">Bet ID</th>
+                   <th style="width: 15%">Selection</th>
+                   <th style="width: 9%">Odds</th>
+                   <th style="width: 13%">Stake</th>
+                   <th style="width: 8%">Type</th>
+                   <th style="width: 20%">Placed</th>
+                   <th style="width: 23%">Profit/Loss</th>
+                 </tr>
+                 <tr
+                   class="even"
+                   data-ng-repeat="bet in getPnL.bets track by $index"
+                 >
+                   <td>{{bet.betId}}</td>
+                   <td>{{bet.selName}}</td>
+                   <td>{{bet.odds}}</td>
+                   <td>{{bet.stake}}</td>
+                   <td>
+                     <span data-ng-class="(bet.betType=='back')?'back':'lay'"
+                       >{{bet.betType}}</span
+                     >
+                   </td>
+                   <td>{{bet.betTime}}</td>
+                   <td>
+                     <span data-ng-class="(bet.netPl<0)?'red':'green'"
+                       >{{bet.netPl | number:2}}</span
+                     >
+                   </td>
+                 </tr>
+                 <tr class="sum-pl">
+                   <td colspan="7">
+                     <dl>
+                       <dt>Total Stakes</dt>
+                       <dd id="totalStakes">
+                         <span
+                           >{{(getPnL.totalStakes==null)?'-':getPnL.totalStakes | number: 2}}</span
+                         >
+                       </dd>
+                       <dt>Back subtotal</dt>
+                       <dd>
+                         <span
+                           data-ng-class="(getPnL.backTotal<0)?'red':'green'"
+                           >{{getPnL.backTotal | number:2}}</span
+                         >
+                       </dd>
+                       <dt>Lay subtotal</dt>
+                       <dd>
+                         <span
+                           data-ng-class="(getPnL.layTotal<0)?'red':'green'"
+                           >{{getPnL.layTotal | number:2}}</span
+                         >
+                       </dd>
+                       <dt>Market subtotal</dt>
+                       <dd>
+                         <span
+                           data-ng-class="(getPnL.mktTotal<0)?'red':'green'"
+                           >{{getPnL.mktTotal | number:2}}</span
+                         >
+                       </dd>
+                       <dt>Commission</dt>
+                       <dd>
+                         <span data-ng-class="(getPnL.commission<=0)?'red':'green'"
+                           >{{getPnL.commission |
+                           number:"2"}}</span
+                         >
+                       </dd>
+                       <dt class="net_total">Net Market Total</dt>
+                       <dd class="net_total">
+                         <span
+                           data-ng-class="(getPnL.netPL<=0)?'red':'green'"
+                           >{{getPnL.netPL | number:2}}</span
+                         >
+                       </dd>
+                     </dl>
+                   </td>
+                 </tr>
+               </tbody>
+             </table>
+           </td>
+         </tr>
+       </tbody>
+     </table>
+     <p class="table-other">Profit and Loss is shown net of commission.</p>
+     <!-- <script type="text/javascript" src="/js/util/PageUtil.js?v=20180111_1515639000000"></script> -->
+     <div>
+      <ul id="pageNumberContent" class="pages">
+        <li id="prev">
+          <a
+            class="disable"
+            disabled="true"
+            data-ng-if="currentPage == 0"
+            >Prev</a
+          >
+          <a
+            class="btn"
+            data-ng-if="currentPage !== 0"
+            ng-click="prev()"
+            >Prev</a
+          >
+        </li>
+        <li>{{currentPage+1}}/{{numberOfPages()}}</li>
+        <li id="next">
+          <a
+            href=""
+            data-ng-if="currentPage >= getProfitLossList.length/pageSize - 1"
+            class="disable"
+            disabled="disabled"
+            >Next</a
+          >
+          <a
+            href=""
+            data-ng-if="currentPage < getProfitLossList.length/pageSize - 1"
+            class="btn"
+            data-ng-click="next()"
+            >Next</a
+          >
+        </li>
+      </ul>
+    </div>
+   </div>
+ </div>
+ 
+ <script>
+   $(function () {
+     $("#startDate").datetimepicker({
+       format: "Y-m-d H:i:s",
+     });
+     $("#endDate").datetimepicker({
+       format: "Y-m-d H:i:s",
+     });
+   });
+ </script>
+ 

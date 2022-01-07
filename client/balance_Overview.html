@@ -1,0 +1,148 @@
+<div class="col-left">
+  <!-- Sub Menu and Path -->
+  <div class="sub_path">
+    <!-- Path -->
+    <div class="path">
+      <!--<a href="#path-pop" class="path-back">...</a>-->
+      <ul>
+        <li class="path-last"><a href="javascript:void(0)">My Account</a></li>
+      </ul>
+    </div>
+    <!-- Path Pop Up-->
+    <ul id="path-pop" class="path-pop"></ul>
+    <!-- Sub Menu -->
+    <ul class="menu-list">
+      <li><a id="sub_menu_detail" href="#!homeAccount">My Profile</a></li>
+      <li>
+        <a id="sub_menu_summary" href="#!balance_Overview" class="select"
+          >Balance Overview</a
+        >
+      </li>
+      <li>
+        <a id="sub_menu_accountCashStatement_log" href="#!accountStatement"
+          >Account Statement
+        </a>
+      </li>
+      <!-- <li><a id="sub_menu_casino_resport" href="#!casinoreport">Casino Report</a></li> -->
+      <li><a id="sub_menu_my_bets" href="#!mybets">My Bets</a></li>
+      <li>
+        <a id="sub_menu_activity_log" href="#!loghistory">Activity Log</a>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="col-center report">
+  <!-- Loading Wrap -->
+  <!-- <div id="loading" class="loading-wrap" style="display: none;">
+  <ul class="loading">
+    <li><img src="images/loading40.gif" alt="load"></li>
+    <li>Loading...</li>
+  </ul>
+</div> -->
+
+  <div id="loading" class="overlay" style="display: none">
+    <div class="loading-wrap">
+      <div class="loading">
+        <div class="loader">
+          <div class="ball ball-1"></div>
+          <div class="ball ball-2"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Message -->
+  <div id="message" class="message-wrap success">
+    <a class="btn-close">Close</a>
+    <p></p>
+  </div>
+
+  <!-- <script language="JavaScript" type="text/javascript">
+  (function () {
+    $j('.btn-close').click(function () {
+      $j('#message').hide();
+    });
+  })();
+</script> -->
+
+  <h2>Summary</h2>
+
+  <!-- Balance -->
+  <div class="white-wrap" data-ng-init="Fund()">
+    <dl class="head-balance">
+      <dt>Your Balances</dt>
+      <dd id="summaryTotalBalance"><span>{{currencyCode}} </span> {{availBal | number : 2}}<span></span></dd>
+    </dl>
+
+    <h3>Welcome,</h3>
+    <p>
+      View your account details here. You can manage funds, review and change
+      your settings and see the performance of your betting activity.
+    </p>
+  </div>
+
+  <!-- Report Table -->
+  <table class="table01">
+    <tbody>
+      <tr>
+        <th style="width: 13%" class="align-L">Date</th>
+        <th style="width: 13%">Transaction №</th>
+        <th style="width: 13%">Debits</th>
+        <th style="width: 13%">Credits</th>
+        <th style="width: 13%">Balance</th>
+        <th style="width: 14%">Remarks</th>
+
+        <th>From/To</th>
+      </tr>
+
+      <tr id="dataTemplate" style="display: none">
+        <td id="date" class="align-L"></td>
+        <td id="statementSerial"></td>
+        <td id="debits"></td>
+        <td id="credits"></td>
+        <td id="balance"></td>
+        <td id="remarks"></td>
+
+        <td id="fromTo">
+          <img class="fromto" src="images/transparent.gif" alt="fromto" />
+        </td>
+      </tr>
+    </tbody>
+    <tbody id="content" data-ng-if="getBalancesdataList.length">
+      <tr data-ng-repeat="row in getBalancesdataList">
+        <td id="date" class="align-L">{{row.dateTime | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+        <td id="statementSerial">{{row.txnNumber}} </td>
+        <td id="debits"> <span data-ng-if="row.txnType === 2">{{row.amount | number:'2'}} </span> </td>
+        <td id="credits"><span data-ng-if="row.txnType === 1">{{row.amount | number:'2'}} </span></td>
+        <td id="balance">{{row.balance | number:'2'}}</td>
+        <td id="remarks">{{row.description}} </td>
+
+        <td id="fromTo">
+          <span>{{row.from_to}} </span>
+          <img class="fromto" src="images/transparent.gif" alt="fromto" />
+          <span>{{currentUser.userName}} </span>
+        </td>
+      </tr>
+    </tbody>
+    <tbody data-ng-if="!getBalancesdataList.length">
+      <tr>
+        <td>No data</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Pages List -->
+
+  <div>
+    <ul style="display: none">
+      <li id="prev"><a href="javascript:void(0);">Prev</a></li>
+      <li id="next"><a href="javascript:void(0);">Next</a></li>
+      <li id="pageNumber"><a href="javascript:void(0);"></a></li>
+      <li id="more"><a href="javascript:void(0);">...</a></li>
+      <input type="text" id="goToPageNumber" maxlength="6" size="4" />
+      <li><a id="goPageBtn">GO</a></li>
+    </ul>
+
+    <ul id="pageNumberContent" class="pages"></ul>
+  </div>
+</div>

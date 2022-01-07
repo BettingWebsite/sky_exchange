@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="14" height="30" viewBox="0 0 14 30">
+  <defs>
+    <linearGradient id="img-line_market-tab-a" x1="50%" x2="50%" y1="0%" y2="81.776%">
+      <stop offset="0%" stop-color="#EF6C2C"/>
+      <stop offset="100%" stop-color="#E4550F"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#img-line_market-tab-a)" fill-rule="evenodd" d="M0,0 L96.8537735,0 L96.8537735,-8.8817842e-16 C100.478179,-7.99220858e-15 103.649779,2.43667148 104.583653,5.9386988 L111,30 L0,30 L0,0 Z" transform="translate(-97)"/>
+</svg>

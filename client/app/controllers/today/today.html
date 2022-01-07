@@ -1,0 +1,115 @@
+<style>
+  .content-box {
+  overflow: hidden;
+  max-width: 688px;
+  }
+  .heading {
+  background: #565656;
+  color: #fff;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 700;
+  padding: 4px 10px 5px;
+  }
+  .racing-box {
+  background: #fff;
+  border-left: 1px solid #c6d5e0;
+  border-right: 1px solid #c6d5e0;
+  padding: 5px 12px 0 7px;
+  }
+  .racing-box, .racing-box:last-child {
+  border-bottom: 1px solid #c6d5e0;
+  }
+  .racing-box h5 {
+  margin: 0 0 6px;
+  }
+  h5 {
+  color: #333;
+  font-size: 12px;
+  line-height: 16px;
+  margin: 0 0 10px;
+  }
+  .time-racing {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  }
+  .time-racing li {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 14px 10px 0;
+  position: relative;
+  font-size: 11px;
+  line-height: 15px;
+  }
+</style>
+<div style="margin-top: 10px;" data-ng-init="upcomingevents()">
+  <!-- Center Column -->
+  <ul id="inPlayTab" class="tab col3">
+    <li><a data-ng-href="#!inplay" class="">In-Play</a></li>
+    <li><a data-ng-href="#!today" class="select">Today</a></li>
+    <li><a data-ng-href="#!tomorrow" class="">Tomorrow</a></li>
+  </ul>
+  <!-- <div id="sportFilter" class="function-wrap">
+    <ul class="filter-list">
+      <li class="filter-head">Sport Filters:</li>
+      <li class="filter-content">
+        <span data-ng-repeat="sport in filteredSports">{{sport}}</span>
+      </li>
+      <li class="filter-btn"><a id="sportFilterPopup" class="btn">Filter</a></li>
+    </ul>
+    <div id="sportFilterContainer" class="filter-pop" style="display: none;">
+      <ul>
+        <li>
+          <input name="sportsFilter" value="0" ng-model="selectedAll" type="checkbox" ng-click="checkAll();">
+          <label for="filter-all">All</label>
+        </li>
+        <li data-ng-repeat="sport in getsportNameFilter"><input name="sportsFilter" value="{{sport}}" type="checkbox" ng-checked="existSport(sport)" ng-click="toggleSportSelection(sport)"><label>{{sport}}</label></li>
+      </ul>
+      <div class="btn-wrap">
+        <a id="sportFilterSave" ng-click="upcomingevents()" class="btn-send">Save</a>
+        <a id="sportFilterCancel" class="btn" ng-click="cancelFilter()">Cancel</a>
+      </div>
+    </div>
+  </div> -->
+  <!-- Sports List Wrap -->
+  <div id="sportListWrap" class="sport_list-wrap">
+    
+    <!-- <dl data-ng-repeat="item in todevent_data" class="game-list-col" style="display: block;">
+      <dt id="openTime" class="time">{{item.date.split(' ')[1]}}</dt>
+      <dd id="eventDetail">{{item.sportName}}<img class="fromto" src="images/transparent.gif">{{item.competitionName}}<img class="fromto" src="images/transparent.gif"><a id="vsNameClick" data-ng-href="#!full-market/{{item.marketId}}/{{item.eventId}}/{{item.bfId}}/{{item.sportName}}/{{item.dataMode}}"><strong>{{item.eventName}}</strong></a></dd>
+    </dl> -->
+    <div class="game-wrap" data-ng-repeat="tom in todevent_data track by $index">
+          <h3>{{tom.name}}</h3>
+          <div id="noDataDiv" class="no-data" data-ng-if="tom.inplayData.length == 0">
+            <p  style="text-align: center;">There are no events to be displayed.</p>
+          </div>
+        <dl  class="game-list-col" data-ng-repeat="tomm in tom.inplayData">
+          <dt id="openTime" class="time">{{tomm.matchDate | date: 'HH:mm:ss'}}</dt>
+          <dd id="eventDetail">
+            <img class="fromto" src="images/transparent.gif" alt="fromto">{{tomm.Tourname}}<img class="fromto" src="images/transparent.gif" alt="images">
+            <a id="vsNameClick"  data-ng-href="#!full-market/{{tomm.SportbfId}}/{{tomm.TourbfId}}/{{tomm.matchId}}/{{tomm.marketId}}/{{tomm.bfId}}">
+            <strong>{{tomm.matchName}}</strong>
+            </a>
+          </dd>
+        </dl>
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(function(){
+  $('#sportFilterPopup').click(function(){
+    if ($('#sportFilterContainer').css('display')=='none') {
+        $('#sportFilterContainer').css('display','block');
+        
+      }
+      else{
+        $('#sportFilterContainer').css('display','none');
+        
+      }
+  })
+  $('#sportFilterCancel,#sportFilterSave').on('click',function(){
+     $('#sportFilterContainer').css('display','none');
+  })
+  });
+</script>

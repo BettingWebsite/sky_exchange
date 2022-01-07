@@ -1,0 +1,125 @@
+<style type="text/css">
+   table {
+      font-size: 12px
+   }
+</style>
+<div class="col-left">
+   <!-- Sub Menu and Path -->
+   <div class="sub_path">
+      <!-- Path -->
+      <div class="path">
+         <!--<a href="#path-pop" class="path-back">...</a>-->
+         <ul>
+            <li class="path-last"><a href="javascript:void(0)">My Account</a></li>
+         </ul>
+      </div>
+      <!-- Path Pop Up-->
+      <ul id="path-pop" class="path-pop">
+      </ul>
+      <!-- Sub Menu -->
+      <ul class="menu-list">
+         <li><a id="sub_menu_detail" href="#!profile">My Profile</a></li>
+         <li><a id="sub_menu_summary" href="#!bal_overview" class="select">Balance Overview</a></li>
+         <li><a id="sub_menu_accountCashStatement_log" href="#!statement">Account Statement
+            </a>
+         </li>
+         <!-- <li><a id="sub_menu_casino_resport" href="#!casinoreport" class="select">Casino Report</a></li> -->
+         <li><a id="sub_menu_my_bets" href="#!current_bets">My Bets</a></li>
+         <li><a id="sub_menu_activity_log" href="#!activity_log">Activity Log</a></li>
+      </ul>
+   </div>
+</div>
+<div class="col-center report">
+
+
+   <!-- Loading Wrap -->
+   <div id="loading" class="overlay" style="display:none; margin-top: 100px">
+      <div class="loading-wrap">
+         <div class="loading">
+            <div class="loader">
+               <div class="ball ball-1"></div>
+               <div class="ball ball-2"></div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- Message -->
+   <div id="message" class="message-wrap success">
+      <a class="btn-close">Close</a>
+      <p></p>
+   </div>
+
+   <!-- <script language="JavaScript" type="text/javascript">
+   (function () {
+     $j('.btn-close').click(function () {
+       $j('#message').hide();
+     });
+   })();
+ </script> -->
+
+   <h2 style="display: block;">Casino Report</h2>
+
+   <div class="filters">
+      <div class="datePickers">
+         <ul class="input-list">
+            <li><label>Type :</label></li>
+
+            <li>
+
+               <select data-ng-model="pnlPeriod" data-ng-change="GetCaisnoResults()">
+
+                  <option value="1" selected="">20-20 Teenpatti</option>
+               </select>
+
+            </li>
+            <li>
+               <input id="startDate" class="cal-input" type="text" style="width: 150px" placeholder="YYYY-MM-DD">
+               to
+               <input id="endDate" class="cal-input" type="text" style="width: 150px" placeholder="YYYY-MM-DD">
+            </li>
+            <li><a id="getPL" href="javascript:void(0)" class="btn-send" data-ng-click="GetCaisnoResults()">Search</a>
+            </li>
+         </ul>
+
+
+      </div>
+   </div>
+
+   <table id="table_log" class="table01">
+      <tbody>
+         <tr>
+            <th style="width:15%;" class="align-L">Round ID</th>
+
+            <th style="width:12%;" class="align-L">Winner</th>
+         </tr>
+
+      </tbody>
+      <tbody id="content">
+
+         <tr data-ng-if="Teenpattidata.length==0">
+            <td class="no-data" colspan="2">
+               <p>No Data Found</p>
+            </td>
+         </tr>
+         <tr data-ng-repeat="tpdata in Teenpattidata">
+            <td id="createDate" class="align-L">{{tpdata.roundId}}</td>
+            <td id="deposit" class="align-L"><span
+                  data-ng-class="green">{{(tpdata.result=="")?"-":tpdata.result}}</span></td>
+
+         </tr>
+
+      </tbody>
+   </table>
+
+
+</div>
+<script>
+   $(function () {
+      $('#startDate').datetimepicker({
+         format: 'Y-m-d H:i:s',
+      });
+      $('#endDate').datetimepicker({
+         format: 'Y-m-d H:i:s',
+      });
+   });
+</script>

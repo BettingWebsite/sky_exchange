@@ -1,0 +1,62 @@
+<!-- <style type="text/css">
+   .col3 .col-game,
+   .col3 .game-list-col dt,
+   .game-list-col .col3 dt {
+      width: calc(71%) !important;
+   }
+</style> -->
+<div data-ng-init="showtennis()">
+   <!--  <div class="kv-wrap" style="">
+               <img src="images/kv/KV03.jpg" alt="">
+            </div> -->
+   <div class="game-highlight-wrap col3" style="">
+      <h3>Highlights</h3>
+      <ul class="slip-head">
+         <li class="col-game"></li>
+         <li class="col-visit">1</li>
+         <li class="col-draw">x</li>
+         <li class="col-home">2</li>
+         <li class="col-info"></li>
+      </ul>
+      <!-- Event Board -->
+      <div class="game-list">
+         <div id="noDataDiv" class="no-data" data-ng-if="shoNoEvents">
+            <p>There are no events to be displayed.</p>
+         </div>
+         <div>
+            <dl data-ng-repeat="item in Highlightlist"
+               class="game-list-col tennis" style="display: block;">
+               <dt>
+                  <img id="playIcon" class="icon-in_play" src="images/transparent.gif" alt="icon-in-play">
+                  <a data-ng-href="#!teenpatti-video/{{item.tableName}}/{{item.tableId}}/{{StreamServer.substr(5)}}/{{item.streamUrl.slice(0, -1)}}/{{OddServer1.substr(7)}}/{{OddServer2.substr(7)}}/{{item.oddsUrl.substr(4)}}">{{item.tableName}}</a>
+                  <span class="game-list-time"><span class="in_play">In-Play</span></span>
+               </dt>
+               <dd  class="col-visit">
+                  <!-- <div class="suspend">
+                    <span>Suspend</span>
+                  </div> -->
+                  <a id="hback1_{{$index}}" class="btn-back" data-side="Back">0</a> 
+                  <a  id="hlay1_{{$index}}" class="btn-lay" data-side="Lay">0</a>
+               </dd>
+               <dd  class="col-draw">
+                  <!-- <div class="suspend">
+                    <span>Suspend</span>
+                  </div> -->
+                  <a id="hback2_{{$index}}" class="btn-back" data-side="Back">-</a> 
+                  <a  id="hlay2_{{$index}}" class="btn-lay" data-side="Lay">-</a>
+               </dd>
+               <dd  class="col-home">
+                  <!-- <div class="suspend">
+                    <span>Suspend</span>
+                  </div> -->
+                  <a id="hback3_{{$index}}" class="btn-back" data-side="Back">0</a> 
+                  <a  id="hlay3_{{$index}}" class="btn-lay" data-side="Lay">0</a>
+               </dd>
+               <dd class="col-info">
+                  <a class="add-pin" style="cursor: pointer" title="Add to Multi Markets">Pin</a>
+               </dd>
+            </dl>
+         </div>
+      </div>
+   </div>
+</div>

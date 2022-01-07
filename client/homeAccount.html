@@ -1,0 +1,79 @@
+<div class="col-center report">
+  <!-- Loading Wrap -->
+  <div id="loading" class="loading-wrap" style="display: none">
+    <ul class="loading">
+      <li><img src="images/loading40.gif" alt="load" /></li>
+      <li>Loading...</li>
+    </ul>
+  </div>
+
+  <!-- Message -->
+  <div id="message" class="message-wrap success">
+    <a class="btn-close">Close</a>
+    <p></p>
+  </div>
+  <!-- 
+<script language="JavaScript" type="text/javascript">
+  (function () {
+    $j('.btn-close').click(function () {
+      $j('#message').hide();
+    });
+  })();
+</script> -->
+
+  <!-- Loading Wrap -->
+  <div class="loading-wrap" style="display: none">
+    <ul class="loading">
+      <li><img src="images/loading40.gif" alt="load" /></li>
+      <li>Loading...</li>
+    </ul>
+  </div>
+
+  <h2>Account Details</h2>
+
+  <div class="event-left">
+    <div class="profile-wrap">
+      <h3>About You</h3>
+      <dl>
+        <dt>First Name</dt>
+        <dd>{{name}}</dd>
+
+        <dt>Password</dt>
+        <dd>
+          ***************
+
+          <a href="#" class="favor-set" data-ng-click="Openpopup()">Edit</a>
+        </dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="event-right">
+    <div class="profile-wrap">
+      <h3>Contact Details</h3>
+      <dl>
+        <dt>Primary number</dt>
+        <dd>--</dd>
+      </dl>
+    </div>
+
+    <div class="profile-wrap">
+      <h3>Setting</h3>
+      <dl>
+        <dt>Currency</dt>
+        <dd>{{currencyCode}}</dd>
+
+        <dt>Odds Format</dt>
+        <dd>--</dd>
+      </dl>
+    </div>
+
+    <div class="profile-wrap">
+      <h3>Commission</h3>
+      <dl>
+        <dt>Comm charged</dt>
+        <dd>-- %</dd>
+      </dl>
+    </div>
+  </div>
+</div>

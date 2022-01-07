@@ -1,0 +1,96 @@
+
+<style>
+  .game-list {
+    padding: 0 4px;
+  }
+  .venue-list {
+    box-shadow: 0 -2px 1px #d3d3d3;
+  }
+  .country {
+    display: inline-block;
+    padding: 8px;
+    font-weight: bold;
+    margin-top: 2px;
+  }
+  .country.selected {
+    background-color: #e4e4e4;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+  }
+  .venue {
+    display: flex;
+    padding: 4px 8px;
+    font-weight: bold;
+    background-color: #eee;
+    align-items: center;
+  }
+  .venue > a {
+    flex: 0 0 150px;
+  }
+  .venue:not(:last-child) {
+    border-bottom: 1px solid #ddd;
+  }
+  .market-list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .market-list .market {
+    padding: 4px;
+    background: #fff;
+    border-radius: 4px;
+    margin: 4px;
+    box-shadow: 0 1px 1px 1px rgb(0 0 0 / 10%);
+  }
+</style>
+<div  class="game-highlight-wrap col3" data-ng-if="todaysList.length">
+  <h3>Greyhound Racing Today's Card</h3>
+  <div class="game-list">
+    <span class="country" data-ng-class="selectedTournament.day === 1 && selectedTournament.id === item.id? 'selected': ''" data-ng-repeat="item in todaysList track by $index">
+      <a href="javascript:void(0)" data-ng-click="getMatches(item, 1)">{{item.name}}</a>
+    </span>
+  </div>
+  <div class="venue-list" data-ng-if="selectedTournament && selectedTournament.day === 1">
+    <span class="venue" data-ng-if="!selectedMatch || selectedMatch.id === match.id" data-ng-repeat="match in matchesList track by $index">
+      <a href="javascript:void(0)">{{match.name}}</a>
+      <div class="market-list">
+        <span class="market" data-ng-repeat="market in match.markets track by $index">
+          <a data-ng-href="#!full-market/4339.1/{{selectedTournament.id}}/{{match.id}}/{{market.bfId}}?o=true">{{market.startTime | date:'HH:mm'}}</a>
+        </span>
+      </div>
+    </span>
+  </div>
+  <!-- <div class="game-list" data-ng-if="selectedMatch && selectedMatch.day === 1">
+    <span class="country" data-ng-class="selectedMatch.day === 1 && selectedMatch.id === item.id? 'selected': ''" data-ng-repeat="item in marketsList track by $index">
+      <a data-ng-href="#!full-market/{{item.SportId}}/{{item.TourId}}/{{item.mtId}}/{{item.bfId}}?o=true">{{item.startTime | date:'HH:mm'}}</a>
+    </span>
+  </div> -->
+</div>
+
+<div  class="game-highlight-wrap col3" data-ng-if="tomorrowList.length">
+  <h3>Greyhound Racing Tomorrow</h3>
+  <div class="game-list">
+    <span class="country" data-ng-class="selectedTournament.day === 2 && selectedTournament.id === item.id? 'selected': ''" data-ng-repeat="item in tomorrowList track by $index">
+      <a href="javascript:void(0)" data-ng-click="getMatches(item, 2)">{{item.name}}</a>
+    </span>
+  </div>
+  <div class="venue-list" data-ng-if="selectedTournament && selectedTournament.day === 2">
+    <span class="venue" data-ng-if="!selectedMatch || selectedMatch.id === match.id" data-ng-repeat="match in matchesList track by $index">
+      <a href="javascript:void(0)">{{match.name}}</a>
+      <div class="market-list">
+        <span class="market" data-ng-repeat="market in match.markets track by $index">
+          <a data-ng-href="#!full-market/4339.2/{{selectedTournament.id}}/{{match.id}}/{{market.bfId}}?o=true">{{market.startTime | date:'HH:mm'}}</a>
+        </span>
+      </div>
+    </span>
+  </div>
+  <!-- <div class="game-list" data-ng-if="selectedMatch && selectedMatch.day === 2">
+    <span class="country" data-ng-class="selectedMatch.day === 2 && selectedMatch.id === item.id? 'selected': ''" data-ng-repeat="item in marketsList track by $index">
+      <a data-ng-href="#!full-market/{{item.SportId}}/{{item.TourId}}/{{item.mtId}}/{{item.bfId}}?o=true">{{item.startTime | date:'HH:mm'}}</a>
+    </span>
+  </div> -->
+</div>
+<div class="no-data" data-ng-if="!todaysList.length">
+  <p style="text-align: center; font-size: 15px">
+    There are no events to be displayed.
+  </p>
+</div>

@@ -1,0 +1,138 @@
+<style>
+   .close{
+   height: 25px;
+   overflow: hidden;
+   }
+</style>
+<style>
+   .content-box {
+   overflow: hidden;
+   max-width: 688px;
+   }
+   .heading {
+   background: #565656;
+   color: #fff;
+   font-size: 12px;
+   line-height: 16px;
+   font-weight: 700;
+   padding: 4px 10px 5px;
+   }
+   .racing-box {
+   background: #fff;
+   border-left: 1px solid #c6d5e0;
+   border-right: 1px solid #c6d5e0;
+   padding: 5px 12px 0 7px;
+   }
+   .racing-box, .racing-box:last-child {
+   border-bottom: 1px solid #c6d5e0;
+   }
+   .racing-box h5 {
+   margin: 0 0 6px;
+   }
+   h5 {
+   color: #333;
+   font-size: 12px;
+   line-height: 16px;
+   margin: 0 0 10px;
+   }
+   .time-racing {
+   list-style: none;
+   margin: 0;
+   padding: 0;
+   }
+   .time-racing li {
+   display: inline-block;
+   vertical-align: top;
+   margin: 0 14px 10px 0;
+   position: relative;
+   font-size: 11px;
+   line-height: 15px;
+   }
+   .close{
+   height: 25px;
+   overflow: hidden;
+   }
+   .myclass{
+   border:1px solid red;
+   }
+
+</style>
+
+   <div data-ng-init="inplay()">
+      <!-- Center Column -->
+      <div id="centerColumn" class="inplay">
+     
+         <div style="margin-top: 10px;">
+            <ul  class="tab col3">
+               <li><a data-ng-href="#!inplay"  class="select">In-Play</a></li>
+               <li><a data-ng-href="#!today" class="">Today</a></li>
+               <li><a data-ng-href="#!tomorrow" class="">Tomorrow</a></li>
+            </ul>
+         </div>
+         
+         <div data-ng-repeat="inplay in inplayListData track by $index" class="game-wrap col3">
+            <h3>
+               <a class="to-expand" toggle-class>{{inplay.name}}</a>
+            </h3>
+            <ul class="slip-head" data-ng-hide="active">
+               <li class="col-game"></li>
+               <li class="col-visit">1</li>
+               <li class="col-draw" style="">x</li>
+               <li class="col-home">2</li>
+               <li class="col-info"></li>
+            </ul>
+            <div id="inplayGameList" class="game-list first" data-ng-hide="active">
+               <div id="noDataDiv" class="no-data" data-ng-show="inplay.inplayData.length == 0">
+                  <p>There are no events to be displayed.</p>
+               </div>
+               <dl data-ng-repeat="inplayDetails in inplay.inplayData | orderBy: orderByDate:false track by inplayDetails.matchId" class="game-list-col">
+                  <dt>
+                     <!-- <a id="fancyBetIcon" data-ng-show="inplayDetails.hasFancy==1"><span class="game-fancy in-play">Fancy</span></a> -->
+                     <img id="playIcon" class="icon-in_play" src="images/transparent.gif" alt="playIcon">
+                     <!-- <span id="lowLiquidityTag" class="game-low_liq"></span> -->
+                     <!-- <a data-ng-href="#!full-market/{{inplayDetails.marketId}}/{{inplayDetails.matchId}}/{{inplayDetails.bfId}}/{{inplay.name}}/{{inplayDetails.dataMode}}" id="" vsinfo=""><span>{{inplayDetails.matchName}}</span></a> -->
+                     <a data-ng-href="#!full-market/{{inplayDetails.SportbfId}}/{{inplayDetails.TourbfId}}/{{inplayDetails.matchId}}/{{inplayDetails.marketId}}/{{inplayDetails.bfId}}"><span>{{inplayDetails.matchName}}</span></a>
+                     <span id="dateTimeInfo" class="game-list-time"><span class="in_play">In-Play</span></span>
+
+                     <span class="game-fancy in-play" id="fancyBetIcon" data-ng-show="inplayDetails.hasFancy==1" style="cursor: pointer; display: inline-flex;"></span>
+                     <span class="game-bookmaker in-play" id="bookMakerIcon" data-ng-show="inplayDetails.hasBookmaker==1" style="cursor: pointer; display: inline-flex;"></span>
+
+                     <a id="iconLive" style="cursor: pointer; display: none;"><img class="icon-live" src="images/transparent.gif" alt="In-Play"></a>
+                  </dt>
+                  <dd id="selectTemp" class="col-visit">
+                     <div class="suspend" data-ng-if="inplayRunnerData[inplayDetails.matchId].runners[0].backPrice==0 && inplayRunnerData[inplayDetails.matchId].runners[0].layPrice==0">
+                        <span>Suspend</span>
+                     </div>
+                     <a data-ng-if="inplayRunnerData[inplayDetails.matchId].runners[0].backPrice == null" id="back1_{{$index}}" class="btn-back" data-ng-side="Back">--</a>
+                     <a data-ng-if="inplayRunnerData[inplayDetails.matchId].runners[0].layPrice == null" id="lay1_{{$index}}" class="btn-lay" data-ng-side="Lay">--</a>
+                     <a data-ng-if="inplayRunnerData[inplayDetails.matchId].runners[0].backPrice != null" id="back1_{{$index}}" class="btn-back" data-ng-side="Back">{{inplayRunnerData[inplayDetails.matchId].runners[0].backPrice | number:2}}</a>
+                     <a data-ng-if="inplayRunnerData[inplayDetails.matchId].runners[0].layPrice != null" id="lay1_{{$index}}" class="btn-lay" data-ng-side="Lay">{{inplayRunnerData[inplayDetails.matchId].runners[0].layPrice | number:2}}</a>
+                  </dd>
+                  <dd class="col-draw" style="">
+                     <div class="suspend" data-ng-if="inplayRunnerData[inplayDetails.matchId].runners[0].backPrice==0 && inplayRunnerData[inplayDetails.matchId].runners[0].layPrice==0 && inplayRunnerData[inplayDetails.matchId].runners[1].backPrice==0 && inplayRunnerData[inplayDetails.matchId].runners[1].layPrice==0">
+                        <span>Suspend</span>
+                     </div>
+                     <a id="btnBack" data-ng-if="inplayRunnerData[inplayDetails.matchId].runners[2].runnerName==null" class="btn-back" data-ng-side="Back">--</a>
+                     <a id="btnLay" data-ng-if="inplayRunnerData[inplayDetails.matchId].runners[2].runnerName==null" class="btn-lay" data-ng-side="Lay">--</a>
+                     <a data-ng-if="inplayRunnerData[inplayDetails.matchId].runners[2].runnerName!=null" data-ng-click="betSlip(inplayDetails.bfId,'back', inplayRunnerData[inplayDetails.matchId].runners[2].runnerName+$index+'back', inplayRunnerData[inplayDetails.matchId].runners[2].runnerName, inplayDetails.matchName, inplayRunnerData[inplayDetails.matchId].runners[2].backPrice,inplayDetails.marketId,inplayDetails.matchId,'1',0,0,sportId,inplayDetails.matchBfId)"  id="back3_{{$index}}" class="btn-back" data-ng-side="Back">{{(inplayRunnerData[inplayDetails.matchId].runners[2].backPrice == null) ? '-' : inplayRunnerData[inplayDetails.matchId].runners[2].backPrice}}</a> 
+                     <a data-ng-if="inplayRunnerData[inplayDetails.matchId].runners[2].runnerName!=null" data-ng-click="betSlip(inplayDetails.bfId,'lay', inplayRunnerData[inplayDetails.matchId].runners[2].runnerName+$index+'back', inplayRunnerData[inplayDetails.matchId].runners[2].runnerName, inplayDetails.matchName, inplayRunnerData[inplayDetails.matchId].runners[2].layPrice,inplayDetails.marketId,inplayDetails.matchId,'1',0,0,sportId,inplayDetails.matchBfId)" id="lay3_{{$index}}" class="btn-lay" data-ng-side="Lay">{{(inplayRunnerData[inplayDetails.matchId].runners[2].layPrice == null) ? '-' : inplayRunnerData[inplayDetails.matchId].runners[2].layPrice}}</a>
+                  </dd>
+                  <dd class="col-home">
+                     <div class="suspend" data-ng-if="inplayRunnerData[inplayDetails.matchId].runners[1].backPrice==0 && inplayRunnerData[inplayDetails.matchId].runners[1].layPrice==0">
+                        <span>Suspend</span>
+                     </div>
+                     <a data-ng-if="inplayRunnerData[inplayDetails.matchId].runners[1].backPrice == null" id="back2_{{$index}}" class="btn-back" data-ng-side="Back">--</a> 
+                     <a data-ng-if="inplayRunnerData[inplayDetails.matchId].runners[1].layPrice == null" id="lay2_{{$index}}" class="btn-lay" data-ng-side="Lay">--</a>
+                     <a data-ng-if="inplayRunnerData[inplayDetails.matchId].runners[1].backPrice != null" id="back2_{{$index}}" class="btn-back" data-ng-side="Back">{{inplayRunnerData[inplayDetails.matchId].runners[1].backPrice | number:2}}</a> 
+                     <a data-ng-if="inplayRunnerData[inplayDetails.matchId].runners[1].layPrice != null" id="lay2_{{$index}}" class="btn-lay" data-ng-side="Lay">{{inplayRunnerData[inplayDetails.matchId].runners[1].layPrice | number:2}}</a>
+                  </dd>
+                  <dd class="col-info">
+                     <a data-ng-if="inplayDetails.isMulti!=1" class="add-pin" style="cursor: pointer" title="Add to Multi Markets" data-ng-click="addMultiMkt(inplayDetails.marketId)"></a>
+                     <a data-ng-if="inplayDetails.isMulti==1" class="delete-pin" style="cursor: pointer" title="Remove from Multi Markets" data-ng-click="removeMultiMkt(inplayDetails.marketId)"></a>
+                  </dd>
+               </dl>
+            </div>
+         </div>
+         <!-- <p><b>There are no events to be displayed.</b></p> -->
+      </div>
+   </div>

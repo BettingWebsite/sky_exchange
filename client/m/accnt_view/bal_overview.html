@@ -1,0 +1,143 @@
+<div class="col-left">
+   <!-- Sub Menu and Path -->
+   <div class="sub_path">
+     <!-- Path -->
+     <div class="path">
+       <!--<a href="#path-pop" class="path-back">...</a>-->
+       <ul>
+         <li class="path-last"><a href="javascript:void(0)">My Account</a></li>
+       </ul>
+     </div>
+     <!-- Path Pop Up-->
+     <ul id="path-pop" class="path-pop"></ul>
+     <!-- Sub Menu -->
+     <ul class="menu-list">
+       <li><a id="sub_menu_detail" href="#!profile">My Profile</a></li>
+       <li>
+         <a id="sub_menu_summary" href="#!bal_overview" class="select"
+           >Balance Overview</a
+         >
+       </li>
+       <li>
+         <a id="sub_menu_accountCashStatement_log" href="#!statement"
+           >Account Statement
+         </a>
+       </li>
+       <!-- <li><a id="sub_menu_casino_resport" href="#!casinoreport">Casino Report</a></li> -->
+       <li><a id="sub_menu_my_bets" href="#!current_bets">My Bets</a></li>
+       <li>
+         <a id="sub_menu_activity_log" href="#!activity_log">Activity Log</a>
+       </li>
+     </ul>
+   </div>
+ </div>
+ <div class="col-center report">
+   <div id="loading" class="overlay" style="display: none">
+     <div class="loading-wrap">
+       <div class="loading">
+         <div class="loader">
+           <div class="ball ball-1"></div>
+           <div class="ball ball-2"></div>
+         </div>
+       </div>
+     </div>
+   </div>
+ 
+   <!-- Message -->
+   <div id="message" class="message-wrap success">
+     <a class="btn-close">Close</a>
+     <p></p>
+   </div>
+  
+   <h2 style="display: block;">Summary</h2>
+ 
+   <!-- Balance -->
+   <div class="white-wrap" data-ng-init="Fund()">
+     <dl class="head-balance">
+       <dt>Your Balances</dt>
+       <dd id="summaryTotalBalance">{{availBal | number : 2}}<span></span></dd>
+     </dl>
+ 
+     <h3>Welcome,</h3>
+     <p>
+       View your account details here. You can manage funds, review and change
+       your settings and see the performance of your betting activity.
+     </p>
+   </div>
+ 
+   <!-- Report Table -->
+   <table class="table01">
+     <tbody>
+       <tr>
+         <th style="width: 13%" class="align-L">Date</th>
+         <th style="width: 13%">Transaction №</th>
+         <th style="width: 13%">Debits</th>
+         <th style="width: 13%">Credits</th>
+         <th style="width: 13%">Balance</th>
+         <th style="width: 14%">Remarks</th>
+ 
+         <th>From/To</th>
+       </tr>
+     </tbody>
+     <tbody id="content" data-ng-if="getBalancesdataList.length">
+       <tr data-ng-repeat="row in getBalancesdataList | startFrom:currentPage*pageSize | limitTo:pageSize">
+         <td id="date" class="align-L">{{row.dateTime | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+         <td id="statementSerial">{{row.txnNumber}} </td>
+         <td id="debits"> <span data-ng-if="row.txnType === 2">{{row.amount | number:'2'}} </span> </td>
+         <td id="credits"><span data-ng-if="row.txnType === 1">{{row.amount | number:'2'}} </span></td>
+         <td id="balance">{{row.balance | number:'2'}}</td>
+         <td id="remarks">{{row.description}} </td>
+ 
+         <td id="fromTo">
+           <span>{{row.from_to}} </span>
+           <img class="fromto" src="images/transparent.gif" alt="fromto" />
+           <span>{{currentUser.userName}} </span>
+         </td>
+       </tr>
+     </tbody>
+     <tbody data-ng-if="!getBalancesdataList.length">
+       <tr>
+         <td>No data</td>
+       </tr>
+     </tbody>
+   </table>
+ 
+   <!-- Pages List -->
+ 
+   <div data-ng-if="getBalancesdataList.length > 10">
+    <ul id="pageNumberContent" class="pages">
+      <li id="prev">
+        <a
+          class="disable"
+          disabled="true"
+          data-ng-if="currentPage == 0"
+          >Prev</a
+        >
+        <a
+          class="btn"
+          data-ng-if="currentPage !== 0"
+          ng-click="prev()"
+          >Prev</a
+        >
+      </li>
+      <li>
+        {{currentPage+1}}/{{numberOfPages()}}
+      </li>
+      <li id="next">
+        <a
+          data-ng-if="currentPage >= getBalancesdataList.length/pageSize - 1"
+          class="disable"
+          disabled="disabled"
+          >Next</a
+        >
+        <a
+          data-ng-if="currentPage < getBalancesdataList.length/pageSize - 1"
+          class="btn"
+          data-ng-click="next()"
+          >Next</a
+        >
+      </li>
+    </ul>
+  </div>
+ </div>
+ 

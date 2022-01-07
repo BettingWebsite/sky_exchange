@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <system.webServer>
+
+           <rewrite>
+              <rules>
+                <rule name="Redirects to www.lcexchanges.com" patternSyntax="ECMAScript" stopProcessing="true">
+                  <match url=".*" />
+                  <conditions logicalGrouping="MatchAny">
+                    <add input="{HTTP_HOST}" pattern="^lcexchanges.com$" />
+                  </conditions>
+                  <action type="Redirect" url="http://www.lcexchanges.com/{R:0}" />
+                </rule>
+              </rules>
+            </rewrite>
+        <defaultDocument>
+            <files>
+                <clear />
+                <add value="index.html" />
+                <add value="login.html" />
+                <add value="Default.htm" />
+                <add value="Default.asp" />
+                <add value="index.htm" />
+                <add value="iisstart.htm" />
+                <add value="default.aspx" />
+                <add value="index.php" />
+            </files>
+        </defaultDocument>
+    </system.webServer>
+</configuration>

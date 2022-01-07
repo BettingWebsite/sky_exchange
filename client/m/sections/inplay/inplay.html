@@ -1,0 +1,48 @@
+
+
+<div class="tab-wrap">
+
+    <ul>
+
+        <li id="inplay" data-ng-class="inplayTab=='inplay'?'select':''"><a data-ng-click="changeTab('inplay');">In-Play</a></li>
+
+        <li id="today" data-ng-class="inplayTab=='today'?'select':''"><a data-ng-click="changeTab('today');">Today</a></li>
+
+        <li id="tomorrow" data-ng-class="inplayTab=='tomorrow'?'select':''"><a data-ng-click="changeTab('tomorrow');">Tomorrow</a></li>
+
+    </ul>
+
+</div>
+
+<div class="wrap-highlight_list" id="inPlayData">
+
+    <div id="inPlayEventType_{{$index}}" data-ng-if="item.inplayData.length" data-ng-repeat="item in inplayUpComData track by $index">
+
+        <h3>{{item.name}}</h3>
+
+        <ul class="highlight-list" id="inPlayList_{{$index}}">
+
+            <li id="inPlayEvent_{{match.matchId}}" data-ng-repeat="match in item.inplayData | orderBy: orderByDate:false track by match.mtBfId" data-ng-class="match.inPlay==1?'inplay-on':'inplay-off'">
+
+                <a data-ng-href="#!{{getSportNameId(item.name)==15?'tp_market':'fullmarket'}}/{{getSportNameId(item.name)}}/{{match.TourbfId}}/{{match.matchId}}/{{match.marketId}}/{{match.bfId}}{{match.tourId!=undefined?'/'+match.tourId:''}}">
+
+                    <dl>
+
+                        <dt><span class="time"> {{match.inPlay==0? (match.matchDate | date:'yyyy-MM-dd HH:mm:ss'):'In-Play'}} </span></dt>
+
+                        <dd>{{match.matchName}}</dd>
+
+                    </dl>
+
+                </a>
+
+                <a data-ng-class="isMultiAdded(match)?'pin-off':'pin-on'" title="{{isMultiAdded(match)?'Add to Multi Markets':'Remove from Multi Markets'}}" data-ng-click="isMultiAdded(match)?addMultiMarket(match):removeMultiMarket(match)"></a>
+
+            </li>
+
+        </ul>
+
+    </div>
+
+</div>
+

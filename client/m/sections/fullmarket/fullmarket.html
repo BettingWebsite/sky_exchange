@@ -1,0 +1,777 @@
+<div class="game-wrap">
+  <h4 id="gameInfo" class="game-info">
+    {{getSportNameId(sportId)}}
+    <ul id="infoIcon" class="info-icon">
+      <li id="inPlayIcon" data-ng-if="marketdata.inplay==true">
+        <img class="info-inplay" src="images/transparent.gif" alt="inplay" />In-Play
+      </li>
+    </ul>
+  </h4>
+  <table data-ng-if="sportId==15" class="game-team soccer ng-scope" style="display: table">
+    <tbody>
+      <tr>
+        <td>
+          <h4 data-ng-if="fullScore==undefined" class="ng-binding ng-scope">
+            {{matchName}}
+          </h4>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table data-ng-if="sportId == 7.1 || sportId == 4339.1 || sportId == 7.2 || sportId == 4339.2"
+    class="game-team soccer ng-scope" style="display: table">
+    <tbody>
+      <tr>
+        <td>
+          <h4 data-ng-if="fullScore==undefined" class="ng-binding ng-scope">
+            {{marketdata.name}}
+          </h4>
+        </td>
+      </tr>
+      <tr>
+        <td><small>Time Remaing: {{countDown}}</small></td>
+      </tr>
+    </tbody>
+  </table>
+  <table id="cricketScoreBoard" data-ng-if="sportId==4 && scoreId==0" class="game-team" data-eventid="29119662"
+    style="display: table">
+    <tbody>
+      <tr>
+        <th>
+          <!-- <a data-ng-class="isMultiAdded(marketdata)?'pin-off':'pin-on'"
+                  title="{{isMultiAdded(marketdata)?'Add to Multi Markets':'Remove from Multi Markets'}}"
+                  data-ng-click="isMultiAdded(marketdata)?addMultiMarket(marketdata):removeMultiMarket(marketdata)"></a> -->
+          <a data-ng-if="markets[bfId].isMulti!=1" class="add-pin pin-off" data-ng-click="addMultiMkt(fancy.mid)"
+            style="cursor: pointer" title="Add to Multi Markets"></a>
+          <a data-ng-if="markets[bfId].isMulti==1" class="delete-pin pin-on" data-ng-click="removeMultiMkt(fancy.mid)"
+            style="cursor: pointer" title="Remove from Multi Markets"></a>
+          <!-- <h4 data-ng-if="fullScore==undefined">{{marketdata.matchName}}</h4> -->
+          <h4>
+            {{matchName.split(' v ')[0]}} &nbsp;<img data-ng-if="fullScore.activenation1==1" class="info-inplay"
+              src="images/transparent.gif" alt="home" />
+            <span>&nbsp;{{fullScore.spnrunrate1}}</span>
+            <span>&nbsp;{{fullScore.spnreqrate1}}</span>
+          </h4>
+          <h4>
+            {{matchName.split(' v ')[1]}} &nbsp;<img data-ng-if="fullScore.activenation1==2" class="info-inplay"
+              src="images/transparent.gif" alt="away" />
+            <span>&nbsp;{{fullScore.spnrunrate2}}</span>
+            <span>&nbsp;{{fullScore.spnreqrate2}}</span>
+          </h4>
+          <!-- <ul  class="scores-time in-play">
+                  <li id="description"></li>
+                  
+                  <li >Day 2</li>
+                  
+                  </ul> -->
+          <!-- <h4 data-ng-if="fullScore!=undefined">
+            {{fullScore.score.home.name}}
+          </h4>
+          <h4 data-ng-if="fullScore!=undefined">
+            {{fullScore.score.away.name}}
+          </h4> -->
+          <ul class="scores-time in-play">
+            <!-- <li
+              data-ng-if="marketdata.inplay==1 && fullScore.stateOfBall!=undefined && fullScore.status!='Finished'"
+              style="display: flex"
+            >
+              <span class="ui-bowler-name"
+                >{{fullScore.stateOfBall.bowlerName}}</span
+              >&nbsp;to&nbsp;<span class="ui-batsman-name"
+                >{{fullScore.stateOfBall.batsmanName}}</span
+              >&nbsp;-&nbsp;
+              <span
+                class="ui-event-message"
+                style="font-weight: bold; color: white"
+                >{{scoreRun()}}</span
+              >
+              <span class="ui-event-message" ng-if="fullScore.status=='Finished'" style="font-weight: bold;">Match Over</span>
+            </li> -->
+            <li data-ng-if="fullScore==undefined">{{matchTime}}</li>
+            <li data-ng-if="fullScore!=undefined">
+              Day {{fullScore.dayno==''?1:fullScore.dayno}}
+            </li>
+            <li data-ng-if="fullScore!=undefined">
+              <span style="font-size: 10px; color: #8eea29">{{fullScore.spnmessage}}</span>
+            </li>
+          </ul>
+        </th>
+        <td data-ng-if="fullScore==undefined && bfId != '1.179157300'" class="team-scores" style="">
+          <h4>--/-</h4>
+          <h4>--/-</h4>
+          <span class="scores-inns">Innings 1</span>
+        </td>
+        <td id="inningsBox1" data-ng-if="fullScore && bfId != '1.179157300'" class="team-scores">
+          <h4 data-ng-if="fullScore.score1" data-ng-class="fullScore.score1 && fullScore.activenation1==1?'in-play':''">
+            {{fullScore.score1}}
+          </h4>
+          <h4 data-ng-if="fullScore.score1=='' && fullScore.activenation1!=1">
+            {{fullScore.score1}}
+          </h4>
+          <h4 data-ng-if="fullScore.score2" data-ng-class="fullScore.score2 && fullScore.activenation2==1?'in-play':''">
+            {{fullScore.score2}}
+          </h4>
+          <h4 data-ng-if="fullScore.score2=='' && fullScore.activenation2!=1">
+            {{fullScore.score2}}
+          </h4>
+          <span>Innings 1</span>
+        </td>
+        <td id="inningsBox2" data-ng-if="fullScore.currentSet>=2" class="team-scores" style="display: table-cell">
+          <h4 data-ng-if="fullScore.score.home.inning2!=undefined && fullScore.score.home.inning2.wickets!='ALL_OUT'"
+            data-ng-class="fullScore.score.home.inning2!=undefined && fullScore.score.home.inning2.wickets!='ALL_OUT'?'in-play':''">
+            {{fullScore.score.home.inning2.runs}}/{{fullScore.score.home.inning2.wickets}}&nbsp;<span>({{fullScore.score.home.inning2.overs}})</span>
+          </h4>
+          <h4 data-ng-if="fullScore.score.home.inning2!=undefined && fullScore.score.home.inning2.wickets=='ALL_OUT'">
+            {{fullScore.score.home.inning2.runs}}&nbsp;<span>({{fullScore.score.home.inning2.overs}})</span>
+          </h4>
+          <h4 data-ng-if="fullScore.score.home.inning2==undefined">
+            Yet to bat
+          </h4>
+          <h4 data-ng-if="fullScore.score.away.inning2!=undefined && fullScore.score.away.inning2.wickets!='ALL_OUT'"
+            data-ng-class="fullScore.score.away.inning2!=undefined && fullScore.score.away.inning2.wickets!='ALL_OUT'?'in-play':''">
+            {{fullScore.score.away.inning2.runs}}/{{fullScore.score.away.inning2.wickets}}&nbsp;<span>({{fullScore.score.away.inning2.overs}})</span>
+          </h4>
+          <h4 data-ng-if="fullScore.score.away.inning2!=undefined && fullScore.score.away.inning2.wickets=='ALL_OUT'">
+            {{fullScore.score.away.inning2.runs}}&nbsp;<span>({{fullScore.score.away.inning2.overs}})</span>
+          </h4>
+          <h4 data-ng-if="fullScore.score.away.inning2==undefined">
+            Yet to bat
+          </h4>
+          <span>Innings 2</span>
+        </td>
+        <td class="team-refresh">
+          <a class="refresh" data-ng-click="getAllMarket();"></a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <table id="tennisScoreBoard" data-ng-if="sportId==2" class="game-team"
+    data-ng-class="fullScore==undefined?'':'tennis'" style="display: table">
+    <tbody>
+      <tr>
+        <th>
+          <a data-ng-class="isMultiAdded(marketdata)?'pin-off':'pin-on'"
+            title="{{isMultiAdded(marketdata)?'Add to Multi Markets':'Remove from Multi Markets'}}"
+            data-ng-click="isMultiAdded(marketdata)?addMultiMarket(marketdata):removeMultiMarket(marketdata)"></a>
+          <h4 data-ng-if="fullScore">{{marketdata.name.split(' v ')[0]}}</h4>
+          <h4 data-ng-if="fullScore">{{marketdata.name.split(' v ')[1]}}</h4>
+          <!-- <h4 data-ng-if="fullScore!=undefined">
+            {{fullScore.score.home.name}}
+          </h4>
+          <h4 data-ng-if="fullScore!=undefined">
+            {{fullScore.score.away.name}}
+          </h4> -->
+          <ul data-ng-if="fullScore!=undefined" class="scores-time in-play">
+            <li id="currentSet">Set {{fullScore.currentSet}}</li>
+            <li id="fullTimeElapsed">
+              {{fullScore.fullTimeElapsed.hour}}h
+              {{fullScore.fullTimeElapsed.min}}m
+              {{fullScore.fullTimeElapsed.sec}}s
+            </li>
+            <li id="court">HARD court</li>
+          </ul>
+        </th>
+        <td data-ng-if="fullScore.currentSet==1" class="team-scores">
+          <h4 class="in-play">{{fullScore.score.home.games}}</h4>
+          <h4 class="in-play">{{fullScore.score.away.games}}</h4>
+          <span>1</span>
+        </td>
+        <td data-ng-if="fullScore.currentSet>1" class="team-scores">
+          <h4>{{fullScore.score.home.gameSequence[0]}}</h4>
+          <h4>{{fullScore.score.away.gameSequence[0]}}</h4>
+          <span>1</span>
+        </td>
+        <td data-ng-if="fullScore.currentSet==2" class="team-scores">
+          <h4 class="in-play">{{fullScore.score.home.games}}</h4>
+          <h4 class="in-play">{{fullScore.score.away.games}}</h4>
+          <span>2</span>
+        </td>
+        <td data-ng-if="fullScore.currentSet>2" class="team-scores">
+          <h4>{{fullScore.score.home.gameSequence[1]}}</h4>
+          <h4>{{fullScore.score.away.gameSequence[1]}}</h4>
+          <span>2</span>
+        </td>
+        <td data-ng-if="fullScore.currentSet==3" class="team-scores team-last_box">
+          <h4 class="in-play">{{fullScore.score.home.games}}</h4>
+          <h4 class="in-play">{{fullScore.score.away.games}}</h4>
+          <span>3</span>
+        </td>
+        <td data-ng-if="fullScore.currentSet==1" class="team-scores">
+          <h4>-</h4>
+          <h4>-</h4>
+          <span>2</span>
+        </td>
+        <td data-ng-if="fullScore.currentSet==1 || fullScore.currentSet==2" class="team-scores team-last_box">
+          <h4>-</h4>
+          <h4>-</h4>
+          <span>3</span>
+        </td>
+        <td id="points" data-ng-if="fullScore!=undefined" class="team-scores team-last_box">
+          <h4 id="pointsHome" class="in-play">
+            {{fullScore.score.home.score}}
+          </h4>
+          <h4 id="pointsAway" class="in-play">
+            {{fullScore.score.away.score}}
+          </h4>
+          <span>Points</span>
+        </td>
+        <td id="aces" class="team-scores team-other">
+          <h4 id="acesHome">{{fullScore.score.home.aces}}</h4>
+          <h4 id="acesAway">{{fullScore.score.away.aces}}</h4>
+          <span>Aces</span>
+        </td>
+        <td id="faults" class="team-scores team-other">
+          <h4 id="faultsHome">{{fullScore.score.home.doubleFaults}}</h4>
+          <h4 id="faultsAway">{{fullScore.score.away.doubleFaults}}</h4>
+          <span>Faults</span>
+        </td>
+        <td id="breaks" class="team-scores team-other team-last_box">
+          <h4 id="breaksHome">{{fullScore.score.home.serviceBreaks}}</h4>
+          <h4 id="breaksAway">{{fullScore.score.away.serviceBreaks}}</h4>
+          <span>Breaks</span>
+        </td>
+        <td class="team-refresh">
+          <a class="refresh" data-ng-click="getAllMarket();"></a>
+        </td>
+        <td id="setBoxTemplate" class="team-scores" style="display: none">
+          <h4>-</h4>
+          <h4>-</h4>
+          <span id="setIndex"></span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <table id="soccerScoreBoard" data-ng-if="sportId==1" class="game-team soccer" style="display: table">
+    <tbody>
+      <tr>
+        <th>
+          <a data-ng-class="isMultiAdded(marketdata)?'pin-off':'pin-on'"
+            title="{{isMultiAdded(marketdata)?'Add to Multi Markets':'Remove from Multi Markets'}}"
+            data-ng-click="isMultiAdded(marketdata)?addMultiMarket(marketdata):removeMultiMarket(marketdata)"></a>
+        </th>
+        <td class="team-scores team-last_box" data-ng-if="fullScore!=undefined">
+          <h4 id="scoresHome" class="in-play">
+            {{fullScore.score.home.score}}
+          </h4>
+          <h4 id="scoresAway" class="in-play">
+            {{fullScore.score.away.score}}
+          </h4>
+          <span id="timeElapsed">{{fullScore.elapsedRegularTime}}'</span>
+        </td>
+        <td>
+          <h4 data-ng-if="fullScore">{{matchName.split(' v ')[0]}}</h4>
+          <h4 data-ng-if="fullScore">{{matchName.split(' v ')[1]}}</h4>
+          <!-- <h4 data-ng-if="fullScore!=undefined">
+            {{fullScore.score.home.name}}
+          </h4>
+          <h4 data-ng-if="fullScore!=undefined">
+            {{fullScore.score.away.name}}
+          </h4> -->
+        </td>
+        <td class="team-refresh">
+          <a class="refresh" data-ng-click="getAllMarket();"></a>
+        </td>
+      </tr>
+      <!-- <tr data-ng-if="fullScore!=undefined">
+        <td class="soccer-map" colspan="4">
+          <div class="bg-progress_bar">
+            <div
+              id="progressPercent"
+              class="progress_bar"
+              ng-style="{'width': fullScore.elapsedRegularTime+getCardTeam(fullScore.elapsedRegularTime)}"
+            ></div>
+            <img
+              id="soccerEvent_{{score.team}}_{{score.type}}_{{score.elapsedRegularTime}}"
+              data-ng-repeat="score in fullScore.updateDetails track by $index"
+              ng-style="{'left': score.elapsedRegularTime+getCardTeam(score.elapsedRegularTime)}"
+              style="display: block"
+              data-ng-class="getCardTeam(score.type,score.team)"
+              src="images/transparent.gif"
+              alt="teamimg"
+            />
+          </div>
+        </td>
+      </tr> -->
+    </tbody>
+  </table>
+</div>
+
+<div id="naviMarket" class="market-type ps ps--theme_default" ng-if="marketdatas.method==0"
+  data-ps-id="832f0911-42c9-9a14-faaf-093194d96fdc">
+  <ul id="naviMarketList">
+    <li id="naviMarket_{{mkt.bfId | removeSpace}}" data-ng-class="mkt.bfId==bfId?'select':''"
+      data-ng-repeat="mkt in allMarketData track by mkt.bfId" style="display: list-item">
+      <a
+        data-ng-href="#!fullmarket/{{sportId}}/{{mtBfId}}/{{matchId}}/{{mkt.marketId}}/{{mkt.bfId}}{{tourId!=undefined?'/'+tourId:''}}">{{mkt.marketName}}</a>
+    </li>
+  </ul>
+  <div class="ps__scrollbar-x-rail" style="left: 0px; bottom: 0px">
+    <div class="ps__scrollbar-x" tabindex="0" style="left: 0px; width: 0px"></div>
+  </div>
+  <div class="ps__scrollbar-y-rail" style="top: 0px; right: 0px">
+    <div class="ps__scrollbar-y" tabindex="0" style="top: 0px; height: 0px"></div>
+  </div>
+</div>
+<div id="marketBetsWrap" class="bets-wrap" data-ng-class="checkDateTime(marketdata.startDate,curTime)?'':''"
+  data-ng-repeat="market in currentMatchData track by $index" data-ng-show="marketsInApi[market.marketId]">
+  <div class="limit_info-popup" style="display: none">
+    <a class="close" onclick="javascript:$j('#minMaxBox').fadeOut();">Close</a>
+    <dl>
+      <dt>Min / Max</dt>
+      <dd>0 / 0</dd>
+    </dl>
+  </div>
+  <a class="bet-limit" onclick="javascript:$j('#minMaxBox').fadeIn().css('display', 'flex');" style="display: none"></a>
+  <dl class="bets-selections-head">
+    <dt>
+      <span>{{market.marketName}} </span>
+      <!-- <a class="a-depth" data-ng-click="openMarketDepth(marketdata)" id="marketDepthBtn">Markets Depth</a> -->
+      <!-- <p>
+        <span>Matched</span>
+        <strong id="totalMatched"> {{totalMatched | number:2}}</strong>
+      </p> -->
+    </dt>
+    <dd class="mode-land"></dd>
+    <dd class="mode-land"></dd>
+    <dd>Back</dd>
+    <dd>Lay</dd>
+    <dd class="mode-land"></dd>
+    <dd class="mode-land"></dd>
+  </dl>
+  <dl id="selection_{{runner.selectionId}}" data-ng-repeat-start="runner in market.runners track by $index"
+    data-ng-style="{'opacity': runner.state.status === 'REMOVED'? 0.5: ''}" class="bets-selections">
+    <dt>
+      <h4>{{runner.runnerName}}</h4>
+      <ul>
+        <!-- <li id="withoutBet" class="win" style="display: list-item;"> 2.20</li> -->
+        <!-- <li id="withoutBet" class="lose" style="display: list-item;">( 10.00)</li> -->
+        <!-- <li id="withBet" class="to-win" style="display: list-item;"> 35.20</li> -->
+        <!-- <li id="withBet" class="to-lose" style="display: list-item;">( 110.00)</li> -->
+        <li id="noBetMktExp_{{market.marketId.replace('.', '_')}}_{{runner.selectionId}}" style="display: list-item">
+        </li>
+        <li id="betMktExp_{{market.marketId.replace('.', '_')}}_{{runner.selectionId}}" style="display: list-item"></li>
+        <!-- <li class="win"></li> -->
+        <!-- <li id="lossWithoutBet" class="win" style="display: none;"></li>
+               <li id="withBet" class="win" style="display: none;"></li>
+               
+               <li id="lossWithBet" class="win" style="display: none;"></li>
+               
+               <li id="zeroProfit" class="win" style="display: none;"></li>
+               
+               <li id="zeroLiability" class="win" style="display: none;"></li>
+               
+               <li id="zeroProfitWithBet" class="win" style="display: none;"></li>
+               
+               <li id="zeroLiabilityWithBet" class="win" style="display: none;"></li> -->
+      </ul>
+    </dt>
+    <dd class="suspend" data-ng-if="market.status? market.status !='OPEN': market.state.status !== 'OPEN'">
+      <p>{{market.status}}</p>
+    </dd>
+    <dd class="suspend" style="display: none">
+      <p>Closed</p>
+    </dd>
+    <dd class="suspend" style="display: none">
+      <p>Non Runner</p>
+    </dd>
+    <dd class="mode-land">
+      <a class="back-3"
+        data-ng-click="runner.ex.availableToBack[2].price==null || runner.ex.availableToBack[2].price==''?'':openMarketBetslip($event,'back',runner.ex.availableToBack[2].price,runner.runnerName, runner.selectionId,sportId,mtBfId,matchId,market.marketId,bfId)">{{runner.ex.availableToBack[2].price
+        | oddDecimal}}<span>{{runner.ex.availableToBack[2].size | volume |
+          number:0}}{{runner.ex.availableToBack[2].size>500000?'+':''}}</span></a>
+    </dd>
+    <dd class="mode-land">
+      <a class="back-2"
+        data-ng-click="runner.ex.availableToBack[1].price==null || runner.ex.availableToBack[1].price==''?'':openMarketBetslip($event,'back',runner.ex.availableToBack[1].price,runner.runnerName, runner.selectionId, sportId,mtBfId,matchId,market.marketId,bfId)">{{runner.ex.availableToBack[1].price
+        | oddDecimal}}<span>{{runner.ex.availableToBack[1].size | volume |
+          number:0}}{{runner.ex.availableToBack[1].size>500000?'+':''}}</span></a>
+    </dd>
+    <dd>
+      <a class="back-1"
+        data-ng-click="runner.ex.availableToBack[0].price==null || runner.ex.availableToBack[0].price==''?'':openMarketBetslip($event,'back',runner.ex.availableToBack[0].price,runner.runnerName, runner.selectionId, sportId,mtBfId,matchId,market.marketId,bfId, market)">{{runner.ex.availableToBack[0].price
+        | oddDecimal}}<span>{{runner.ex.availableToBack[0].size | volume |
+          number:0}}{{runner.ex.availableToBack[0].size>500000?'+':''}}</span></a>
+    </dd>
+    <dd>
+      <a class="lay-1"
+        data-ng-click="runner.ex.availableToLay[0].price==null || runner.ex.availableToLay[0].price==''?'':openMarketBetslip($event,'lay',runner.ex.availableToLay[0].price,runner.runnerName, runner.selectionId, sportId,mtBfId,matchId,market.marketId,bfId, market)">{{runner.ex.availableToLay[0].price
+        | oddDecimal}}<span>
+          {{runner.ex.availableToLay[0].size | volume |
+          number:0}}{{runner.ex.availableToLay[0].price>500000?'+':''}}</span></a>
+    </dd>
+    <dd class="mode-land">
+      <a class="lay-2"
+        data-ng-click="runner.ex.availableToLay[1].price==null || runner.ex.availableToLay[1].price==''?'':openMarketBetslip($event,'lay',runner.ex.availableToLay[1].price,runner.runnerName, runner.selectionId, sportId,mtBfId,matchId,market.marketId,bfId)">{{runner.ex.availableToLay[1].price
+        | oddDecimal}}<span>
+          {{runner.ex.availableToLay[1].size | volume |
+          number:0}}{{runner.ex.availableToLay[1].price>500000?'+':''}}</span></a>
+    </dd>
+    <dd class="mode-land">
+      <a class="lay-3"
+        data-ng-click="runner.ex.availableToLay[2].price==null || runner.ex.availableToLay[2].price==''?'':openMarketBetslip($event,'lay',runner.ex.availableToLay[2].price,runner.runnerName, runner.selectionId, sportId,mtBfId,matchId,market.marketId,bfId)">{{runner.ex.availableToLay[2].price
+        | oddDecimal}}<span>
+          {{runner.ex.availableToLay[2].size | volume |
+          number:0}}{{runner.ex.availableToLay[2].price>500000?'+':''}}</span></a>
+    </dd>
+  </dl>
+  <div id="betBoard_{{runner.selectionId}} {{market.marketId}} {{placeMarketData.marketId}}"
+    data-ng-show="market.marketId==placeMarketData.marketId && runner.selectionId===placeMarketData.selectionId && (market.status? market.status ==='OPEN': market.state.status === 'OPEN')"
+    class="bet_slip-wrap {{placeMarketData.backlay | lowercase}}" style="display: block" data-ng-repeat-end>
+    <div class="message-wrap" style="display: none">
+      <div class="message">
+        <h4>The Minimun stake is $25.00</h4>
+        <p>Your stake has been updated accordingly.</p>
+      </div>
+      <a class="close" href="#">Close</a>
+    </div>
+    <ul class="btn-list">
+      <li>
+        <div class="input-num input-odds">
+          <a data-ng-click="oddsDown(placeMarketData)" class="icon-minus"></a>
+          <span id="odds" data-ng-class="oddsTyping?'typeing':'typed'"
+            data-ng-click="typingSign('odds',placeMarketData)">{{placeMarketData.odds}}</span>
+          <a data-ng-click="oddsUp(placeMarketData)" class="icon-plus"></a>
+        </div>
+      </li>
+      <li>
+        <div class="input-num input-stake">
+          <a data-ng-click="stakeDown(placeMarketData)" class="icon-minus"></a>
+          <span data-ng-class="stakeTyping?'typeing':'typed'"
+            data-ng-click="typingSign('stake',placeMarketData)">{{placeMarketData.stake}}</span>
+          <a data-ng-click="stakeUp(placeMarketData)" class="icon-plus"></a>
+        </div>
+      </li>
+    </ul>
+    <ul class="coin-list">
+      <li data-ng-repeat="stake in stakeList track by $index">
+        <a data-stake="{{stake.stake}}" data-ng-click="stakeChange(stake.stake,placeMarketData)">
+          {{stake.stake}}</a>
+      </li>
+    </ul>
+    <div class="keyboard-wrap">
+      <ul class="btn-tel">
+        <li><a data-ng-click="buttonInput('1',placeMarketData)">1</a></li>
+        <li><a data-ng-click="buttonInput('2',placeMarketData)">2</a></li>
+        <li><a data-ng-click="buttonInput('3',placeMarketData)">3</a></li>
+        <li><a data-ng-click="buttonInput('4',placeMarketData)">4</a></li>
+        <li><a data-ng-click="buttonInput('5',placeMarketData)">5</a></li>
+        <li><a data-ng-click="buttonInput('6',placeMarketData)">6</a></li>
+        <li><a data-ng-click="buttonInput('7',placeMarketData)">7</a></li>
+        <li><a data-ng-click="buttonInput('8',placeMarketData)">8</a></li>
+        <li><a data-ng-click="buttonInput('9',placeMarketData)">9</a></li>
+        <li><a data-ng-click="buttonInput('0',placeMarketData)">0</a></li>
+        <li><a data-ng-click="buttonInput('00',placeMarketData)">00</a></li>
+        <li><a data-ng-click="buttonInput('.',placeMarketData)">.</a></li>
+      </ul>
+      <a data-ng-click="buttonDelete(placeMarketData)" class="btn-delete"></a>
+    </div>
+    <ul class="btn-list">
+      <li>
+        <a data-ng-click="cancelBetslip()" class="btn">Cancel </a>
+      </li>
+      <li>
+        <a data-ng-click="placeMarketData.stake=='' || placeMarketData.odds==''?'':confirmBetPop(placeMarketData)"
+          class="btn-send" data-ng-class="placeMarketData.stake=='' || placeMarketData.odds==''?'disable':''">Place Bet
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="no-data" style="display: none">
+    <h3>This race has ended</h3>
+    <p></p>
+  </div>
+</div>
+
+<div id="bookRateBetsWrap" class="bets-wrap" data-ng-if="bookmakingData && bookmakingData.length"
+  data-ng-repeat="bokRate in bookmakingData track by $index">
+  <div class="limit_info-popup" style="display: none">
+    <a class="close" onclick="javascript:$j('#minMaxBox').fadeOut();">Close</a>
+    <dl>
+      <dt>Min / Max</dt>
+      <dd>0 / 0</dd>
+    </dl>
+  </div>
+  <a class="bet-limit" onclick="javascript:$j('#minMaxBox').fadeIn().css('display', 'flex');" style="display: none"></a>
+  <!--<div id="fancyBetHead" class="fancy_bet-head" style="">
+      <h4 class="in-play">
+      
+         <a id="multiMarketPin" class="pin-off" href="#">Pin to Muilti Markets</a>
+      
+         <span>
+      
+            <pre>in-play</pre>
+      
+            {{bookMakingData.name}}
+      
+         </span>
+      
+         <a class="btn-fancybet_rules" data-ng-click="showOverlayInfo('fancyBetRulesWrap')">Rules</a>
+      
+      </h4>
+      
+      </div> -->
+  <dl class="bets-selections-head">
+    <dt style="font-size: 3.93333vw">
+      <p>
+        <strong>{{bokRate[0].mname}} </strong>
+      </p>
+    </dt>
+    <dd class="mode-land"></dd>
+    <dd class="mode-land"></dd>
+    <dd>Back</dd>
+    <dd>Lay</dd>
+    <dd class="mode-land"></dd>
+    <dd class="mode-land"></dd>
+  </dl>
+  <dl id="selection_{{runner.sid}}_{{runner.nat | removeSpace}}"
+    data-ng-repeat-start="runner in bokRate track by runner.sid" class="bets-selections">
+    <dt>
+      <h4>{{runner.nat}}</h4>
+      <ul>
+        <li id="withoutBetBMExp_{{runner.sid}}"></li>
+        <li id="withBetBMExp_{{runner.sid}}"></li>
+        <!-- <li id="withoutBet" class="win" style="display: none;"></li>
+               <li id="lossWithoutBet" class="win" style="display: none;"></li>
+               
+               <li id="withBet" class="win" style="display: none;"></li>
+               
+               <li id="lossWithBet" class="win" style="display: none;"></li>
+               
+               <li id="zeroProfit" class="win" style="display: none;"></li>
+               
+               <li id="zeroLiability" class="win" style="display: none;"></li>
+               
+               <li id="zeroProfitWithBet" class="win" style="display: none;"></li>
+               
+               <li id="zeroLiabilityWithBet" class="win" style="display: none;"></li> -->
+      </ul>
+    </dt>
+    <dd class="suspend" data-ng-if="runner.s!='ACTIVE'">
+      <p>{{runner.s}}</p>
+    </dd>
+    <dd class="suspend" style="display: none">
+      <p>Closed</p>
+    </dd>
+    <dd class="suspend" style="display: none">
+      <p>Non Runner</p>
+    </dd>
+    <dd class="mode-land"></dd>
+    <dd class="mode-land"></dd>
+    <dd>
+      <a class="back-1"
+        data-ng-click="runner.b1=='-' || runner.b1==''?'':openBookBetSlip($event,'backBook',runner.b1,runner.nat,runner.sid,bokRate.id,bokRate.name,bokRate.type,matchId,'bm_' + runner.mid)">{{runner.b1}}<span>{{runner.bs1}}</span></a>
+    </dd>
+    <dd>
+      <a class="lay-1"
+        data-ng-click="runner.l1=='-' || runner.l1==''?'':openBookBetSlip($event,'layBook',runner.l1,runner.nat,runner.sid,bokRate.id,bokRate.name,bokRate.type,matchId,'bm_' + runner.mid)">{{runner.l1}}<span>
+          {{runner.ls1}}</span></a>
+    </dd>
+    <dd class="mode-land"></dd>
+    <dd class="mode-land"></dd>
+  </dl>
+  <div id="betBoard_{{runner.sid}}_{{runner.nat | removeSpace}}"
+    data-ng-if="runner.sid==placeBookData.selectionId && runner.s=='ACTIVE'"
+    class="bet_slip-wrap {{placeBookData.backlay | lowercase}} {{runner.mid}}" style="display: block"
+    data-ng-repeat-end>
+    <div class="message-wrap" style="display: none">
+      <div class="message">
+        <h4>The Minimun stake is $25.00</h4>
+        <p>Your stake has been updated accordingly.</p>
+      </div>
+      <a class="close" href="#">Close</a>
+    </div>
+    <ul class="btn-list">
+      <li>
+        <div class="input-num disable">
+          <span class="typed">{{placeBookData.odds}}</span>
+        </div>
+      </li>
+      <li>
+        <div class="input-num input-stake">
+          <a data-ng-click="stakeDown(placeBookData)" class="icon-minus"></a>
+          <span data-ng-class="stakeTyping?'typeing':'typed'"
+            data-ng-click="typingSign('stake',placeBookData)">{{placeBookData.stake}}</span>
+          <a data-ng-click="stakeUp(placeBookData)" class="icon-plus"></a>
+        </div>
+      </li>
+    </ul>
+    <ul class="coin-list">
+      <li data-ng-repeat="stake in stakeList track by $index">
+        <a data-stake="{{stake.stake}}" data-ng-click="stakeChange(stake.stake,placeBookData)">
+          {{stake.stake}}</a>
+      </li>
+    </ul>
+    <div class="keyboard-wrap">
+      <ul class="btn-tel">
+        <li><a data-ng-click="buttonInput('1',placeBookData)">1</a></li>
+        <li><a data-ng-click="buttonInput('2',placeBookData)">2</a></li>
+        <li><a data-ng-click="buttonInput('3',placeBookData)">3</a></li>
+        <li><a data-ng-click="buttonInput('4',placeBookData)">4</a></li>
+        <li><a data-ng-click="buttonInput('5',placeBookData)">5</a></li>
+        <li><a data-ng-click="buttonInput('6',placeBookData)">6</a></li>
+        <li><a data-ng-click="buttonInput('7',placeBookData)">7</a></li>
+        <li><a data-ng-click="buttonInput('8',placeBookData)">8</a></li>
+        <li><a data-ng-click="buttonInput('9',placeBookData)">9</a></li>
+        <li><a data-ng-click="buttonInput('0',placeBookData)">0</a></li>
+        <li><a data-ng-click="buttonInput('00',placeBookData)">00</a></li>
+        <li><a data-ng-click="buttonInput('.',placeBookData)">.</a></li>
+      </ul>
+      <a data-ng-click="buttonDelete(placeBookData)" class="btn-delete"></a>
+    </div>
+    <ul class="btn-list">
+      <li>
+        <a data-ng-click="cancelBetslip()" class="btn">Cancel </a>
+      </li>
+      <li>
+        <a data-ng-click="placeBookData.stake==''?'':placeBMBet(placeBookData)" class="btn-send"
+          data-ng-class="placeBookData.stake==''?'disable':''">Place Bet
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="no-data" style="display: none">
+    <h3>This race has ended</h3>
+    <p></p>
+  </div>
+</div>
+
+<div data-ng-if="marketdata.inPlay == 1 && fancyData && fancyData.length">
+  <div id="fancyBetHead" class="fancy_bet-head" style="">
+    <h4 class="in-play">
+      <!-- <a id="multiMarketPin" class="pin-off">Pin to Muilti Markets</a> -->
+      <a data-ng-class="isMultiAdded(marketdata.matchBfId)?'pin-off':'pin-on'"
+        title="{{isMultiAdded(marketdata.matchBfId)?'Add to Multi Markets':'Remove from Multi Markets'}}"
+        data-ng-click="isMultiAdded(marketdata.matchBfId)?addMultiMarket(marketdata.matchBfId):removeMultiMarket(marketdata.matchBfId)">Pin
+        to Muilti Markets</a>
+      <span>
+        <pre>in-play</pre>
+        Fancy Bet
+      </span>
+      <a class="btn-fancybet_rules" data-ng-click="showOverlayInfo('fancyBetRulesWrap')">Rules</a>
+    </h4>
+  </div>
+  <div id="fancyBetWrap" class="bets-wrap multi fancy">
+    <dl id="marketHead" class="bets-selections-head">
+      <dt id="fancyBetNoBet" style="display: none"></dt>
+      <dt></dt>
+      <dd>No</dd>
+      <dd>Yes</dd>
+      <dd class="mode-land"></dd>
+    </dl>
+    <div class="fancy-bet" ng-repeat="fancy in fancyData track by fancy.sid">
+      <h4>
+        <span id="marketName">{{fancy.nat}}</span>
+      </h4>
+      <dl id="fancyBetMarket_{{fancy.sid}}" class="bets-selections"
+        style="display: flex; border-top: 1px solid #e4dfdf">
+        <dt class="line_market-selection">
+          <!-- <h4 id="marketName">{{fancy.name}}</h4> -->
+          <ul>
+            <!-- <li id="before" class="win" style="display: none;"></li>
+                    <li id="after" class="to-lose" style="display: none;"></li> -->
+            <li id="beforeFancyExpo_{{fancy.sid}}" style="display: flex">
+              <span></span>
+            </li>
+            <li id="afterFancyExpo_{{fancy.sid}}" style="display: inline-flex">
+              <span></span>
+            </li>
+          </ul>
+          <!--  <ul>
+                 <li id="before" class="lose" style="display: flex;"><span class="red">( 2.00)</span></li>
+                 
+                 <li id="after" class="to-lose" style="display: flex;"><span class="red">( 502.00)</span></li>
+                 
+                 </ul> -->
+          <a id="fancyBetBookBtn_{{fancy.sid}}" class="btn-book" data-ng-click="getFancyBook(bfId,fancy.sid,fancy.nat)"
+            style="display: none">Book</a>
+        </dt>
+        <!-- Suspend for Fancy Bet -->
+        <dd class="suspend-fancy" data-ng-if="fancy.gstatus!=''">
+          <p>{{fancy.gstatus}}</p>
+        </dd>
+        <dd>
+          <a class="lay-1"
+            data-ng-click="fancy.gstatus!='' || fancy.l1==''?'':openFancyBetSlip($event,'no',fancy.l1,fancy.ls1,fancy.nat,fancy.sid,matchId,bfId, 'df_' + fancy.mid + '_' + fancy.sid)">{{fancy.l1
+            | number:0}}<span>{{fancy.ls1 | number:0}}</span></a>
+        </dd>
+        <dd>
+          <a class="back-1"
+            data-ng-click="fancy.gstatus!='' || fancy.b1==''?'':openFancyBetSlip($event,'yes',fancy.b1,fancy.bs1,fancy.nat,fancy.sid,matchId,bfId, 'df_' + fancy.mid + '_' + fancy.sid)">{{fancy.b1
+            | number:0}}<span>{{fancy.bs1 | number:0}}</span></a>
+        </dd>
+        <dd class="mode-land">
+          <a data-ng-click="openCloseFancyInfo(fancy)" class="btn-fancy_info">fancybet info</a>
+          <div id="fancy_popup_{{fancy.sid}}" class="fancy_info-popup"
+            data-ng-style="{'display':(fancyInfo==undefined)?'':(fancy.sid==fancyInfo.sid)?'flex':'none'}">
+            <dl>
+              <dt>Min / Max</dt>
+              <dd id="minMax">{{sessionSettings.min}} / {{sessionSettings.max}}</dd>
+            </dl>
+            <a id="close-fancy_info__{{fancy.sid}}" data-ng-click="openCloseFancyInfo()" class="close">Close</a>
+          </div>
+        </dd>
+      </dl>
+      <div id="betBoard_{{fancy.sid}}" data-ng-show="fancy.sid==placeFancyData.fancyId && fancy.gstatus==''"
+        class="bet_slip-wrap {{placeFancyData.yesno=='yes'?'back':'lay'}}" style="display: block">
+        <div class="message-wrap" style="display: none">
+          <div class="message">
+            <h4>The Minimun stake is $25.00</h4>
+            <p>Your stake has been updated accordingly.</p>
+          </div>
+          <a class="close" href="#">Close</a>
+        </div>
+        <ul class="btn-list">
+          <li>
+            <div class="input-num disable">
+              <!-- <a class="icon-minus"></a> -->
+              <span class="typed">{{placeFancyData.score}} / {{placeFancyData.rate}}</span>
+              <!-- <a class="icon-plus"></a> -->
+            </div>
+          </li>
+          <li>
+            <div class="input-num input-stake">
+              <a data-ng-click="stakeDown(placeFancyData)" class="icon-minus"></a>
+              <span data-ng-class="stakeTyping?'typeing':'typed'"
+                data-ng-click="typingSign('stake',placeFancyData)">{{placeFancyData.stake}}</span>
+              <a data-ng-click="stakeUp(placeFancyData)" class="icon-plus"></a>
+            </div>
+          </li>
+        </ul>
+        <ul class="coin-list">
+          <li data-ng-repeat="stake in stakeList track by $index">
+            <a data-stake="{{stake.stake}}" data-ng-click="stakeChange(stake.stake,placeFancyData)">
+              {{stake.stake}}</a>
+          </li>
+        </ul>
+        <div class="keyboard-wrap">
+          <ul class="btn-tel">
+            <li><a data-ng-click="buttonInput('1',placeFancyData)">1</a></li>
+            <li><a data-ng-click="buttonInput('2',placeFancyData)">2</a></li>
+            <li><a data-ng-click="buttonInput('3',placeFancyData)">3</a></li>
+            <li><a data-ng-click="buttonInput('4',placeFancyData)">4</a></li>
+            <li><a data-ng-click="buttonInput('5',placeFancyData)">5</a></li>
+            <li><a data-ng-click="buttonInput('6',placeFancyData)">6</a></li>
+            <li><a data-ng-click="buttonInput('7',placeFancyData)">7</a></li>
+            <li><a data-ng-click="buttonInput('8',placeFancyData)">8</a></li>
+            <li><a data-ng-click="buttonInput('9',placeFancyData)">9</a></li>
+            <li><a data-ng-click="buttonInput('0',placeFancyData)">0</a></li>
+            <li><a data-ng-click="buttonInput('00',placeFancyData)">00</a></li>
+            <li><a data-ng-click="buttonInput('.',placeFancyData)">.</a></li>
+          </ul>
+          <a data-ng-click="buttonDelete(placeFancyData)" class="btn-delete"></a>
+        </div>
+        <ul class="btn-list">
+          <li>
+            <a data-ng-click="cancelBetslip()" class="btn">Cancel </a>
+          </li>
+          <li>
+            <a data-ng-click="placeFancyData.stake==''?'':placeFancyBet(placeFancyData)" class="btn-send"
+              data-ng-class="placeFancyData.stake==''?'disable':''">Place Bet
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

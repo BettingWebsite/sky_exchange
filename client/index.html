@@ -1,0 +1,2290 @@
+<html xmlns="http://www.w3.org/1999/xhtml" data-ng-app="myApp" lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="theme-color" content="#2F3BA2" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-ng-bind="'Encabook999 &mdash; ' + title"></title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+  <link rel="stylesheet" type="text/css" href="css/global-style.css" />
+  <!-- <link rel="stylesheet" href="css/sportradar.css"> -->
+  <!-- <link rel="stylesheet" type="text/css" href="css/font-awesome.css"> -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+  <link
+    href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+    rel="stylesheet">
+
+  <!-- Angular Material CSS now available via Google CDN; version 1.2.1 used here -->
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.2.1/angular-material.min.css">
+
+  <link rel="stylesheet" type="text/css" href="css/modal-box.css" />
+  <link rel="SHORTCUT ICON" href="./favicon.png" />
+  <script src="js/common.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="/script/ng-websocket.js"></script>
+  <script>
+    if (
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(
+        navigator.userAgent
+      )
+    ) {
+      context = "mobile";
+    } else {
+      context = "web";
+    }
+      if (context == "web") {
+        if ($(window).width() < 900) {
+          window.location = "http://jio.encabook999.com/m/";
+        }
+      } else {
+        window.location = "http://jio.encabook999.com/";
+      }
+  </script>
+  <script>
+    toastr.options = {
+      closeButton: true,
+      debug: false,
+      newestOnTop: false,
+      progressBar: true,
+      positionClass: "toast-top-center",
+      preventDuplicates: true,
+      onclick: null,
+      showDuration: "300",
+      hideDuration: "1000",
+      timeOut: "5000",
+      extendedTimeOut: "1000",
+      showEasing: "swing",
+      hideEasing: "linear",
+      showMethod: "fadeIn",
+      hideMethod: "fadeOut",
+    };
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-google-chart/1.0.0-beta.1/ng-google-chart.min.js"
+    type="text/javascript"></script>
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/> -->
+  <!-- <link rel="stylesheet" href="jquery.datetimepicker.css"> -->
+  <!-- <link rel="stylesheet" type="text/css" href="css/terms_conditions.css"> -->
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script> -->
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script> -->
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script> -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular-aria.min.js"></script> -->
+  <!-- <script data-require="ui-bootstrap@*" data-semver="0.12.1" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.min.js"></script> -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular-cookies.js"></script> -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular-sanitize.js"></script> -->
+  <!-- <script src="https://cdn.jsdelivr.net/ngstorage/0.3.6/ngStorage.min.js"></script> -->
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> -->
+
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+  <style>
+    /*.bigwin .header h1 {
+    margin-top: -30px;
+    margin-left: -10px;
+}
+*/
+    [ng\:cloak],
+    [ng-cloak],
+    [data-ng-cloak],
+    [x-ng-cloak],
+    .ng-cloak,
+    .x-ng-cloak,
+    .ng-hide {
+      display: none !important;
+    }
+
+    .overlay {
+      position: absolute;
+      /* height: 100vh;
+  width: 100vw; */
+    }
+
+    .loader {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      display: flex;
+      width: 60px;
+
+      height: 30px;
+      transform: translate(-50%, -50%);
+    }
+
+    .ball {
+      position: absolute;
+      display: block;
+      height: 30px;
+      width: 30px;
+      border-radius: 50%;
+    }
+
+    .ball-1 {
+      background: #243a48;
+      animation: loading-1 700ms linear infinite;
+      z-index: 5;
+    }
+
+    .ball-2 {
+      background: #ffb80c;
+      right: 0;
+      animation: loading-2 700ms linear infinite;
+    }
+
+    @keyframes loading-1 {
+      0% {
+        left: 0;
+      }
+
+      50% {
+        left: 50%;
+      }
+
+      100% {
+        left: 0;
+      }
+    }
+
+    @keyframes loading-2 {
+      0% {
+        left: 50%;
+        z-index: 1;
+      }
+
+      49% {
+        z-index: 1;
+      }
+
+      50% {
+        left: 0;
+        z-index: 10;
+      }
+
+      100% {
+        left: 50%;
+        z-index: 0;
+      }
+    }
+
+    .casinoContent {
+      width: 1300px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+
+<body class="sports777" data-ng-controller="homeController" data-ng-init="Callfunctions()" data-ng-cloak>
+  <!-- Top start -->
+  <div class="top">
+    <div class="header full-wrap">
+      <h1 style="text-indent: unset; font-size: 23px">
+        <a style="display: inline-flex; color: #fff; align-items: center" href="#">
+          <img class="logo" src="/images/transparent.gif" alt="777sports.live">
+        </a>
+      </h1>
+
+      <div id="searchWrap" class="search-wrap" style="">
+        <div>
+          <!-- <label for="searchInput" style="color: #212121;border-top: 1px solid #212121">
+          Search
+        </label> -->
+          <input id="searchInput" data-ng-model="Searchevent" data-ng-change="SearchItem(Searchevent)"
+            class="search-input" type="text" placeholder="Search Events" />
+          <button id="searchClear" class="search-clear" style="display: none"></button>
+        </div>
+        <div id="searchResult" class="suggestion-wrap">
+          <ul id="searchList" style="display: none">
+            <li id="noMatching" style="display: none">
+              <p class="no-matching">No events found matching ...</p>
+            </li>
+            <li id="resultTemplate" style="display: none"><a></a></li>
+            <li id="result_{{match.matchId}}"
+              data-ng-repeat="match in Allmatches | filter : Searchevent track by match.bfId"
+              style="/*display: list-item;*/">
+              <a data-ng-click="matchclick()"
+                data-ng-href="#!full-market/{{match.SportbfId}}/{{match.TourbfId}}/{{match.matchId}}/{{match.marketId}}/{{match.bfId}}">{{match.matchDate.split('
+                ')[1]}} {{match.matchName}}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="search-wrap" style="margin-left: 5px; width: 33%">
+        <!-- <marquee
+            id="ticker"
+            onmouseover="document.all.ticker.stop()"
+            onmouseout="document.all.ticker.start()"
+            style="color: white; vertical-align: middle"
+            class="ng-binding"
+            >{{news}}</marquee
+          > -->
+      </div>
+
+      <ul class="login-wrap" data-ng-show="authcookie==undefined">
+        <li class="user error">
+          <label for="loginName" style="color: #212121">n</label>
+          <input id="loginName" type="text" placeholder="Username" data-ng-model="username2"
+            ng-keypress="($event.keyCode === 13)? login(): $event.charCode" />
+        </li>
+        <li>
+          <label for="password" style="color: #212121">p</label>
+          <input id="password" type="password" placeholder="Password" data-ng-model="password2"
+            ng-keypress="($event.keyCode === 13)? login(): $event.charCode" />
+        </li>
+        <li class="valid-code">
+          <label for="validCode" style="color: #212121">i</label>
+          <input id="validCode" type="text" data-ng-model="Popcaptcha2" placeholder="Validation" maxlength="4"
+            ng-keypress="($event.keyCode === 13)? login(): $event.charCode" />
+          <img id="authenticateImage" alt="" />
+        </li>
+        <li>
+          <input id="valid" name="valid" type="hidden" value="1af3fcd7-a5d3-4b01-876e-d336fb343a85" />
+        </li>
+        <li>
+          <a id="loginBtn" class="btn-login" data-ng-click="login();">Login
+            <img class="icon-login" src="images/transparent.gif?v=1548051109718" alt="1548051109718" />
+          </a>
+        </li>
+        <!-- <li><a class="btn-signup" data-ng-click="logout()">Sign up</a></li> -->
+        <li id="errorMsg" class="error" style="display: none"></li>
+      </ul>
+
+      <ul class="account-wrap" data-ng-show="authcookie!=undefined">
+        <li>
+          <!--  <p class="microsoft">
+                        <MARQUEE id="ticker" width="625" onMouseOver="document.all.ticker.stop()" onMouseOut="document.all.ticker.start()"> {{ticker}} </MARQUEE>
+                     </p> -->
+          <!--  <p class="microsoft marquee">{{ticker}}</p> -->
+        </li>
+        <li id="accountCredit">
+          Main
+          <strong style="color: #ffb80c">&nbsp;{{currencyCode}} :
+            &nbsp;{{availBal|number:2}}</strong>&nbsp;&nbsp;Exposure&nbsp;:&nbsp;
+          <strong class="red" style="cursor: pointer;">{{exposure | number: 2}}</strong>
+        </li>
+        <li id="menuRefreshIcon" style="display: none">
+          <img class="refresh-bar" src="images/account/transparent.gif" alt="refresh" />
+        </li>
+        <li class="head-refresh">
+          <a id="Refresh" data-ng-click="getBalance()" style="cursor: pointer">Refresh</a>
+        </li>
+        <!--  <li>
+                     <span style="font-size: 15px; font-weight: bolder;">{{name}}</span><br></li> -->
+        <!-- <span style="font-size: 15px; font-weight: bolder;">lastLogin</span></li> -->
+        <li class="account" style="padding-right: 5px">
+          <a id="accountPopup" style="cursor: pointer">My Account</a>
+          <ul id="account_pop" style="display: none">
+            <li>
+              <h4>
+                {{(currentUser.name==null ||
+                currentUser.name=='')?'-':currentUser.name}}
+                ({{currentUser.userName}})
+                <span class="gmt" title="Time Zone">GMT+5:30</span>
+              </h4>
+            </li>
+            <!--  <li><a href="indexAccount.html#!/homeAccount" target="_blank"><i  aria-hidden="true" style="margin-top: 2px;"></i>&nbsp; 
+                           My Profile</a>
+                        </li> -->
+            <li>
+              <a href="indexAccount.html#!/balance_Overview" target="_blank"><i aria-hidden="true"
+                  style="margin-top: 2px"></i>&nbsp;Balance Overview</a>
+            </li>
+            <li>
+              <a href="indexAccount.html#!/accountStatement" target="_blank"><i aria-hidden="true"
+                  style="margin-top: 2px"></i>&nbsp;Account Statement</a>
+            </li>
+            <!-- <li>
+                <a href="indexAccount.html#!/casinoreport" target="_blank"
+                  ><i aria-hidden="true" style="margin-top: 2px"></i
+                  >&nbsp;Casino Report</a
+                >
+              </li> -->
+            <li>
+              <a href="indexAccount.html#!/mybets" target="_blank"><i aria-hidden="true"
+                  style="margin-top: 2px"></i>&nbsp;My
+                Bets</a>
+            </li>
+            <li>
+              <a href="indexAccount.html#!/betsHistory" target="_blank"><i aria-hidden="true"
+                  style="margin-top: 2px"></i>&nbsp;Bets
+                History</a>
+            </li>
+            <li>
+              <a href="indexAccount.html#!/profitLoss" target="_blank"><i aria-hidden="true"
+                  style="margin-top: 2px"></i>&nbsp;Profit &amp; Loss</a>
+            </li>
+            <li>
+              <a href="indexAccount.html#!/loghistory" target="_blank"><i aria-hidden="true"
+                  style="margin-top: 2px"></i>&nbsp;Activity Log</a>
+            </li>
+            <!--   <li>
+                           <a href="#!changePassword"  data-ng-click="ChangePwd()">
+                              <span class="fa-passwd-reset fa-stack">
+                                 <i class="fa fa-undo"></i>
+                                 <i class="fa fa-lock"></i>
+                              </span>
+                              Change Password
+                           </a>
+                        </li> -->
+            <!--  <li><a href="indexAccount.html#!/loghistory" ><span class="fa-passwd-reset fa-stack" style="margin-top: 2px; color: #000;"></span>&nbsp;Change password</a></li> -->
+            <!--  <li>
+                           <a href="#!changePassword"  data-ng-click="ChangePwd()"><i class="fa fa-zap" aria-hidden="true"></i>
+                              <span> Change password</span><!<img src="images/transparent.gif" alt="logout"> 
+                       
+                        </li>-->
+            <li class="logout">
+              <a href="" id="logout" data-ng-click="logout()">LOGOUT<img src="images/transparent.gif"
+                  alt="logout" /></a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Menu Wrap -->
+    <div class="menu-wrap">
+      <div class="full-wrap">
+        <ul id="tabMenu" class="menu">
+          <li><a class="select" href="#!">Home</a></li>
+          <li><a href="#!inplay" data-ng-click="Inplaymenu()">In-Play</a></li>
+          <li><a href="#!multiMarkets">Multi Markets</a></li>
+          <!-- <li data-ng-repeat="sprt in sport track by $index"><a data-ng-href="#!{{sprt.name}}">{{sprt.name}}</a></li> -->
+          <li>
+            <a data-ng-href="#!Cricket">
+              <span id="tagLive" class="tag-live"><strong></strong> {{inPlayEventsCount[4] || 0}}
+              </span>
+              Cricket</a>
+          </li>
+          <li>
+            <a data-ng-href="#!Soccer">
+              <span id="tagLive" class="tag-live"><strong></strong>{{inPlayEventsCount[1] || 0}}
+              </span>
+              Soccer</a>
+          </li>
+          <li>
+            <a data-ng-href="#!Tennis">
+              <span id="tagLive" class="tag-live"><strong></strong>{{inPlayEventsCount[2] || 0}}
+              </span>
+              Tennis</a>
+          </li>
+          <li><a data-ng-href="#!Live Teenpatti">Live Casino</a></li>
+          <li>
+            <a data-ng-href="#!/full-market/{{winnerMarket.sportId}}/{{winnerMarket.competitionId}}/{{winnerMarket.eventId}}/{{winnerMarket.gameId}}/{{winnerMarket.markets[0].marketId}}">IPL Winner</a>
+          </li>
+          <li><a data-ng-href="#!Horse Racing">Horse Racing</a></li>
+          <li><a data-ng-href="#!Greyhound Racing">Greyhound Racing</a></li>
+          <!-- <li><a data-ng-href="#!Casino" data-ng-click="Casinomenu()">Casino</a></li> -->
+        </ul>
+
+        <ul class="setting-wrap">
+          <li class="time_zone"><span>Time Zone :</span> GMT+5:30</li>
+          <li>
+            <a id="oneClickSetting" class="one_click" style="cursor: pointer"><img src="images/transparent.gif"
+                alt="One_Click" />One Click
+              Bet</a>
+          </li>
+          <!-- <li>
+              <a class="live-menu" data-ng-click="livestreaming()"
+                ><img src="images/transparent.gif" alt="menu" />Live
+                Streaming</a
+              >
+            </li> -->
+          <!--  <li><a id="openStreaming" class="live-menu"><img src="images/transparent.gif">Live Streaming</a></li> -->
+          <li>
+            <a id="login-trigger" class="setting" style="cursor: pointer">Setting <img src="images/transparent.gif"
+                alt="login-trigger" /></a>
+          </li>
+        </ul>
+
+        <div id="login-content" class="slip_set-pop" style="display: none">
+          <div id="coinList" class="set-content">
+            <dl class="odds-set">
+              <dt></dt>
+              <dd class="col-defult">
+                <label><strong>Default stake</strong></label>
+                <input id="userCoin" class="stake-input" type="text" maxlength="7" data-min="0"
+                  onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+                  data-ng-change="defaultStakeChange(default_stake)" data-ng-model="default_stake" />
+              </dd>
+            </dl>
+            <dl id="stakeSet" class="stake-set" data-ng-if="show_close">
+              <dt>Stake</dt>
+              <dd data-ng-repeat="stake in stakeList track by $index">
+                <a data-ng-model="stakeList[$index]" style="cursor: pointer" class="btn select">{{stake.stake}}</a>
+              </dd>
+              <!--  <dd><a  style="cursor:pointer;" class="btn select" data-ng-model="stake2">{{stake2}}</a></dd>
+                        <dd><a  style="cursor:pointer;" class="btn select" data-ng-model="stake3">{{stake3}}</a></dd>
+                        <dd><a  style="cursor:pointer;" class="btn" data-ng-model="stake4">{{stake4}}</a></dd>
+                        <dd><a  style="cursor:pointer;" class="btn select" data-ng-model="stake5">{{stake5}}</a></dd>
+                        <dd><a  style="cursor:pointer;" class="btn" data-ng-model="stake6">{{stake6}}</a></dd>
+                        <dd><a  style="cursor:pointer;" class="btn select" data-ng-model="stake7">{{stake7}}</a></dd>
+                        <dd><a  style="cursor:pointer;" class="btn select" data-ng-model="stake8">{{stake8}}</a></dd>
+                        <dd><a  style="cursor:pointer;" class="btn select" data-ng-model="stake9">{{stake9}}</a></dd>
+                        <dd><a  style="cursor:pointer;" class="btn select" data-ng-model="stake10">{{stake10}}</a></dd> -->
+              <!--  <dd class="col-edit"><a id="ok" class="btn-send" style="display: none;" data-ng-click="editStakeSettings()">OK
+                        <img src="images/transparent.gif" alt="ok"></a>
+                        </dd> -->
+              <dd class="col-edit" style="padding-top: 5px">
+                <a id="edit" class="btn-edit" data-ng-click="showEditDiv()">Edit
+                  <!-- <img src="images/transparent.gif" alt="edit" style="text-align: center;"> -->
+                </a>
+              </dd>
+            </dl>
+            <dl id="editCustomizeStakeList" class="stake-set" data-ng-if="!show_close">
+              <dt>Stake</dt>
+              <dd data-ng-repeat="stake in stakeList track by $index">
+                <input id="stake{{$index}}" class="stake_edit-input" type="text" maxlength="7" data-min="0"
+                  onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+                  value="{{stake.stake}}" />
+              </dd>
+              <!--   <dd><input  class="stake_edit-input" type="text" value="{{stake2}}" maxlength="7" data-ng-model="stake2"></dd>
+                        <dd><input  class="stake_edit-input" type="text" value="{{stake3}}" maxlength="7" data-ng-model="stake3"></dd>
+                        <dd><input  class="stake_edit-input" type="text" value="{{stake4}}" maxlength="7" data-ng-model="stake4"></dd>
+                        <dd><input  class="stake_edit-input" type="text" value="{{stake5}}" maxlength="7" data-ng-model="stake5"></dd>
+                        <dd><input  class="stake_edit-input" type="text" value="{{stake6}}" maxlength="7" data-ng-model="stake6"></dd>
+                        <dd><input  class="stake_edit-input" type="text" value="{{stake7}}" maxlength="7" data-ng-model="stake7"></dd>
+                        <dd><input  class="stake_edit-input" type="text" value="{{stake8}}" maxlength="7" data-ng-model="stake8"></dd>
+                        <dd><input  class="stake_edit-input" type="text" value="{{stake9}}" maxlength="7" data-ng-model="stake9"></dd>
+                        <dd><input  class="stake_edit-input" type="text" value="{{stake10}}" maxlength="7" data-ng-model="stake10"></dd>-->
+              <dd class="col-edit">
+                <a id="ok" class="btn-send" data-ng-click="editStakeSettings()">OK<img src="images/transparent.gif"
+                    alt="ok" /></a>
+              </dd>
+            </dl>
+            <ul class="btn-wrap">
+              <li>
+                <a id="cancel1" class="btn" data-ng-click="cancelSetting()" style="cursor: pointer">Cancel</a>
+              </li>
+              <li class="col-send" data-ng-click="SaveSetting()">
+                <a id="coinSave" class="btn-send" style="cursor: pointer">Save</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Top end -->
+  <div class="full-wrap">
+    <!-- Left Column -->
+    <div class="col-left" data-ng-show="!inplaydiv && !isCasinoPage">
+      <!-- Sub Menu and Path -->
+
+      <div class="sub_path" style="height: calc(100% - 0px)">
+        <!-- Path -->
+        <div class="path">
+          <a class="path-back" id="gott">...</a>
+          <ul id="pathBackUl" data-ng-init="isLastElement=true">
+            <li class="" data-ng-click="ShowSportsList()" data-ng-class="isLastElement ? 'path-last' : ''"
+              data-ng-init="showcricket()">
+              <a href="">Sports</a>
+            </li>
+            <li class="" data-ng-repeat="item in pathList track by $index"
+              data-ng-class="{'path-last node': $index == pathList.length - 1}">
+              <a data-ng-if="item.level==1" data-ng-click="TournamentList(item.id,item.name)">{{item.name}}</a>
+              <a data-ng-if="item.level==2" data-ng-click="eventList(item.id,item.name)">{{item.name}}</a>
+              <a data-ng-if="item.level==3" data-ng-click="MarketList(item.id,item.name)">{{item.name}}</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Path Pop Up-->
+        <ul class="path-pop" id="show">
+          <li class="" data-ng-repeat="item in pathList track by $index" data-ng-if="item.level==3">
+            <a data-ng-click="MarketList(item.id,item.name)">{{item.name}}</a>
+          </li>
+          <li class="" data-ng-repeat="item in pathList track by $index" data-ng-if="item.level==2">
+            <a data-ng-click="eventList(item.id,item.name)">{{item.name}}</a>
+          </li>
+          <li class="" data-ng-repeat="item in pathList track by $index" data-ng-if="item.level==1">
+            <a data-ng-click="TournamentList(item.id,item.name)">{{item.name}}</a>
+          </li>
+          <li class="node">
+            <a href="#!" data-ng-click="SportsList()">Sports</a>
+          </li>
+
+          <!--  <li class="path-last" data-ng-repeat="item in pathList" data-ng-click="eventList()">
+                     <a>{{item.event}}</a>
+                     </li>
+                     <li class="path-last" data-ng-repeat="item in pathList" data-ng-click="MarketList()">
+                     <a>{{item.market}}</a>
+                     </li> -->
+        </ul>
+
+        <!-- Sub Menu -->
+        <!-- <ul id="loadingTree" class="loading" style="display:none;">
+        <li><img src="images/loading40.gif" alt="loading40"></li>
+        <li>Loading...</li>
+      </ul> -->
+
+        <div id="loadingTree" class="overlay" style="display: none">
+          <div class="loading">
+            <div class="loader">
+              <div class="ball ball-1"></div>
+              <div class="ball ball-2"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sub Menu -->
+        <ul class="menu-list">
+          <li style="display: none">
+            <a class="Go" style="cursor: pointer; display: none">Go</a>
+            <a style="cursor: pointer"></a>
+          </li>
+          <li style="display: list-item" data-istodayscard="0" data-todayscardgroup="1" title="{{item.name}}"
+            data-ng-repeat="item in sport track by $index" data-ng-click="TournamentList(item.id,item.name)"
+            data-ng-if="showSportList">
+            <a class="Go" style="cursor: pointer">Go</a>
+            <a style="cursor: pointer">{{item.name}}</a>
+          </li>
+          <li style="display: list-item" data-istodayscard="0" data-todayscardgroup="1" title="{{item.name}}"
+            data-ng-repeat="item in tournament track by $index" data-ng-click="eventList(item.id,item.name)"
+            data-ng-if="showTournamentList">
+            <a class="Go" style="cursor: pointer">Go</a>
+            <a style="cursor: pointer">{{item.name}}</a>
+          </li>
+          <li style="display: list-item" data-istodayscard="0" data-todayscardgroup="1" title="{{item.name}}"
+            data-ng-repeat="item in Event track by $index" data-ng-click="MarketList(item.id,item.name)"
+            data-ng-if="showEventList">
+            <a class="Go" style="cursor: pointer">Go</a>
+            <a style="cursor: pointer">{{item.name}}</a>
+          </li>
+          <li style="display: list-item" data-istodayscard="0" data-todayscardgroup="1" class=""
+            data-ng-class="(item.bfId==routbfid)?'select':''" title="{{item.name}}"
+            data-ng-repeat="item in Market track by $index" data-ng-if="showMarketList">
+            <a class="Go" style="cursor: pointer; display: none">Go</a>
+            <a data-ng-if="item.racing"
+              data-ng-href="#!full-market/{{item.SportId}}/{{item.TourId}}/{{item.mtId}}/{{item.bfId}}?o=true"
+              style="cursor: pointer"><img class="" src="images/transparent.gif"
+                data-ng-class="(item.inPlay==1)?'icon-in_play':'icon-no_play'" alt="icon-no_play" />{{item.name}}</a>
+            <a data-ng-if="!item.racing"
+              data-ng-href="#!full-market/{{item.SportId}}/{{item.TourId}}/{{item.mtId}}/{{item.id}}/{{item.bfId}}"
+              style="cursor: pointer"><img class="" src="images/transparent.gif"
+                data-ng-class="(item.inPlay==1)?'icon-in_play':'icon-no_play'" alt="icon-no_play" />{{item.name}}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- index start -->
+    <!-- Center Column -->
+    <div id="centerColumn" class="col-center" ng-class="{inplay : inplaydiv, casinoContent : isCasinoPage}">
+      <!-- Message -->
+
+      <!-- Loading Wrap -->
+      <!-- <div id="loading" class="loading-wrap" style="display:none">
+  <ul class="loading">
+    <li><img src="images/loading40.gif" alt="Loading"></li>
+    <li>Loading...</li>
+  </ul>
+</div> -->
+
+      <div id="loading" class="overlay" style="display: none">
+        <div class="loading-wrap">
+          <div class="loading">
+            <div class="loader">
+              <div class="ball ball-1"></div>
+              <div class="ball ball-2"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Message -->
+      <div id="message" class="message-wrap success">
+        <a class="btn-close">Close</a>
+        <p></p>
+      </div>
+
+      <!-- <script language="JavaScript" >
+  (function () {
+    $j('.btn-close').click(function () {
+      $j('#message').hide();
+    });
+  })();
+</script> -->
+
+      <!-- <div id="oneClickLoading" class="loading-wrap" style="display:none">
+      <ul class="loading">
+        <li><img src="images/loading40.gif" alt="Place_bet"></li>
+        <li >Place Bets</li>
+      </ul>
+    </div> -->
+
+      <div class="overlay" style="display: none">
+        <div id="oneClickLoading" class="loading-wrap">
+          <div class="loading">
+            <div class="loader">
+              <div class="ball ball-1"></div>
+              <div class="ball ball-2"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Game Head -->
+      <div data-ng-if="authcookie" class="marquee-box">
+        <h4>News</h4>
+        <div class="marquee">
+          <div ng-style="{animation: 'marquee ' + (tickerLength) + 's linear infinite'}">
+            <div class="ticker" data-ng-repeat="tick in ticker">
+              <span>{{tick.ticker}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="overWrap" class="over-wrap" style="height: calc(100% - 0px)">
+        <ng-view></ng-view>
+
+        <div class="footer" data-ng-show="!mainfooter">
+          <!-- Support Info -->
+          <div class="support-wrap">
+            <h3>Support</h3>
+            <!--  <dl class="support-mail">
+            <dt><img src="images/transparent.gif" title="Email"></dt>
+            <dd><a href="mailto:info@777sportsange.com">info@777sportsange.com</a></dd>
+          </dl> -->
+            <dl class="support-app">
+              <dt><img src="images/transparent.gif" title="WhatsApp" /></dt>
+              <dd>
+                <span>WhatsApp</span>
+                <a href="https://wa.me/14238133005">+1 (423) 813-3005</a>
+              </dd>
+            </dl>
+            <dl class="support-telegram">
+              <dt><img src="images/transparent.gif" title="Telegram" /></dt>
+              <dd>
+                <span>Telegram</span><a href="https://t.me/live777sports">
+                  https://t.me/live777sports</a>
+              </dd>
+            </dl>
+          </div>
+
+          <!-- Sky Power by -->
+          <div class="power-wrap" style="width: 109px !important">
+            <h3>
+              <span>Powered by</span><img src="images/transparent.gif" alt="poweredby" />
+            </h3>
+          </div>
+
+          <!-- Browser Support -->
+          <!-- <div class="browser-wrap">
+              <i class="fa fa-chrome fa-2x"></i>
+              Our website works best in the newest and last prior version of
+              these browsers: <br />Google Chrome.
+            </div> -->
+
+          <!-- Policy and TC link -->
+          <ul class="policy-link">
+            <li>
+              <a onclick="window.open('Privacy_Policy.html','_blank', config='height=600,width=800,location=no');">Privacy
+                Policy</a>
+            </li>
+            <li>
+              <a onclick="window.open('terms_conditions.html','_blank', config='height=600,width=800,location=no');">Terms
+                and Conditions</a>
+            </li>
+            <li>
+              <a onclick="window.open('rules_regulations.html','_blank', config='height=600,width=800,location=no');">Rules
+                and Regulations</a>
+            </li>
+            <li>
+              <a onclick="window.open('kyc.html','_blank', config='height=600,width=800,location=no');">KYC</a>
+            </li>
+            <li>
+              <a onclick="window.open('responsible-gaming.html','_blank', config='height=600,width=800,location=no');">Responsible
+                Gaming</a>
+            </li>
+            <li>
+              <a onclick="window.open('self-exclusion.html','_blank', config='height=600,width=800,location=no');">Self
+                Exclusion</a>
+            </li>
+            <li>
+              <a onclick="window.open('underage-policy.html','_blank', config='height=600,width=800,location=no');">Underage
+                Policy</a>
+            </li>
+          </ul>
+
+          <ul class="RnR-link">
+            <li>
+              <a
+                onclick="window.open('/exchange/member/rulesAndRegulations.jsp','_blank', config='height=600,width=800,location=no');">Rules
+                and Regulations</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="one_click-wrap">
+        <div class="overlay" data-name="oneClickBetDialog" style="display: none"></div>
+        <div id="oneClickBetDialog" class="dialog-wrap white-halo" style="display: none">
+          <h4>One Click Bet ON</h4>
+          <div class="dialog-content">
+            <p>
+              Stake selected will be placed immediately once you click on the
+              market odds. <br /><span class="attention">
+                Attention: Back/Lay at your own risk</span>
+            </p>
+          </div>
+          <ul class="btn-wrap break">
+            <li>
+              <a id="OkayAccept" class="btn-send" style="cursor: pointer">OK</a>
+            </li>
+          </ul>
+          <img class="arrow-dialog" src="images/transparent.gif" alt="arrow" />
+        </div>
+        <div id="oneClickBetStakeBox" class="one_click-setting" style="display: none">
+          <h4>One Click Bet Stake</h4>
+          <ul class="one_click-stake">
+            <li data-ng-repeat="oneStake in oneClickStake track by $index">
+              <a class="btn" data-ng-class="{'select':$index==selected_Stake_btn}" data-index="{{$index}}"
+                data-ng-click="selectStakeButton($index)" style="cursor: pointer">{{oneStake}}</a>
+            </li>
+            <!-- <li><a class="btn"  index="1" style="cursor:pointer;">200</a></li>
+                        <li><a class="btn"  index="2" style="cursor:pointer;">300</a></li>
+                        <li><a class="btn"  index="3" style="cursor:pointer;">500</a></li> -->
+          </ul>
+          <a id="one_click_edit" data-ng-click="showOneClickEdit()" class="a-edit" style="cursor: pointer">Edit<img
+              src="images/transparent.gif" alt="edit" /></a>
+        </div>
+        <div id="editOneClickBetStakeBox" class="one_click-setting" style="display: none">
+          <h4>Edit One Click Bet Stake</h4>
+          <ul class="one_click-stake">
+            <li data-ng-repeat="oneStake in oneClickStake track by $index">
+              <input type="text" data-ng-model="oneStake" name="editBetStake"
+                data-ng-change="changeStakeVal(oneStake,$index)" data-index="{{$index}}" value="{{oneStake}}"
+                maxlength="6" />
+            </li>
+            <!-- <li><input type="text" name="editBetStake" index="1" value=""></li> -->
+            <!-- <li><input type="text" name="editBetStake" index="2" value=""></li> -->
+            <!-- <li><input type="text" name="editBetStake" index="3" value=""></li> -->
+          </ul>
+          <a id="one_click_save" data-ng-click="saveOneClickStake()" class="btn-send" style="cursor: pointer">Save</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- index end -->
+
+    <!-- Right Column -->
+    <div class="col-right" data-ng-show="!isCasinoPage">
+      <!--  <div class="slip-wrap live_tv close" style="display: block;" data-ng-show="showLiveTv">
+               <h3>
+                  <a id="livetv" class="to-expand" toggle-class style="cursor:pointer;">Live TV</a>
+               </h3>
+               <ul class="livetvs" data-ng-if="liveTvContent">
+                  <div class="bet-dtl" id="sprt-nws">
+                     <div style="margin-top:0px" class="featured-box featured-box-secundary default">
+                        <div id="showLiveTvPro" style="padding-left:0px;padding-top:0px;" align=center>
+                        </div>
+                     </div>
+                  </div>
+               </ul>
+            </div> -->
+      <!-- no-open-bet_slip -->
+      <div id="betslip_open" class="slip-wrap" style="display: block">
+        <h3>
+          <a id="eventType" class="to-expand" data-toggle-class style="cursor: pointer">Bet Slip</a>
+        </h3>
+        <!--  <ul id="loading_place_bet" class="loading" style="display: none">
+                  <li><img src="images/loading40.gif" alt="load"></li>
+                  <li >Placing bet please wait...</li>
+               </ul> -->
+
+        <ul id="loading_place_bet" class="overlay" style="display: none">
+          <div class="loading">
+            <div class="loader">
+              <div class="ball ball-1"></div>
+              <div class="ball ball-2"></div>
+            </div>
+          </div>
+        </ul>
+
+        <div class="message-bet">
+          <h4 class="error" style="display: none"></h4>
+          <p id="betMsg" class="warning" style="display: none"></p>
+        </div>
+        <div
+          data-ng-if="backBetSlipDataArray.length < 1 && layBetSlipDataArray.length < 1  && backTeenSlipDataArray.length < 1">
+          <p style="display: block">
+            Click on the odds to add selections to the betslip.
+          </p>
+        </div>
+        <div class="bet_slip" style="display: block">
+          <div class="slip-list" style="max-height: calc(100% - 60px)">
+            <dd class="col-stake_list" style="display: none">
+              <ul>
+                <li>
+                  <a class="btn" stake="5" style="cursor: pointer">5</a>
+                </li>
+                <li>
+                  <a class="btn" stake="10" style="cursor: pointer">10</a>
+                </li>
+                <li>
+                  <a class="btn" stake="20" style="cursor: pointer">20</a>
+                </li>
+                <li>
+                  <a class="btn" stake="50" style="cursor: pointer">50</a>
+                </li>
+                <li>
+                  <a class="btn" stake="100" style="cursor: pointer">100</a>
+                </li>
+                <li>
+                  <a class="btn" stake="200" style="cursor: pointer">200</a>
+                </li>
+              </ul>
+            </dd>
+            <div class="tips-popup" style="display: none">min 1.01</div>
+            <div class="tips-popup" style="display: none">Min 4.00</div>
+            <ul data-ng-if="backBetSlipDataArray.length > 0 || yesBetSlipData.length > 0 || noBetSlipData.length > 0"
+              class="slip-head" data-name="slipHeader" style="display: block">
+              <li class="col-bet">Back (Bet For)</li>
+              <li class="col-odd">Odds</li>
+              <li class="col-odd" style="display: none">Unit:Runs</li>
+              <li class="col-stake">Stake</li>
+              <li class="col-profit">Profit</li>
+            </ul>
+            <!--   <ul  class="slip-head" name="slipHeader" style="">
+                        <li class="col-bet">Lay (Bet Against)</li>
+                        <li id="oddsHeader" class="col-odd">Odds</li>
+                        <li id="runsHeader" class="col-odd" style="display: none">Unit:Runs</li>
+                        <li class="col-stake">Stake</li>
+                        <li class="col-profit">Liability</li>
+                        </ul> -->
+            <div data-ng-repeat="BetSlipData in backBetSlipDataArray track by $index">
+              <h4>
+                <img data-ng-class="BetSlipData.isInplay==1?'icon-in_play':'icon-no_play'" src="images/transparent.gif"
+                  alt="in-play" />{{BetSlipData.matchname}}
+              </h4>
+              <dl class="slip-back" data-ng-repeat="backBet in BetSlipData.backBetSlipData track by $index">
+                <dt>
+                  <!-- <a data-ng-click="closeBetSlip($index, 'back',$parent.$index)"  class="delete" style="cursor:pointer;">delete</a> -->
+                  <a data-ng-click="closeBetSlip($index, 'back',$parent.$index)" class="delete"
+                    style="cursor: pointer; text-indent: 0; width: 23px" title="Remove Bet"><i class="fa fa-close"></i></a>
+                  <span class="short-amount">{{backBet.runnerName}}</span>
+                  <span>Match Odds</span>
+                </dt>
+                <!-- <br> -->
+                <dd class="col-odd">
+                  <label class="Label text"></label>
+                  <input type="text" data-min="1.0" data-step="0.01" data-ng-model="backBet.odds"
+                    data-ng-value="{{backBet.odds}}"
+                    data-ng-keyup="onKeyUp(backBet.odds,backBet.backlay,$index,$parent.$index)"
+                    data-ng-focus="onFocus($index)" data-floatnumber-only=""
+                    class="ng-pristine ng-untouched ng-valid ng-not-empty" aria-invalid="false" />
+                  <ul class="odd-add">
+                    <li data-ng-click="incrementOdd(backBet.odds,backBet.backlay,$index,$parent.$index)">
+                      <a class="up" style="cursor: pointer">up</a>
+                    </li>
+                    <li data-ng-click="decrementOdd(backBet.odds,backBet.backlay,$index,$parent.$index)">
+                      <a class="down" style="cursor: pointer">down</a>
+                    </li>
+                  </ul>
+                  <ul></ul>
+                </dd>
+                <dd class="col-stake">
+                  <label class="Label text" for="input-1"></label>
+                  <input placeholder="Stake" id="input-1" type="text" value="" maxlength="7" tabindex="0"
+                    data-ng-value="{{backBet.stake}}" data-ng-model="backBet.stake"
+                    data-ng-change="updateStake(backBet)" data-ng-focus="stakeFocus(backBet,$index)"
+                    data-ng-blur="stakeBlur(backBet,$index)" />
+                  <ul></ul>
+                </dd>
+                <dd class="col-profit">{{backBet.profit | number:2}}</dd>
+                <dd id="stake_back_{{backBet.matchId}}_{{$index}}" class="col-stake_list" style="display: block">
+                  <ul>
+                    <li data-ng-repeat="stake in stakeList track by $index">
+                      <a class="btn" data-ng-click="stakeValue(stake.stake,backBet)"
+                        style="cursor: pointer">{{stake.stake}}</a>
+                    </li>
+                    <li>
+                      <a class="btn" data-ng-click="clearStake(backBet)" style="cursor: pointer">Clear</a>
+                    </li>
+                  </ul>
+                </dd>
+                <!-- <table  class="table slip-back">
+                              <thead>
+                              </thead>
+                              <tbody>
+                                 <tr style="background-color: #BEDDF4;">
+                                    <td colspan="5" style="padding-left:5px;">
+                                       <button class="nopadding btn-new btncustom primary btn_dyn" style="margin-top:2px;margin-bottom:2px; class="stakeButton" data-ng-repeat="stake in stakeList track by $index" data-ng-click="stakeValue(stake,backBet)">{{stake}}</button>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                              </table> -->
+                <dd class="inn_runs" style="display: none">
+                  <dl>
+                    <dt></dt>
+                    <dd><span class="green"></span></dd>
+                    <dt></dt>
+                    <dd><span class="green"></span></dd>
+                  </dl>
+                </dd>
+              </dl>
+              <dl class="slip-back" data-ng-repeat="backBet in BetSlipData.yesBetSlipData track by $index">
+                <dt>
+                  <!-- <a data-ng-click="closeBetSlip($index, 'back',$parent.$index)"  class="delete" style="cursor:pointer;">delete</a> -->
+                  <a data-ng-click="closeBetSlip($index, 'yes',$parent.$index)" class="delete" style="
+                        cursor: pointer;
+                        background: none;
+                        text-indent: 0;
+                        width: 23px;
+                      " title="Remove Bet"><i class="fa fa-close" style="
+                          /* font-size: 15px; */ /* color: #f9f5f5; */ /* padding: 0px 2px; */ /* margin-top: 9px; */
+                        "></i></a>
+                  <span class="short-amount">{{backBet.runnerName}}</span>
+                  <span> Fancy Market
+                </dt>
+                <!-- <br> -->
+                <dd class="col-odd">
+                  <label class="Label text"></label>
+                  <input type="text" data-min="1.0" data-step="0.01" data-ng-model="backBet.score"
+                    data-ng-value="{{backBet.score}}" data-floatnumber-only readonly />
+                  <!-- <ul class="odd-add">
+                                 <li data-ng-click="incrementOdd(backBet.odds,backBet.backlay,$index,$parent.$index)"><a  class="up" style="cursor:pointer;">up</a></li>
+                                 <li data-ng-click="decrementOdd(backBet.odds,backBet.backlay,$index,$parent.$index)"><a  class="down" style="cursor:pointer;">down</a></li>
+                              </ul> -->
+                  <ul></ul>
+                </dd>
+                <dd class="col-stake">
+                  <label class="Label text" for="input-2"></label>
+                  <input placeholder="Stake" id="input-2" type="text" value="" maxlength="7" tabindex="0"
+                    data-ng-value="{{backBet.stake}}" data-ng-model="backBet.stake"
+                    data-ng-change="updateStake(backBet)" data-ng-focus="stakeFocus(backBet,$index)"
+                    data-ng-blur="stakeBlur(backBet,$index)" />
+                  <ul></ul>
+                </dd>
+                <dd class="col-profit">{{backBet.profit | number:2}}</dd>
+                <dd id="stake_yes_{{backBet.matchId}}_{{$index}}" class="col-stake_list" style="display: block">
+                  <ul>
+                    <li data-ng-repeat="stake in stakeList track by $index">
+                      <a class="btn" data-ng-click="stakeValue(stake.stake,backBet)"
+                        style="cursor: pointer">{{stake.stake}}</a>
+                    </li>
+                    <li>
+                      <a class="btn" data-ng-click="clearStake(backBet)" style="cursor: pointer">Clear</a>
+                    </li>
+                  </ul>
+                </dd>
+                <dd class="inn_runs" style="display: none">
+                  <dl>
+                    <dt></dt>
+                    <dd><span class="green"></span></dd>
+                    <dt></dt>
+                    <dd><span class="green"></span></dd>
+                  </dl>
+                </dd>
+              </dl>
+              <dl class="slip-back" data-ng-repeat="backBet in BetSlipData.backBookBetSlipData track by $index">
+                <dt>
+                  <!-- <a data-ng-click="closeBetSlip($index, 'back',$parent.$index)"  class="delete" style="cursor:pointer;">delete</a> -->
+                  <a data-ng-click="closeBetSlip($index, 'backBook',$parent.$index)" class="delete"
+                    style="cursor: pointer; width: 23px" title="Remove Bet"><i class="fa fa-close"></i></a>
+                  <span class="short-amount" style="margin-top: 8px">{{backBet.runnerName}}</span>
+                  <span>Book Maker</span>
+                </dt>
+                <!-- <br> -->
+                <dd class="col-odd">
+                  <label class="Label text"></label>
+                  <input type="text" data-min="1.0" data-step="0.01" data-ng-model="backBet.odds"
+                    data-ng-value="{{backBet.odds}}" data-floatnumber-only readonly />
+                  <!-- <ul class="odd-add">
+                                 <li data-ng-click="incrementOdd(backBet.odds,backBet.backlay,$index,$parent.$index)"><a  class="up" style="cursor:pointer;">up</a></li>
+                                 <li data-ng-click="decrementOdd(backBet.odds,backBet.backlay,$index,$parent.$index)"><a  class="down" style="cursor:pointer;">down</a></li>
+                              </ul> -->
+                  <ul></ul>
+                </dd>
+                <dd class="col-stake">
+                  <label class="Label text" for="input-3"></label>
+                  <input placeholder="Stake" id="input-3" type="text" value="" maxlength="7" tabindex="0"
+                    data-ng-value="{{backBet.stake}}" data-ng-model="backBet.stake"
+                    data-ng-change="updateStake(backBet,BetSlipData.booktype)"
+                    data-ng-focus="stakeFocus(backBet,$index)" data-ng-blur="stakeBlur(backBet,$index)" />
+                  <ul></ul>
+                </dd>
+                <dd class="col-profit">{{backBet.profit | number:2}}</dd>
+                <dd id="stake_backBook_{{backBet.eventId}}_{{$index}}" class="col-stake_list" style="display: block">
+                  <ul>
+                    <li data-ng-repeat="stake in stakeList track by $index">
+                      <a class="btn" data-ng-click="stakeValue(stake.stake,backBet,BetSlipData.booktype)"
+                        style="cursor: pointer">{{stake.stake}}</a>
+                    </li>
+                    <li>
+                      <a class="btn" data-ng-click="clearStake(backBet)" style="cursor: pointer">Clear</a>
+                    </li>
+                  </ul>
+                </dd>
+                <dd class="inn_runs" style="display: none">
+                  <dl>
+                    <dt></dt>
+                    <dd><span class="green"></span></dd>
+                    <dt></dt>
+                    <dd><span class="green"></span></dd>
+                  </dl>
+                </dd>
+              </dl>
+            </div>
+
+            <div data-ng-repeat="backBet in backTeenSlipDataArray track by $index">
+              <h4>{{backBet.matchname}}</h4>
+              <dl class="slip-{{backBet.backlay}}">
+                <dt>
+                  <!-- <a data-ng-click="closeBetSlip($index, 'back',$parent.$index)"  class="delete" style="cursor:pointer;">delete</a> -->
+                  <a data-ng-click="closeBetSlip($index, 'Teenback',$parent.$index)" class="delete"
+                    style="cursor: pointer; text-indent: 0; width: 23px" title="Remove Bet"><i class="fa fa-close"></i></a>
+                  <span class="short-amount">{{backBet.runnerName}}</span>
+                  <span>Match Odds</span>
+                </dt>
+                <!-- <br> -->
+                <dd class="col-odd">
+                  <label class="Label text"></label>
+                  <input type="text" data-min="1.0" data-step="0.01" data-ng-model="backBet.odds"
+                    data-ng-value="{{backBet.odds}}"
+                    data-ng-keyup="onKeyUp(backBet.odds,backBet.backlay,$index,$parent.$index)"
+                    data-ng-focus="onFocus($index)" data-floatnumber-only=""
+                    class="ng-pristine ng-untouched ng-valid ng-not-empty" aria-invalid="false" />
+                  <ul class="odd-add">
+                    <!-- <li data-ng-click="incrementOdd(backBet.odds,backBet.backlay,$index)"><a  class="up" style="cursor:pointer;">up</a></li> -->
+                    <!-- <li data-ng-click="decrementOdd(backBet.odds,backBet.backlay,$index)"><a  class="down" style="cursor:pointer;">down</a></li> -->
+                  </ul>
+                  <ul></ul>
+                </dd>
+                <dd class="col-stake">
+                  <label class="Label text" for="input-1"></label>
+                  <input placeholder="Stake" id="input-1" type="text" value="" maxlength="7" tabindex="0"
+                    data-ng-value="{{backBet.stake}}" data-ng-model="backBet.stake"
+                    data-ng-change="updateStake(backBet)" />
+                  <ul></ul>
+                </dd>
+                <dd class="col-profit">{{backBet.profit | number:2}}</dd>
+                <dd id="stake_back_{{backBet.matchId}}_{{$index}}" class="col-stake_list"
+                  style="display: block !important">
+                  <ul>
+                    <li data-ng-repeat="stake in stakeList track by $index">
+                      <a class="btn" data-ng-click="stakeValue(stake.stake,backBet)"
+                        style="cursor: pointer">{{stake.stake}}</a>
+                    </li>
+                    <li>
+                      <a class="btn" data-ng-click="clearStake(backBet)" style="cursor: pointer">Clear</a>
+                    </li>
+                  </ul>
+                </dd>
+                <dd class="inn_runs" style="display: none">
+                  <dl>
+                    <dt></dt>
+                    <dd><span class="green"></span></dd>
+                    <dt></dt>
+                    <dd><span class="green"></span></dd>
+                  </dl>
+                </dd>
+              </dl>
+            </div>
+            <ul data-ng-if="layBetSlipDataArray.length > 0 || yesBetSlipData.length > 0 || noBetSlipData.length > 0"
+              class="slip-head" data-name="slipHeader" style="">
+              <li class="col-bet">Lay (Bet Against)</li>
+              <li id="oddsHeader" class="col-odd">Odds</li>
+              <li id="runsHeader" class="col-odd" style="display: none">
+                Unit:Runs
+              </li>
+              <li class="col-stake">Stake</li>
+              <li class="col-profit">Liability</li>
+            </ul>
+            <div data-ng-repeat="BetSlipData in layBetSlipDataArray track by $index">
+              <h4>
+                <img data-ng-class="BetSlipData.isInplay==1?'icon-in_play':'icon-no_play'" src="images/transparent.gif"
+                  alt="in-play" />{{BetSlipData.matchname}}
+              </h4>
+              <dl class="slip-lay" data-ng-repeat="layBet in BetSlipData.layBetSlipData track by $index">
+                <dt>
+                  <!-- <a data-ng-click="closeBetSlip($index, 'lay',$parent.$index)"  class="delete" style="cursor:pointer;">delete</a> -->
+                  <a data-ng-click="closeBetSlip($index, 'lay',$parent.$index)" class="delete"
+                    style="cursor: pointer; text-indent: 0; width: 23px" title="Remove Bet"><i class="fa fa-close"></i></a>
+                  <span class="short-amount">{{layBet.runnerName}}</span>
+                  <span>Match Odds</span>
+                </dt>
+                <!-- <br> -->
+                <dd class="col-odd">
+                  <label class="Label text"></label>
+                  <input type="text" data-min="1.0" data-step="0.01" data-ng-model="layBet.odds"
+                    data-ng-value="{{layBet.odds}}"
+                    data-ng-keyup="onKeyUp(layBet.odds,layBet.backlay,$index,$parent.$index)"
+                    data-ng-focus="onFocus($index)" data-floatnumber-only=""
+                    class="ng-pristine ng-untouched ng-valid ng-not-empty" aria-invalid="false" />
+                  <ul class="odd-add">
+                    <li data-ng-click="incrementOdd(layBet.odds,layBet.backlay,$index,$parent.$index)">
+                      <a class="up" style="cursor: pointer">up</a>
+                    </li>
+                    <li data-ng-click="decrementOdd(layBet.odds,layBet.backlay,$index,$parent.$index)">
+                      <a class="down" style="cursor: pointer">down</a>
+                    </li>
+                  </ul>
+                  <ul></ul>
+                </dd>
+                <dd class="col-stake">
+                  <label class="Label text"></label>
+                  <input placeholder="Stake" data-ng-model="layBet.stake" data-ng-change="updateStake(layBet)"
+                    type="text" maxlength="7" data-ng-focus="stakeFocus(layBet,$index)"
+                    data-ng-blur="stakeBlur(layBet,$index)" />
+                  <ul></ul>
+                </dd>
+                <dd class="col-profit">{{layBet.profit | number:2}}</dd>
+                <dd id="stake_lay_{{layBet.matchId}}_{{$index}}" class="col-stake_list" style="display: block">
+                  <ul>
+                    <li data-ng-repeat="stake in stakeList track by $index">
+                      <a class="btn" data-ng-click="stakeValue(stake.stake,layBet)"
+                        style="cursor: pointer">{{stake.stake}}</a>
+                    </li>
+                    <li>
+                      <a class="btn" data-ng-click="clearStake(layBet)" style="cursor: pointer">Clear</a>
+                    </li>
+                  </ul>
+                </dd>
+                <dd class="inn_runs" style="display: none">
+                  <dl>
+                    <dt></dt>
+                    <dd><span class="green"></span></dd>
+                    <dt></dt>
+                    <dd><span class="green"></span></dd>
+                  </dl>
+                </dd>
+                <!--  <table  class="table slip-lay">
+                              <thead>
+                              </thead>
+                              <tbody>
+                                 <tr style="background-color: #F3DCE2;">
+                                    <td colspan="5" style="padding-left:5px;">
+                                       <button style="margin-top:2px;margin-bottom:2px;" class="nopadding btn-new btncustom primary btn_dyn" data-ng-repeat=" stake in stakeList track by $index" data-ng-click="stakeValue(stake,layBet)">{{stake}}</button> 
+                                    </td>
+                                 </tr>
+                              </tbody>
+                              </table> -->
+              </dl>
+              <dl class="slip-lay" data-ng-repeat="layBet in BetSlipData.noBetSlipData track by $index">
+                <dt>
+                  <!-- <a data-ng-click="closeBetSlip($index, 'lay',$parent.$index)"  class="delete" style="cursor:pointer;">delete</a> -->
+                  <a data-ng-click="closeBetSlip($index, 'no',$parent.$index)" class="delete"
+                    style="cursor: pointer; text-indent: 0; width: 23px" title="Remove Bet"><i class="fa fa-close"
+                      style="
+                          /* font-size: 15px; */ /* color: #f9f5f5; */ /* padding: 0px 2px; */ /* margin-top: 9px; */
+                        "></i></a>
+                  <span class="short-amount">{{layBet.runnerName}}</span>
+                  <span>Fancy Market</span>
+                </dt>
+                <!-- <br> -->
+                <dd class="col-odd">
+                  <label class="Label text"></label>
+                  <input type="text" data-min="1.0" data-step="0.01" data-ng-model="layBet.score"
+                    data-ng-value="{{layBet.score}}" data-floatnumber-only readonly />
+                  <!--  <ul class="odd-add">
+                                 <li data-ng-click="incrementOdd(layBet.odds,layBet.backlay,$index,$parent.$index)"><a  class="up" style="cursor:pointer;">up</a></li>
+                                 <li data-ng-click="decrementOdd(layBet.odds,layBet.backlay,$index,$parent.$index)"><a  class="down" style="cursor:pointer;">down</a></li>
+                              </ul>
+                              <ul ></ul> -->
+                </dd>
+                <dd class="col-stake">
+                  <label class="Label text"></label>
+                  <input placeholder="Stake" data-ng-model="layBet.stake" data-ng-change="updateStake(layBet)"
+                    type="text" value="" maxlength="7" data-ng-focus="stakeFocus(layBet,$index)"
+                    data-ng-blur="stakeBlur(layBet,$index)" />
+                  <ul></ul>
+                </dd>
+                <dd class="col-profit">{{layBet.profit | number:2}}</dd>
+                <dd id="stake_no_{{layBet.matchId}}_{{$index}}" class="col-stake_list" style="display: block">
+                  <ul>
+                    <li data-ng-repeat="stake in stakeList track by $index">
+                      <a class="btn" data-ng-click="stakeValue(stake.stake,layBet)"
+                        style="cursor: pointer">{{stake.stake}}</a>
+                    </li>
+                    <li>
+                      <a class="btn" data-ng-click="clearStake(layBet)" style="cursor: pointer">Clear</a>
+                    </li>
+                  </ul>
+                </dd>
+                <dd class="inn_runs" style="display: none">
+                  <dl>
+                    <dt></dt>
+                    <dd><span class="green"></span></dd>
+                    <dt></dt>
+                    <dd><span class="green"></span></dd>
+                  </dl>
+                </dd>
+              </dl>
+              <dl class="slip-lay" data-ng-repeat="layBet in BetSlipData.layBookBetSlipData track by $index">
+                <dt>
+                  <!-- <a data-ng-click="closeBetSlip($index, 'lay',$parent.$index)"  class="delete" style="cursor:pointer;">delete</a> -->
+                  <a data-ng-click="closeBetSlip($index, 'layBook',$parent.$index)" class="delete"
+                    style="cursor: pointer; text-indent: 0; width: 23px" title="Remove Bet"><i class="fa fa-close"></i></a>
+                  <span class="short-amount" style="margin-top: 8px">{{layBet.runnerName}}</span>
+                  <span>Book Maker</span>
+                </dt>
+                <!-- <br> -->
+                <dd class="col-odd">
+                  <label class="Label text"></label>
+                  <input type="text" data-min="1.0" data-step="0.01" data-ng-model="layBet.odds"
+                    data-ng-value="{{layBet.odds}}" data-floatnumber-only readonly />
+                  <!--  <ul class="odd-add">
+                                 <li data-ng-click="incrementOdd(layBet.odds,layBet.backlay,$index,$parent.$index)"><a  class="up" style="cursor:pointer;">up</a></li>
+                                 <li data-ng-click="decrementOdd(layBet.odds,layBet.backlay,$index,$parent.$index)"><a  class="down" style="cursor:pointer;">down</a></li>
+                              </ul>
+                              <ul ></ul> -->
+                </dd>
+                <dd class="col-stake">
+                  <label class="Label text"></label>
+                  <input placeholder="Stake" data-ng-model="layBet.stake" data-ng-change="updateStake(layBet)"
+                    type="text" value="" maxlength="7" data-ng-focus="stakeFocus(layBet,$index)"
+                    data-ng-blur="stakeBlur(layBet,$index)" />
+                  <ul></ul>
+                </dd>
+                <dd class="col-profit">{{layBet.profit | number:2}}</dd>
+                <dd id="stake_layBook_{{layBet.eventId}}_{{$index}}" class="col-stake_list" style="display: block">
+                  <ul>
+                    <li data-ng-repeat="stake in stakeList track by $index">
+                      <a class="btn" data-ng-click="stakeValue(stake.stake,layBet,BetSlipData.booktype)"
+                        style="cursor: pointer">{{stake.stake}}</a>
+                    </li>
+                    <li>
+                      <a class="btn" data-ng-click="clearStake(layBet)" style="cursor: pointer">Clear</a>
+                    </li>
+                  </ul>
+                </dd>
+                <dd class="inn_runs" style="display: none">
+                  <dl>
+                    <dt></dt>
+                    <dd><span class="green"></span></dd>
+                    <dt></dt>
+                    <dd><span class="green"></span></dd>
+                  </dl>
+                </dd>
+              </dl>
+            </div>
+
+            <ul class="slip-head" data-name="slipHeader" style="display: none">
+              <li class="col-bet">Lay (Bet Against)</li>
+              <li class="col-odd">Odds</li>
+              <li class="col-odd" style="display: none">Unit:Runs</li>
+              <li class="col-stake">Stake</li>
+              <li class="col-profit">Liability</li>
+            </ul>
+            <div id="headerTemplate" style="display: none">
+              <h4>
+                <img class="icon-in_play" src="images/transparent.gif" alt="play" />Team a v Team b
+              </h4>
+            </div>
+            <dl class="slip-back" style="display: none" data-market data-selection>
+              <dt>
+                <a class="delete" style="cursor: pointer">delete</a>
+                <span>Match Odds</span>
+              </dt>
+              <dd class="col-odd">
+                <input type="text" maxlength="6" />
+                <ul class="odd-add">
+                  <li data-ng-click="incrementOdd(layBet.odds,layBet.backlay,$index,$parent.$index)">
+                    <a class="up" style="cursor: pointer">up</a>
+                  </li>
+                  <li data-ng-click="decrementOdd(layBet.odds,layBet.backlay,$index,$parent.$index)">
+                    <a class="down" style="cursor: pointer">down</a>
+                  </li>
+                </ul>
+                <ul></ul>
+              </dd>
+              <dd class="col-stake">
+                <input type="text" value="" maxlength="7" />
+                <ul></ul>
+              </dd>
+              <dd class="col-profit"></dd>
+              <dd class="inn_runs" style="display: none">
+                <dl>
+                  <dt></dt>
+                  <dd><span class="green"></span></dd>
+                  <dt></dt>
+                  <dd><span class="green"></span></dd>
+                </dl>
+              </dd>
+            </dl>
+          </div>
+          <div class="full_btn">
+            <dl class="sum"
+              data-ng-if="backBetSlipDataArray.length > 0 || layBetSlipDataArray.length > 0 || backTeenSlipDataArray.length > 0">
+              <dt>Total Stake</dt>
+              <dd>
+                <span class="red">{{liabilities}}</span>
+              </dd>
+            </dl>
+            <ul class="btn-wrap"
+              data-ng-if="backBetSlipDataArray.length > 0 || layBetSlipDataArray.length > 0 || yesBetSlipData.length > 0 || noBetSlipData.length > 0 || backTeenSlipDataArray.length > 0">
+              <li data-ng-click="removeAllBetSlip()">
+                <a class="btn" style="cursor: pointer" tabindex="0">Cancel All</a>
+              </li>
+              <!--  <button class="btn-send" data-ng-click="placeBet()" ng-disabled="placedButton">Place Bet</button> -->
+              <li data-ng-click="placeBet()">
+                <button class="btn-send" id="placebet_btn" style="cursor: pointer" tabindex="0">
+                  Place Bets
+                </button>
+              </li>
+            </ul>
+            <ul class="slip-option"
+              data-ng-if="backBetSlipDataArray.length > 0 || layBetSlipDataArray.length > 0 || yesBetSlipData.length > 0 || noBetSlipData.length > 0">
+              <li>
+                <input id="comfirmBets" data-ng-model="comfirmBetschk" type="checkbox" checked="checked" /><label
+                  for="comfirmBets">Please confirm your bets.</label>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="slip-list" style="height: auto; display: none">
+          <div class="message-bet">
+            <h4 class="warning">Please confirm your bets.</h4>
+            <p>
+              A commission is charged on your net profit from each market.
+            </p>
+          </div>
+          <ul class="slip-head" style="display: none">
+            <li class="col-bet">Back (Bet For)</li>
+            <li class="col-odd">Odds</li>
+            <li class="col-stake">Stake</li>
+            <li class="col-profit">Profit</li>
+          </ul>
+          <ul class="slip-head" style="display: none">
+            <li class="col-bet">Lay (Bet Against)</li>
+            <li class="col-odd">Odds</li>
+            <li class="col-stake">Stake</li>
+            <li class="col-profit">Liability</li>
+          </ul>
+          <div style="display: none">
+            <h4>
+              <img class="icon-in_play" src="images/transparent.gif" alt="icon-in_play" />
+            </h4>
+          </div>
+          <dl class="slip-back" style="display: none">
+            <dt>
+              <span class="slip-type">--</span>
+              <span>--</span>
+              <span>--</span>
+            </dt>
+            <dd class="col-odd">--</dd>
+            <dd class="col-stake">--</dd>
+            <dd class="col-profit">--</dd>
+          </dl>
+        </div>
+        <div class="full_btn" style="display: none">
+          <dl class="sum">
+            <dt></dt>
+            <dd>
+              <span></span>
+            </dd>
+          </dl>
+          <ul class="btn-wrap">
+            <li><a class="btn" style="cursor: pointer">Edit Bets</a></li>
+            <li>
+              <a class="btn-send" style="cursor: pointer">Confirm Bets</a>
+            </li>
+          </ul>
+          <ul class="slip-option">
+            <li>
+              <input type="checkbox" checked="checked" /><label>Confirm bets before placing</label>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="matched-wrap" data-ng-if="authcookie!=undefined" style="height: calc(100% - 26px)">
+        <h3>
+          <a id="openBetsRefresh" data-ng-click="GetBets()" class="slip_refresh" style="cursor: pointer">Refresh</a>
+          <a class="to-expand" style="cursor: pointer">Open Bets</a>
+        </h3>
+
+        <div class="message-bet">
+          <h4 id="oneClickMsg" class="" style="display: none"></h4>
+        </div>
+
+        <div id="oneClickLoadingWrap" class="one_click-loading" style="display: none">
+          <div id="loadPending" class="load-pending" style="display: none">
+            <strong id="pendingNum"></strong>
+            pending...
+          </div>
+          <!--   <ul class="loading">
+      <li><img src="images/loading40.gif" alt="loading40"></li>
+      <li >Place Bets</li>
+    </ul> -->
+          <ul class="loading">
+            <div class="loader">
+              <div class="ball ball-1"></div>
+              <div class="ball ball-2"></div>
+            </div>
+          </ul>
+        </div>
+
+        <div class="message-bet">
+          <h4 id="editErrorMsg" class="error" style="display: none"></h4>
+          <p id="editBetMsg" class="warning" style="display: none"></p>
+        </div>
+
+        <!--  <ul id="processingImg" class="loading" style="display: none">
+    <li><img src="images/loading40.gif" alt="loading40"></li>
+    <li>Processing...</li>
+  </ul> -->
+
+        <ul id="processingImg" class="overlay" style="display: none">
+          <div class="loading">
+            <div class="loader">
+              <div class="ball ball-1"></div>
+              <div class="ball ball-2"></div>
+            </div>
+          </div>
+        </ul>
+
+        <div id="matchSection" style="height: calc(100% - 25px)">
+          <div id="openBetSelectionBox" class="slip-sort">
+            <!-- <label for="selectMenu" style="color: #212121;border-top: 1px solid #212121">
+          Select Menu
+        </label> -->
+            <select id="selectMenu" data-ng-model="selectMenuMatch" data-ng-change="GetBetsdropdown(selectMenuMatch)">
+              <option value="0" selected="selected">Select Match</option>
+              <option id="option_{{match.eventId}}" value="{{match.eventId}}" data-ng-repeat="match in StoreMatches"
+                data-eventid="{{match.eventId}}" style="display: block">
+                {{match.matchName}} - Match Odds
+              </option>
+            </select>
+
+            <option id="optionTemplate" value="" eventid="" marketid="" style="display: none"></option>
+          </div>
+
+          <div id="openBetSlip" class="bet_slip over-wrap" style="height: calc(100% - 35px); display: block">
+            <ul id="unMatchTicketHead" data-ng-if="unMatchedData.length>0" class="slip-head" style="">
+              <li class="col-bet">
+                <strong id="headerInfo">Unmatched</strong>
+              </li>
+            </ul>
+
+            <div id="unMatchTicketList" data-ng-if="unMatchedData.length>0" class="slip-list" style="display: block">
+              <ul class="matched-head" style="">
+                <li class="col-bet">Back (Bet For)</li>
+                <li class="col-odd">Odds</li>
+                <li class="col-stake">Stake</li>
+                <li class="col-profit">Profit</li>
+              </ul>
+              <dl class="slip-back" data-ng-repeat="item in unMatchedData track by item.id"
+                data-ng-if="item.betType == 'BACK'">
+                <dt>
+                  <a data-ng-click="cancelBet(item.id,$index)" class="delete" style="cursor: pointer"
+                    title="Cancel Bet"><i class="fa fa-close"></i></a>
+                  <span class="slip-type">Back</span>
+                  <span class="short-amount">{{item.selName}}</span>
+                  <span>{{item.marketName}}</span>
+                </dt>
+                <dd class="col-odd">{{item.odds.toFixed(2)}}</dd>
+                <dd class="col-stake" title="$50">
+                  {{item.stake.toFixed(2)}}
+                </dd>
+                <dd class="col-profit">{{item.PL..toFixed(2)}}</dd>
+                <!-- <dd><input type="button" style="width: 24px;background: #121212 url(../images/bigwin/bg-send-skyEX.png) repeat-x;color: #F8D61C;border-color: #000;" title="Edit Bet" name="EditUM" value="Edit"><i class="fa fa-pencil" ></i></dd> -->
+                <dd class="inn_runs" style="display: none">
+                  <dl>
+                    <dt></dt>
+                    <dd><span class="green">0.00</span></dd>
+                    <dt></dt>
+                    <dd><span class="green">0.00</span></dd>
+                  </dl>
+                </dd>
+              </dl>
+
+              <ul class="matched-head" style="">
+                <li class="col-bet">Lay (Bet Against)</li>
+                <li class="col-odd">Odds</li>
+                <li class="col-stake">Stake</li>
+                <li class="col-profit">Liability</li>
+              </ul>
+              <dl class="slip-lay" data-ng-repeat="item in unMatchedData track by item.id"
+                data-ng-if="item.betType == 'LAY'">
+                <dt>
+                  <a data-ng-click="cancelBet(item.id,$index)" class="delete" style="cursor: pointer"
+                    title="Cancel Bet"><i class="fa fa-close" style="
+                          /* font-size: 15px; */ /* color: #f9f5f5; */ /* padding: 0px 2px; */ /* margin-top: 9px; */
+                        "></i></a>
+                  <span class="slip-type">Back</span>
+                  <span class="short-amount">{{item.selName}}</span>
+                  <span>{{item.marketName}}</span>
+                </dt>
+                <dd class="col-odd">{{item.odds.toFixed(2)}}</dd>
+                <dd class="col-stake" title="$50">
+                  {{item.stake.toFixed(2)}}
+                </dd>
+                <dd class="col-profit">{{item.PL.toFixed(2)}}</dd>
+                <dd class="inn_runs" style="display: none">
+                  <dl>
+                    <dt></dt>
+                    <dd><span class="green">0.00</span></dd>
+                    <dt></dt>
+                    <dd><span class="green">0.00</span></dd>
+                  </dl>
+                </dd>
+              </dl>
+            </div>
+
+            <div id="unMatchFullBtn" class="full_btn" data-ng-if="unMatchedData.length!=0" style="display: block">
+              <dl class="sum"></dl>
+
+              <!-- <ul class="btn-wrap">
+                  <li>
+                    <a
+                      data-ng-click="cancelAllUnMatchbet()"
+                      class="btn"
+                      style="cursor: pointer"
+                      tabindex="0"
+                      >Cancel All</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      id="editAllBets"
+                      data-ng-click="editAllUMBets()"
+                      class="btn-send"
+                      style="cursor: pointer"
+                      tabindex="0"
+                      >Edit Bets</a
+                    >
+                  </li>
+                </ul> -->
+            </div>
+
+            <ul class="stake-popup" data-stakepopuplisttype="template" style="display: none">
+              <li><a data-stake="10" style="cursor: pointer">10</a></li>
+              <li><a data-stake="30" style="cursor: pointer">30</a></li>
+              <li><a data-stake="50" style="cursor: pointer">50</a></li>
+              <li><a data-stake="200" style="cursor: pointer">200</a></li>
+              <li><a data-stake="500" style="cursor: pointer">500</a></li>
+              <li><a data-stake="1000" style="cursor: pointer">1000</a></li>
+            </ul>
+
+            <div id="oddsTipsPopup" class="tips-popup" style="display: none">
+              min 1.01
+            </div>
+
+            <div id="stakeTipsPopup" class="tips-popup" style="display: none">
+              Min 4.00
+            </div>
+
+            <div id="editUnMatchedList" class="slip-list" style="display: none">
+              <dd class="col-stake_list" stakepopuplisttype="template" style="display: none">
+                <ul>
+                  <li>
+                    <a class="btn" stake="10" style="cursor: pointer">10</a>
+                  </li>
+                  <li>
+                    <a class="btn" stake="30" style="cursor: pointer">30</a>
+                  </li>
+                  <li>
+                    <a class="btn" stake="50" style="cursor: pointer">50</a>
+                  </li>
+                  <li>
+                    <a class="btn" stake="200" style="cursor: pointer">200</a>
+                  </li>
+                  <li>
+                    <a class="btn" stake="500" style="cursor: pointer">500</a>
+                  </li>
+                  <li>
+                    <a class="btn" stake="1000" style="cursor: pointer">1000</a>
+                  </li>
+                </ul>
+              </dd>
+
+              <ul class="matched-head" style="">
+                <li class="col-bet">Back (Bet For)</li>
+                <li class="col-odd">Odds</li>
+                <li class="col-stake">Stake</li>
+                <li class="col-profit">Profit</li>
+              </ul>
+
+              <dl id="editUnMatched_{{beckum.id}}" class="slip-back"
+                data-ng-repeat="beckum in unMatchedData track by beckum.id" data-ng-if="beckum.backLay == 'BACK'">
+                <dt></dt>
+                <dd class="refer" style="display: none">
+                  <span>Ref: --</span>
+                  <span>xx-xx-2016 --:--</span>
+                </dd>
+                <dt>
+                  <a data-ng-click="cancelBet(beckum.id,$index)" class="delete" style="cursor: pointer"
+                    title="Cancel Bet"><i class="fa fa-close" style="
+                          /* font-size: 15px; */ /* color: #f9f5f5; */ /* padding: 0px 2px; */ /* margin-top: 9px; */
+                        "></i></a>
+                  <span class="slip-type">Back</span>
+                  <span class="short-amount">{{beckum.runnerName}}</span>
+                  <span>{{beckum.marketName}}</span>
+                </dt>
+                <dd class="col-odd">
+                  <input id="oddsBackUM_{{beckum.id}}" type="text"
+                    data-ng-keyup="onKeyUp(beckum.odds,beckum.backLay,$index,$parent.$index,beckum.id)"
+                    data-floatnumber-only data-ng-model="beckum.odds" data-ng-value="beckum.odds" maxlength="6"
+                    tabindex="0" />
+                  <ul class="odd-add">
+                    <li data-ng-click="incrementoddUM(beckum.odds,beckum.backLay,beckum.id)">
+                      <a class="up" style="cursor: pointer">up</a>
+                    </li>
+                    <li data-ng-click="decrementOddUM(beckum.odds,beckum.backLay,beckum.id)">
+                      <a class="down" style="cursor: pointer">down</a>
+                    </li>
+                  </ul>
+                  <ul></ul>
+                </dd>
+                <dd class="col-stake">
+                  <input id="inputStakeBackUM_{{beckum.id}}" type="text" data-ng-change="updateStake(beckum)"
+                    data-ng-model="beckum.stake" data-ng-value="beckum.stake" data-numbers-only class="" />
+                  <ul></ul>
+                </dd>
+                <dd id="profitLiabilityBackUM_{{beckum.id}}" class="col-profit">
+                  {{layum.profit | number:2}}
+                </dd>
+                <dd id="stakePopupListBackUM" class="col-stake_list" data-stakepopuplisttype="extended"
+                  style="display: block" data-bet="editUnMatched_96804798">
+                  <ul>
+                    <li data-ng-repeat="stake in stakeList track by $index">
+                      <a class="btn"
+                        data-ng-click="stakeValueUM(stake.stake,beckum.id,beckum.backLay,beckum.stake,beckum.odds)"
+                        style="cursor: pointer">{{stake.stake}}</a>
+                    </li>
+                    <!-- <li><a class="btn"  stake="10" style="cursor:pointer;">10</a></li>
+            <li><a class="btn"  stake="30" style="cursor:pointer;">30</a></li>
+            <li><a class="btn"  stake="50" style="cursor:pointer;">50</a></li>
+            <li><a class="btn"  stake="200" style="cursor:pointer;">200</a></li>
+            <li><a class="btn"  stake="500" style="cursor:pointer;">500</a></li>
+            <li><a class="btn"  stake="1000" style="cursor:pointer;">1000</a></li> -->
+                  </ul>
+                </dd>
+
+                <dd class="inn_runs" style="display: none">
+                  <dl>
+                    <dt></dt>
+                    <dd><span class="green">$0.00</span></dd>
+                    <dt></dt>
+                    <dd><span class="green">$0.00</span></dd>
+                  </dl>
+                </dd>
+                <div class="full_btn">
+                  <dl class="sum"></dl>
+
+                  <ul class="btn-wrap">
+                    <li>
+                      <a data-ng-click="cancelAllUnMatchbet()" class="btn" style="cursor: pointer"
+                        tabindex="0">Cancel</a>
+                    </li>
+                    <li class="edit-function">
+                      <a data-ng-click="EditMOBet($index,beckum.id,beckum.backLay)" class="btn-send"
+                        style="cursor: pointer" tabindex="0">OK</a>
+                      <a data-ng-click="resetUMbet($index,beckum.id,beckum.backLay,beckum.odds,beckum.stake)"
+                        class="btn" style="cursor: pointer" tabindex="0">Reset</a>
+                    </li>
+                  </ul>
+                </div>
+
+                <dd class="keep-option" style="display: none">
+                  At In-Play
+                  <input name="keepOption" type="checkbox" class="" /><label>cancel</label>
+                  <input name="keepOption" type="checkbox" class="" tabindex="-1" /><label>keep</label>
+                </dd>
+              </dl>
+
+              <ul class="matched-head" style="">
+                <li class="col-bet">Lay (Bet Against)</li>
+                <li class="col-odd">Odds</li>
+                <li class="col-stake">Stake</li>
+                <li class="col-profit">Liability</li>
+              </ul>
+
+              <dl id="editUnMatched_{{layum.id}}" class="slip-lay"
+                data-ng-repeat="layum in unMatchedData track by layum.id" data-ng-if="layum.backLay == 'LAY'">
+                <dt></dt>
+                <dd class="refer" style="display: none">
+                  <span>Ref: --</span>
+                  <span>xx-xx-2016 --:--</span>
+                </dd>
+                <dt>
+                  <a data-ng-click="cancelBet(layum.id,$index)" class="delete" style="cursor: pointer"
+                    title="Cancel Bet"><i class="fa fa-close" style="
+                          /* font-size: 15px; */ /* color: #f9f5f5; */ /* padding: 0px 2px; */ /* margin-top: 9px; */
+                        "></i></a>
+                  <span class="slip-type">Lay</span><span class="short-amount">{{layum.runnerName}}</span>
+                  <span>{{layum.marketName}}</span>
+                </dt>
+                <dd class="col-odd">
+                  <input id="oddsLayUM_{{layum.id}}" type="text"
+                    data-ng-keyup="onKeyUp(layums.odds,layums.backLay,$index,$parent.$index,layums.id)"
+                    data-ng-model="layum.odds" data-ng-value="layum.odds" data-floatnumber-only />
+                  <ul class="odd-add">
+                    <li data-ng-click="incrementoddUM(layum.odds,layum.backLay,layum.id)">
+                      <a class="up" style="cursor: pointer">up</a>
+                    </li>
+                    <li data-ng-click="decrementOddUM(layum.odds,layum.backLay,layum.id)">
+                      <a class="down" style="cursor: pointer">down</a>
+                    </li>
+                  </ul>
+                  <ul></ul>
+                </dd>
+                <dd class="col-stake">
+                  <input id="inputStakeLayUM_{{layum.id}}" type="text" data-ng-change="updateStake(layum)"
+                    data-ng-model="layum.stake" data-ng-value="layum.stake" data-numbers-only />
+                  <ul></ul>
+                </dd>
+                <dd id="profitLiabilityLayUM_{{layum.id}}" class="col-profit">
+                  {{layum.profit | number:2}}
+                </dd>
+                <dd id="stakePopupListLayUM" class="col-stake_list" data-stakepopuplisttype="extended"
+                  style="display: block" data-bet="editUnMatched_96806688">
+                  <ul>
+                    <li data-ng-repeat="stake in stakeList track by $index">
+                      <a class="btn"
+                        data-ng-click="stakeValueUM(stake.stake,layum.id,layum.backLay,layum.odds,layum.stake)"
+                        style="cursor: pointer">{{stake.stake}}</a>
+                    </li>
+                    <!-- <li><a class="btn"  stake="10" style="cursor:pointer;">10</a></li>
+            <li><a class="btn"  stake="30" style="cursor:pointer;">30</a></li>
+            <li><a class="btn"  stake="50" style="cursor:pointer;">50</a></li>
+            <li><a class="btn"  stake="200" style="cursor:pointer;">200</a></li>
+            <li><a class="btn"  stake="500" style="cursor:pointer;">500</a></li>
+            <li><a class="btn"  stake="1000" style="cursor:pointer;">1000</a></li> -->
+                  </ul>
+                </dd>
+                <div class="full_btn">
+                  <dl class="sum"></dl>
+
+                  <ul class="btn-wrap">
+                    <li>
+                      <a data-ng-click="cancelAllUnMatchbet()" class="btn" style="cursor: pointer"
+                        tabindex="0">Cancel</a>
+                    </li>
+                    <li class="edit-function">
+                      <a data-ng-click="EditMOBet($index,layum.id,layum.backLay)" class="btn-send"
+                        style="cursor: pointer" tabindex="0">OK</a>
+                      <a data-ng-click="resetUMbet($index,layum.id,layum.backLay,layum.odds,layum.stake)" class="btn"
+                        style="cursor: pointer" tabindex="0">Reset</a>
+                    </li>
+                  </ul>
+                </div>
+
+                <dd class="inn_runs" style="display: none">
+                  <dl>
+                    <dt></dt>
+                    <dd><span class="green">$0.00</span></dd>
+                    <dt></dt>
+                    <dd><span class="green">$0.00</span></dd>
+                  </dl>
+                </dd>
+
+                <dd class="keep-option" style="display: none">
+                  At In-Play
+                  <input name="keepOption" type="checkbox" /><label>cancel</label>
+                  <input name="keepOption" type="checkbox" tabindex="-1" /><label>keep</label>
+                </dd>
+              </dl>
+            </div>
+
+            <div id="editUnMatchFullBtn" class="full_btn" style="display: none">
+              <dl class="sum"></dl>
+
+              <ul class="btn-wrap">
+                <li>
+                  <a class="btn" style="cursor: pointer" tabindex="0">Cancel All Bets</a>
+                </li>
+                <li class="edit-function">
+                  <a class="btn-send" style="cursor: pointer" tabindex="0">OK</a>
+                  <a class="btn" style="cursor: pointer" tabindex="0">Reset</a>
+                </li>
+              </ul>
+            </div>
+
+            <ul id="txnHead" data-ng-if="matchedData.length>0" class="slip-head" style="">
+              <li class="col-bet"><strong>Matched</strong></li>
+            </ul>
+
+            <div id="Matchedbets" data-ng-if="matchedData.length>0" class="slip-list" data-name="txn" style="">
+              <ul class="matched-head" style="">
+                <li class="col-bet">Back (Bet For)</li>
+                <li class="col-odd">Odds</li>
+                <li class="col-stake">Stake</li>
+                <li class="col-profit">Profit</li>
+              </ul>
+              <dl data-ng-repeat="item in matchedData track by $index" class="slip-back"
+                data-ng-if="item.betType == 'BACK' || item.betType == 'back' || item.betType == 'YES' || item.betType == 'yes'">
+                <dt></dt>
+                <dd class="refer matched" style="display: none">
+                  <span>Ref id : {{item.consolidateId}}</span>
+                  <span>Date : {{item.betTime | date}}</span>
+                </dd>
+                <dd class="refer consolidated" style="display: none">
+                  <span class="short-amount">{{item.eventName}}</span>
+                </dd>
+                <dt>
+                  <span class="slip-type">{{(item.betType=='BACK'|| item.betType ==
+                    'back')?'Back':'Yes'}}</span><span class="short-amount">{{item.selName}}</span>
+                  <span>{{item.marketName}}</span>
+                </dt>
+                <dd class="col-odd">
+                  {{(item.isFancy==1)?item.runs+'/'+item.odds:item.odds}}
+                </dd>
+                <dd class="col-stake">{{item.stake | number: 2}}</dd>
+                <!--  <dd  class="col-profit">{{(item.isFancy==0)?((item.odds-1)*item.stake): ((item.isFancy==1)?((item.odds*item.stake)/100):((item.odds/100)*item.stake)) | number:2}}</dd> -->
+                <dd class="col-profit">
+                  {{item.PL | number:2}}
+                </dd>
+                </dd>
+              </dl>
+
+              <ul class="matched-head">
+                <li class="col-bet">Lay (Bet Against)</li>
+                <li class="col-odd">Odds</li>
+                <li class="col-stake">Stake</li>
+                <li class="col-profit">Liability</li>
+              </ul>
+              <dl class="slip-lay" data-ng-repeat="item in matchedData track by $index"
+                data-ng-if="item.betType == 'LAY' || item.betType == 'lay' || item.betType == 'NO' || item.betType == 'no'">
+                <dt></dt>
+                <dd class="refer matched" style="display: none">
+                  <span>Ref id : {{item.consolidateId}}</span>
+                  <span>Date : {{item.betTime | date}}</span>
+                </dd>
+                <dd class="refer consolidated" style="display: none">
+                  <span class="short-amount">{{item.eventName}}</span>
+                </dd>
+                <dt>
+                  <span class="slip-type">{{(item.betType=='LAY' || item.betType ==
+                    'lay')?'Lay':'No'}}</span><span class="short-amount">{{item.selName}}</span>
+                  <span>{{item.marketName}}</span>
+                </dt>
+                <dd class="col-odd">
+                  {{(item.isFancy==1)?item.runs+'/'+item.odds:item.odds}}
+                </dd>
+                <dd class="col-stake">{{item.stake | number: 2}}</dd>
+                <!--  <dd  class="col-profit">{{(item.isFancy==0)?((item.odds-1)*item.stake): ((item.isFancy==1)?((item.odds*item.stake)/100):((item.odds/100)*item.stake)) | number:2}}</dd> -->
+                <dd class="col-profit">
+                  {{item.PL | number:2}}
+                </dd>
+              </dl>
+
+              <ul id="fancyYesHeader" class="matched-head" style="display: none">
+                <li class="col-bet">Yes</li>
+                <li class="col-odd">Runs/Odds</li>
+                <li class="col-stake">Stake</li>
+                <li class="col-profit">Profit</li>
+              </ul>
+
+              <ul id="fancyNoHeader" class="matched-head" style="display: none">
+                <li class="col-bet">No</li>
+                <li class="col-odd">Runs/Odds</li>
+                <li class="col-stake">Stake</li>
+                <li class="col-profit">Liability</li>
+              </ul>
+
+              <dl id="txnTemplate" class="slip-back" style="display: none">
+                <dt></dt>
+                <dd class="refer" style="display: none">
+                  <span>Ref: --</span>
+                  <span>xx-xx-2016 --:--</span>
+                </dd>
+                <dt>
+                  <span class="slip-type">--</span>
+                  <span>--</span>
+                </dt>
+                <dd class="col-odd">--</dd>
+                <dd class="col-stake">--</dd>
+                <dd class="col-profit">--</dd>
+              </dl>
+            </div>
+
+            <div class="full_btn">
+              <ul class="slip-option">
+                <li>
+                  <input id="showBetInfo" type="checkbox" data-ng-model="showinfobet"
+                    data-ng-change="showinfobetfunc(showinfobet)" name="openOption" /><label for="showBetInfo">Bet
+                    Info</label>
+                </li>
+                <li>
+                  <input id="consolidate" type="checkbox" data-ng-model="consolidatebet"
+                    data-ng-change="consolidatefunc(consolidatebet)" name="openOption" /><label
+                    for="consolidate">Consolidate</label>
+                </li>
+                <li>
+                  <input id="average" type="checkbox" data-ng-model="averageOdds" data-ng-change="GetBets()"
+                    name="openOption" /><label for="average">Average Odds</label>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="myMarketModal" tabindex="-1" role="dialog" aria-labelledby="myMarketModalLabel"
+    aria-hidden="true" style="display: none">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button data-ng-click="myMarketClose()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"> ×</span>
+          </button>
+          <h4 class="modal-title" id="myMarketModalLabel">My Markets</h4>
+        </div>
+        <div class="modal-body">
+          <button class="accordion" data-ng-repeat-start="market in MyMarketData track by market.matchId"
+            data-accordion-toggle>
+            {{market.matchName}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+              style="font-size: 15px; padding-right: 10px; float: right"
+              data-ng-style="{ color:market.liability >0 ? 'green' : 'red' }">Exposure
+              -&nbsp;&nbsp;{{market.liability}}</span>
+          </button>
+          <div class="panel" data-ng-repeat-end>
+            <!-- <p style="margin: 10px">MATCH ODDS <span style="font-size: 15px;font-weight: bold;">-1000</span></p> -->
+            <table class="bets" id="myMarketTable" style="margin-top: 0">
+              <thead>
+                <tr style="
+                      border-bottom: 1px solid #67afe5;
+                      background: #d9dcd491;
+                    ">
+                  <th style="text-align: center">Market Name</th>
+                  <th style="text-align: center">Liability</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-ng-repeat="mkt in market.mktLiability">
+                  <td style="height: 30px">{{mkt.marketName}}</td>
+                  <td style="height: 30px" data-ng-style="{ color:mkt.liability >0 ? 'green' : 'red' }">
+                    {{mkt.liability}}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- <table class="table table-bordered table-condensed table-hover table-striped" id="myMarketTable">
+                     <thead>
+                       <tr>
+                         <th>Market ID</th>
+                         <th>Market Name <a class="btn btn-xs btn-azure pull-right" onclick=" getMyMarkets(); return false; " href="#"><i class="fa fa-refresh"></i> Reload</a></th>
+                         <th>Liability</th>
+                       </tr>
+                     </thead>
+                     <tbody></tbody>
+                     </table> -->
+        </div>
+      </div>
+    </div>
+    <div id="devtool-status"></div>
+  </div>
+
+  <!-- <div class="modal" id="fancyBook" aria-hidden="true" >
+         <div class="modal-dialog" style="top: 2px">
+            <div class="modal-content">
+               <div class="modal-header">
+                 
+                  <h4 class="modal-title">{{fancyNamedisplay}}</h4>
+               </div>
+               <div class="modal-body">
+                  <div data-ng-if="fancyDatabookList.length==0" style="visibility: visible; text-align: center; vertical-align: middle; background: powderblue; padding: 5px; border-radius: 10px;">
+                     <h3>No fancy book found</h3>
+                  </div>
+                  <div data-ng-if="fancyDatabookList.length!=0" style="vertical-align: middle;">
+                     <table class="table bets" style="text-align:center;margin-top: 0">
+                        <thead>
+                           <tr>
+                              <th style="border: 1px solid #969696;text-align: center;">Score</th>
+                              <th style="border: 1px solid #969696;text-align: center;">Amount</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr data-ng-repeat="fancy in fancyDatabookList" data-ng-class="{'back-1':fancy.Value>=0,'lay-1':fancy.Value<0}">
+                              <td style="height: 30px;">{{fancy.Key}}</td>
+                              <td style="height: 30px;">{{fancy.Value}}</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+               <div class="modal-footer">
+                  <a id="close" class="btn btn-primary" data-ng-click="ModalClose()" data-dismiss="modal" style="cursor: pointer;width: 20%">Close</a>
+               </div>
+            </div>
+         </div>
+      </div> -->
+
+  <!-- <script src="jquery.datetimepicker.full.js"></script> -->
+  <!-- <script  src="js/jquery.signalR.min.js"></script> -->
+
+  <!-- <script src="jquery.signalR.min.js"></script> -->
+
+  <script src="js/modal-box.js"></script>
+  <script src="script/routing.js"></script>
+
+  <!-- Angular Material Dependencies -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-resource/1.8.2/angular-resource.min.js" integrity="sha512-heHqDjSgQ/iDnrNQqj9WFFYIS9nKYnWwb3VndZOvW1riVCWN9gsr98JEptFqmBl8Ru+3ubuGcHCYe2RJnA2PnA==" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-animate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-aria.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-messages.min.js"></script>
+
+  <!-- Angular Material Javascript now available via Google CDN; version 1.2.1 used here -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.2.1/angular-material.min.js"></script>
+
+  <script src="app/app.module.js"></script>
+  <script src="app/app.routes.js"></script>
+  <script src="app/app.config.js"></script>
+
+  <script src="app/filters/decimal-number.js"></script>
+  <script src="app/filters/remove-space.js"></script>
+  <script src="app/filters/titlecase.js"></script>
+  <script src="app/filters/pagination.js"></script>
+
+  <script src="app/directives/accordion-toggle.js"></script>
+  <script src="app/directives/numbers-only.js"></script>
+  <script src="app/directives/toggle-class.js"></script>
+
+  <!-- Serices -->
+  <script src="app/services/auth.interceptor.js"></script>
+  <script src="app/services/games.service.js"></script>
+
+  <!-- Controllers -->
+  <script src="app/controllers/home/home.ctrl.js"></script>
+  <script src="app/controllers/inplay/inplay.ctrl.js"></script>
+  <script src="app/controllers/today/today.ctrl.js"></script>
+  <script src="app/controllers/tomorrow/tomorrow.ctrl.js"></script>
+  <script src="app/controllers/multimarket/multimarket.ctrl.js"></script>
+  <script src="app/controllers/cricket/cricket.ctrl.js"></script>
+  <script src="app/controllers/soccer/soccer.ctrl.js"></script>
+  <script src="app/controllers/tennis/tennis.ctrl.js"></script>
+  <script src="app/controllers/casino/casino.ctrl.js"></script>
+  <script src="app/controllers/horseracing/horseracing.ctrl.js"></script>
+  <script src="app/controllers/greyhoundracing/greyhoundracing.ctrl.js"></script>
+  <script src="app/controllers/teenpatti/teenpatti.ctrl.js"></script>
+  <script src="app/controllers/teenpatti-video/teenpatti-video.ctrl.js"></script>
+  <script src="app/controllers/fullmarket/fullmarket.ctrl.js"></script>
+  <script>
+    $(document).ready(function () {
+      $("#login-trigger").click(function () {
+        if (authtoken == undefined) {
+          $("#loginBox").css("display", "block");
+        } else {
+          $(this).next("#login-content").slideToggle();
+          $(this).toggleClass("active");
+
+          if ($(this).hasClass("active") == true) {
+            $("#login-content").css("display", "block");
+          } else {
+            $("#login-content").css("display", "none");
+          }
+        }
+      });
+    });
+    $("#cancel1").click(function () {
+      $("#login-content").css("display", "none");
+    });
+  </script>
+  <script>
+    $("#live").click(function () {
+      window.open(
+        "tv.html",
+        "_blank",
+        "resizable=yes,top=700,left=900,width=700,height=500"
+      );
+    });
+  </script>
+  <script>
+    $("#edit").click(function (e) {
+      e.stopPropagation();
+      $("#ok").show();
+      $("#edit").hide();
+    });
+    $("#ok").click(function (e) {
+      e.stopPropagation();
+      $("#edit").show();
+      $("#ok").hide();
+    });
+
+    // $('#Refresh').click(function (e) {
+    //     e.stopPropagation();
+    //     location.reload(true);
+    // });
+    $("#cancel1").click(function () {
+      $("#login-content").css("display", "none");
+    });
+
+    $("#coinSave").click(function () {
+      $("#login-content").css("display", "none");
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      // $("#eventType").on('click',function(){
+      //    $(".slip-wrap").toggleClass("close");
+      // })
+      if ($("#betslip_open").hasClass("close") == true) {
+        $(".matched-wrap").css("height", "calc(100% - 31px)");
+      } else {
+        $(".matched-wrap").css("height", "calc(100% - 325px)");
+      }
+      if ($("#oneClickSetting").hasClass("select") == true) {
+        // $('.overlay').css('display','block');
+        $("#oneClickBetStakeBox").css("display", "block");
+        $("#overWrap").css("height", "calc(100% - 31px)");
+        $("#editOneClickBetStakeBox").css("display", "none");
+
+        localStorage.setItem("oneclick", "true");
+
+        // localStorage.removeItem('oneclick');
+        // $('#oneClickBetDialog').css('display','block');
+      } else {
+        $("#oneClickBetStakeBox").css("display", "none");
+        $("#editOneClickBetStakeBox").css("display", "none");
+        $("#overWrap").css("height", "calc(100% - 0px)");
+
+        localStorage.removeItem("oneclick");
+
+        // localStorage.setItem('oneclick','true');
+        // $('#oneClickBetDialog').css('display','none');
+      }
+      var oneClicked = localStorage.getItem("oneclick");
+      if (oneClicked != undefined) {
+        $("#oneClickSetting").addClass("select");
+        $("#oneClickBetStakeBox").css("display", "block");
+      }
+
+      $("#oneClickSetting").on("click", function () {
+        if (authtoken == undefined) {
+          $("#loginBox").css("display", "block");
+          return false;
+        }
+        $(this).toggleClass("select");
+        // $(this).hasClass('select')
+
+        var okClicked = localStorage.getItem("OK");
+
+        if (okClicked == undefined) {
+          if ($(this).hasClass("select") == true) {
+            $("#editOneClickBetStakeBox").css("display", "none");
+            // $('.overlay').css('display','block');
+            $("#overWrap").css("height", "calc(100% - 31px)");
+            $("#oneClickBetStakeBox").css("display", "block");
+            $("#oneClickBetDialog").css("display", "block");
+            localStorage.removeItem("oneclick");
+          } else {
+            $("#oneClickBetStakeBox").css("display", "none");
+            $("#overWrap").css("height", "calc(100% - 0px)");
+            $("#oneClickBetDialog").css("display", "none");
+            $("#editOneClickBetStakeBox").css("display", "none");
+
+            localStorage.setItem("oneclick", "true");
+          }
+        } else {
+          if ($(this).hasClass("select") == true) {
+            // $('.overlay').css('display','block');
+            $("#oneClickBetStakeBox").css("display", "block");
+            $("#overWrap").css("height", "calc(100% - 31px)");
+            $("#editOneClickBetStakeBox").css("display", "none");
+
+            localStorage.setItem("oneclick", "true");
+
+            // localStorage.removeItem('oneclick');
+            // $('#oneClickBetDialog').css('display','block');
+          } else {
+            $("#oneClickBetStakeBox").css("display", "none");
+            $("#editOneClickBetStakeBox").css("display", "none");
+            $("#overWrap").css("height", "calc(100% - 0px)");
+
+            localStorage.removeItem("oneclick");
+
+            // localStorage.setItem('oneclick','true');
+            // $('#oneClickBetDialog').css('display','none');
+          }
+        }
+      });
+      $("#OkayAccept").click(function () {
+        $("#oneClickBetDialog").css("display", "none");
+        $(".overlay").css("display", "none");
+        localStorage.setItem("OK", "true");
+        localStorage.setItem("oneclick", "true");
+      });
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $("#tabMenu").on("click", "li a", function () {
+        $("#tabMenu li a").removeClass("select");
+        $(this).addClass("select");
+      });
+    });
+
+    // $(document).ready(function(){
+    //     $('.btn-send').on('click',function(){
+    //        $('.btn-send').removeClass('disable')
+    //        $(this).addClass('disable')
+    //     })
+    //  })
+
+    $(document).ready(function () {
+      $("#accountPopup").on("click", function (event) {
+        event.stopPropagation();
+        $("#account_pop").toggle();
+      });
+      $(document).on("click", function () {
+        $("#account_pop").hide();
+      });
+    });
+  </script>
+
+  <!--  <script>
+         $("#close1").click(function(){
+           $("#TermsNConditions").hide();
+         });
+      </script> -->
+
+  <!-- <div id="TermsNConditions"  class="modal fade" role="dialog" style="display: none;">
+  <div class="modal-dialog">
+  
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">
+          <h1>Rules & Terms</h1>
+        </h4>
+      </div>
+      <div class="modal-body" style="overflow-y: auto;height: 500px;">
+        <h3>Rules :</h3>
+        <div ng-bind-html="rules"></div>
+        <br><br>
+        <h3>Terms :</h3>
+        <div ng-bind-html="terms"></div>
+      </div>
+      <div class="modal-footer">
+        <div style="text-align: left;">
+          <button type="button" class="btn btn-default" data-dismiss="modal" id="close1" data-ng-click="accept('true')">Accept Terms & Conditions</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+  <script>
+    // $(document).ready(function(){
+    //    $('#tabMenu').on('click','li a',function(){
+    //       $('#tabMenu li a').removeClass('select')
+    //       $(this).addClass('select')
+    //    })
+    // })
+    function focusFunction() {
+      // Focus = Changes the background color of input to yellow
+      document.getElementById("myInput").style.background = "yellow";
+    }
+
+    function blurFunction() {
+      // No focus = Changes the background color of input to red
+      document.getElementById("myInput").style.background = "red";
+    }
+    $(document).ready(function () {
+      $("#gott").on("click", function (event) {
+        event.stopPropagation();
+        $("#show").toggle();
+      });
+      $(document).on("click", function () {
+        $("#show").hide();
+      });
+    });
+  </script>
+</body>
+
+</html>

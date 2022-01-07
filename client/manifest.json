@@ -1,0 +1,21 @@
+{
+  "name":"BIGWIN247",
+  "short_name":"BW247",
+  "start_url":"http://www.ddbets.com/bw247-optimised/BW247/",
+  "background_color":"#3E4EB8",
+  "icons": [  
+    {  
+      "src": "/BW247/images/skyexchange/logobw.png",  
+      "sizes": "192x192",  
+      "type": "image/png"  
+    }, 
+    {  
+      "src": "/BW247/images/skyexchange/logobw.png",  
+      "sizes": "512x512",  
+      "type": "image/png"  
+    }
+  ],  
+  "theme_color":"#2F3BA2",
+  "display":"standalone",
+  "orientation":"portrait"
+}

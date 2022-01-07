@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <system.webServer>
+        <defaultDocument>
+            <files>
+                <clear />
+                <add value="Default.php" />
+                <add value="index.html" />
+                <add value="Default.htm" />
+                <add value="Default.asp" />
+                <add value="index.htm" />
+                <add value="iisstart.htm" />
+                <add value="default.aspx" />
+                <add value="index.php" />
+            </files>
+        </defaultDocument>
+        <directoryBrowse enabled="true" />
+        <handlers>
+            <add name="FastCGI" path="*.php" verb="*" modules="FastCgiModule" scriptProcessor="C:\Program Files\PHP\php-cgi.exe" resourceType="File" />
+        </handlers>
+
+        <!-- <caching>
+            <profiles>
+                <add extension=".php" policy="DisableCache" kernelCachePolicy="DisableCache" />
+                <add extension=".html" policy="CacheForTimePeriod" kernelCachePolicy="CacheForTimePeriod" duration="14:00:00:00" />
+                <add extension=".js" policy="CacheForTimePeriod" kernelCachePolicy="CacheForTimePeriod" duration="14:00:00:00" />
+                <add extension=".css" policy="CacheForTimePeriod" kernelCachePolicy="CacheForTimePeriod" duration="14:00:00:00" />
+                <add extension=".png" policy="CacheForTimePeriod" kernelCachePolicy="CacheForTimePeriod" duration="14:00:00:00" />
+                <add extension=".jpg" policy="CacheForTimePeriod" kernelCachePolicy="CacheForTimePeriod" duration="14:00:00:00" />
+                <add extension=".gif" policy="CacheForTimePeriod" kernelCachePolicy="CacheForTimePeriod" duration="14:00:00:00" />
+                <add extension=".ico" policy="CacheForTimePeriod" kernelCachePolicy="CacheForTimePeriod" duration="14:00:00:00" />
+                <add extension=".mp4" policy="CacheForTimePeriod" kernelCachePolicy="CacheForTimePeriod" duration="14:00:00:00" />
+
+            </profiles>
+        </caching> -->
+    </system.webServer>
+</configuration>

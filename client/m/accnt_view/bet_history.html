@@ -1,0 +1,325 @@
+<style type="text/css">
+  table tr td {
+    font-size: 12px;
+  }
+</style>
+<!-- Left Column -->
+<div class="col-left">
+  <!-- Sub Menu and Path -->
+  <div class="sub_path">
+    <!-- Path -->
+    <div class="path">
+      <!--<a href="#path-pop" class="path-back">...</a>-->
+      <ul>
+        <li class="path-last"><a href="javascript:void(0)">My Account</a></li>
+      </ul>
+    </div>
+    <!-- Path Pop Up-->
+    <ul id="path-pop" class="path-pop"></ul>
+    <!-- Sub Menu -->
+    <ul class="menu-list">
+      <li><a id="sub_menu_detail" href="#!profile">My Profile</a></li>
+      <li>
+        <a id="sub_menu_summary" href="#!bal_overview">Balance Overview</a>
+      </li>
+      <li>
+        <a id="sub_menu_accountCashStatement_log" href="#!statement"
+          >Account Statement
+        </a>
+      </li>
+      <!-- <li><a id="sub_menu_casino_resport" href="#!casinoreport">Casino Report</a></li> -->
+      <li>
+        <a id="sub_menu_my_bets" href="#!current_bets" class="select"
+          >My Bets</a
+        >
+      </li>
+      <li>
+        <a id="sub_menu_activity_log" href="#!activity_log">Activity Log</a>
+      </li>
+    </ul>
+  </div>
+</div>
+<!-- Center Column -->
+<div class="col-center report">
+  <!-- Loading Wrap -->
+  <!--   <div id="loading" class="loading-wrap" style="display:none">
+       <ul class="loading">
+          <li><img src="images/loading40.gif" alt="loading"></li>
+          <li>Loading...</li>
+       </ul>
+    </div> -->
+  <div id="loading" class="overlay" style="display: none; margin-top: 100px">
+    <div class="loading-wrap">
+      <div class="loading">
+        <div class="loader">
+          <div class="ball ball-1"></div>
+          <div class="ball ball-2"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Message -->
+  <div id="message" class="message-wrap success">
+    <a class="btn-close">Close</a>
+    <p></p>
+  </div>
+  <h2 style="display: block">My Bets</h2>
+  <ul class="tab col3">
+    <li><a href="#!current_bets">Current Bets</a></li>
+    <li><a class="select" href="#!bet_history">Bets History</a></li>
+    <li><a href="#!pnl">Profit &amp; Loss</a></li>
+  </ul>
+
+  <ul class="report-tab-wrap" style="display: block">
+    <li
+      class="report-tab"
+      id="reportType_exchange"
+      data-ng-click="selectTab(0)"
+      data-ng-class="{'select': selectedTab === 0}"
+    >
+      Exchange
+    </li>
+    <li
+      class="report-tab"
+      id="reportType_casino"
+      data-ng-click="selectTab(1)"
+      data-ng-class="{'select': selectedTab === 1}"
+    >
+      Casino
+    </li>
+  </ul>
+  <!-- function -->
+  <div class="function-wrap">
+    <ul class="input-list">
+      <div id="statusCondition" style="">
+        <li><label>Bet Status:</label></li>
+        <li>
+          <select data-ng-model="betStatus" ng-change="getBetHistory()">
+            <option value="1">Settled</option>
+            <option value="2">Voided</option>
+            <!-- <option ng-options="v.name for v in types track by v.value"> </option> -->
+            <!-- <option value="4">Voided</option> -->
+          </select>
+        </li>
+      </div>
+      <li><label>Period</label></li>
+      <li>
+        <input
+          id="startDate"
+          class="cal-input"
+          type="text"
+          style="width: 150px"
+          placeholder="YYYY-MM-DD"
+        />
+        <!-- <input id="startTime" class="time-input " type="text" placeholder="HH:MM:SS"> -->
+        to
+        <input
+          id="endDate"
+          class="cal-input"
+          type="text"
+          style="width: 150px"
+          placeholder="YYYY-MM-DD"
+        />
+        <!-- <input id="endTime" class="time-input " type="text" placeholder="HH:MM:SS"> -->
+      </li>
+      <li style="display: none">(TimeZone:IST)</li>
+    </ul>
+    <ul class="input-list">
+      <li>
+        <a
+          id="today"
+          href="javascript:void(0)"
+          data-ng-click="getBetHistoryDate('today')"
+          class="btn"
+          >Just For Today</a
+        >
+      </li>
+      <li>
+        <a
+          id="yesterday"
+          href="javascript:void(0)"
+          data-ng-click="getBetHistoryDate('yesterday')"
+          class="btn"
+          >From Yesterday</a
+        >
+      </li>
+      <li>
+        <a
+          id="getPL"
+          href="javascript:void(0)"
+          data-ng-click="getBetHistory()"
+          class="btn-send"
+          >Get History</a
+        >
+      </li>
+    </ul>
+  </div>
+  <!-- No Report Message -->
+  <div id="noReportMessage" data-ng-if="getBetHistoryList.length==0">
+    <p>
+      Betting History enables you to review the bets you have placed.
+      <br />Specify the time period during which your bets were placed, the type
+      of markets on which the bets were placed, and the sport.
+    </p>
+    <p>Betting History is available online for the past 3 months.</p>
+  </div>
+  <!-- function end-->
+  <!-- Report Table -->
+  <!-- Report Table -->
+  <div id="report">
+    <table
+      class="table-s"
+      style="display: table; font-size: 13px"
+      data-ng-if="getBetHistoryList.length!=0"
+    >
+      <tbody>
+        <tr>
+          <th style="width: 9%" class="align-L">Bet ID</th>
+          <!-- <th style="width: 9%" class="align-L">PL ID</th> -->
+          <th class="align-L">Market</th>
+          <th style="width: 12%">Selection</th>
+          <!-- <th style="width: 12%">Bet Placed</th> -->
+          <th style="width: 4%">Type</th>
+          <th style="width: 8%">Bet placed</th>
+          <th style="width: 7%">Odds</th>
+          <th style="width: 8%">Stake</th>
+          <!-- <th style="width: 8%">Avg. odds matched</th> -->
+          <th style="width: 10%">Profit/Loss</th>
+        </tr>
+        <tr
+          data-ng-repeat="betHistory in getBetHistoryList | startFrom:currentPage*pageSize | limitTo:pageSize; track by betHistory.betId"
+        >
+          <td class="align-L">
+            <!-- <a
+               data-ng-if="betStatus=='1'"
+               id="{{betHistory.betId}}"
+               href="javascript: void(0);"
+               data-ng-click="betDetails(betHistory.betId)"
+               class="expand-close"
+               style="font-size: 13px"
+               >{{betHistory.betId}}</a
+             > -->
+            <a
+              data-ng-if="betStatus=='1'"
+              style="font-size: 13px"
+              >{{betHistory.betId}}</a
+            >
+          </td>
+          <!-- <td class="align-L">{{betHistory.plId}}</td> -->
+          <td class="align-L">
+            {{betHistory.sportName | titlecase}}<img
+              class="fromto"
+              src="images/transparent.gif"
+              alt="fromto"
+            /><strong>{{betHistory.eventName}}</strong
+            ><img
+              class="fromto"
+              src="images/transparent.gif"
+              alt="format"
+            />{{betHistory.marketName}}
+          </td>
+          <td>{{betHistory.selName}}</td>
+          <td>
+            <span class="{{betHistory.betType}}">{{betHistory.betType}}</span>
+          </td>
+          <td>
+            <span class="small-date">{{betHistory.betTime}}</span>
+          </td>
+          <td>{{betHistory.odds}}</td>
+          <td>{{betHistory.stake.toFixed(2)}}</td>
+          <!-- <td>{{(betStatus=='4')?betHistory.avgOdds:'-'}}</td> -->
+          <td>
+            <span data-ng-class="(betHistory.PL<0)?'red':'green'"
+              >{{(betStatus=='1')?betHistory.PL:'Cancelled' | number : 2}}</span
+            >
+          </td>
+        </tr>
+        <!-- <tr
+           data-ng-repeat-end
+           id="bet_{{betHistory.betId}}"
+           class="expand"
+           style="display: none"
+         >
+           <td colspan="2"></td>
+           <td colspan="8">
+             <img
+               class="expand-arrow"
+               src="images/transparent.gif"
+               alt="arrow"
+             />
+             <table style="text-align: right">
+               <tbody>
+                 <tr>
+                   <th>Bet taken</th>
+                   <th style="width: 16%">Odds</th>
+                   <th style="width: 17%">Stake</th>
+                   <th style="width: 24%">Liability</th>
+                   <th style="width: 24%">Profit</th>
+                 </tr>
+                 <tr class="even">
+                   <td>
+                     <span class="small-date">{{betHistory.betTime}}</span>
+                   </td>
+                   <td>{{betHistory.odds}}</td>
+                   <td>{{betHistory.stake}}</td>
+                   <td data-ng-class="(betHistory.liab<0)?'green':'red'">{{betHistory.liab.toFixed(2)}} </td>
+                   <td data-ng-class="(betHistory.prof<0)?'red':'green'">{{betHistory.prof.toFixed(2)}} </td>
+                 </tr>
+               </tbody>
+             </table>
+           </td>
+         </tr> -->
+      </tbody>
+    </table>
+
+    <p class="table-other" data-ng-if="getBetHistoryList.length!=0">
+      Betting History is shown net of commission.
+    </p>
+
+    <div>
+      <ul id="pageNumberContent" class="pages">
+        <li id="prev">
+          <a
+            href="javascript:void(0);"
+            class="disable"
+            disabled="true"
+            data-ng-if="currentPage == 0"
+            >Prev</a
+          >
+          <a
+            href="javascript:void(0);"
+            class="btn"
+            data-ng-if="currentPage !== 0"
+            ng-click="prev()"
+            >Prev</a
+          >
+        </li>
+        <li>{{currentPage+1}}/{{numberOfPages()}}</li>
+        <li id="next">
+          <a
+            data-ng-if="currentPage >= getBetHistoryList.length/pageSize - 1"
+            class="disable"
+            disabled="disabled"
+            >Next</a
+          >
+          <a
+            data-ng-if="currentPage < getBetHistoryList.length/pageSize - 1"
+            class="btn"
+            data-ng-click="next()"
+            >Next</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+  <script>
+    $(function () {
+      $("#startDate").datetimepicker({
+        format: "Y-m-d H:i:s",
+      });
+      $("#endDate").datetimepicker({
+        format: "Y-m-d H:i:s",
+      });
+    });
+  </script>
+</div>

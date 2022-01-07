@@ -1,0 +1,221 @@
+
+@font-face {
+    font-family: CasinoNumFont;
+    src: url(font/Casino3DMarquee.ttf);
+}
+.box-sizing-border *{
+    box-sizing: border-box;
+}
+
+.m-t-10 {
+    margin-top: 10px !important;
+}
+.m-t-20 {
+    margin-top: 20px !important;
+}
+.m-r-5 {
+    margin-right: 5px;
+}
+.m-b-5 {
+    margin-bottom: 5px !important;
+}
+.m-b-10 {
+    margin-bottom: 10px !important;
+}
+.m-b-0 {
+    margin-bottom: 0px !important;
+}
+.mb-0, .my-0 {
+    margin-bottom: 0!important;
+}
+.mb-1, .my-1 {
+    margin-bottom: .25rem!important;
+}
+.mt-1, .my-1 {
+    margin-top: .25rem!important;
+}
+.mt-2, .my-2 {
+    margin-top: .5rem!important;
+}
+.ml-2, .mx-2 {
+    margin-left: .5rem!important;
+}
+.mr-2, .mx-2 {
+    margin-right: .5rem!important;
+}
+.mb-2, .my-2 {
+    margin-bottom: .5rem!important;
+}
+.p-10 {
+    padding: 10px;
+}
+.p-r-5 {
+    padding-right: 5px !important;
+}
+.p-r-0 {
+    padding-right: 0px !important;
+}
+.p-l-5 {
+    padding-left: 5px !important;
+}
+.p-l-0 {
+    padding-left: 0px !important;
+}
+.pt-2, .py-2 {
+    padding-top: .5rem!important;
+}
+.pb-2, .py-2 {
+    padding-bottom: .5rem!important;
+}
+
+.text-center {
+    text-align: center!important;
+}
+.text-right {
+    text-align: right!important;
+}
+.text-left {
+    text-align: left!important;
+}
+.text-uppercase {
+    text-transform: uppercase!important;
+}
+.fs14 {
+    font-size: 14px !important;
+}
+.fs12 {
+    font-size: 12px !important;
+}
+.fs10 {
+    font-size: 10px !important;
+}
+.row {
+    display: flex;
+    flex-wrap: wrap; 
+    margin-right: -15px;
+    margin-left: -15px;
+}
+.row.row5 {
+    margin-left: -5px;
+    margin-right: -5px;
+}
+.row.row5>[class*=col-] {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.col-1 {
+    flex: 0 0 8.333333%;
+    max-width: 8.333333%;
+}
+.col-2 {
+    flex:1;
+    /*flex: 0 0 16.666667%;*/
+    max-width: 16.666667%;
+}
+.col-3 {
+    -ms-flex: 0 0 25%;
+    flex: 0 0 25%;
+    max-width: 25%;
+}
+.col-4 {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+}
+.col-5 {
+    flex: 1;
+    /*flex: 0 0 41.666667%;*/
+    max-width: 41.666667%;
+}
+.col-6 {
+    flex: 1;
+    /*flex: 0 0 50%;*/
+    max-width: 50%;
+}
+.col-7 {
+    flex: 0 0 58.333333%;
+    max-width: 58.333333%;
+}
+.col-8 {
+    flex: 0 0 66.666667%;
+    max-width: 66.666667%;
+}
+.col-9 {
+    flex: 0 0 75%;
+    max-width: 75%;
+}
+.col-12 {
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+.col,
+.col-1,
+.col-10,
+.col-11,
+.col-12,
+.col-2,
+.col-3,
+.col-4,
+.col-5,
+.col-6,
+.col-7,
+.col-8,
+.col-9 {
+  position: relative;
+  width: 100%;
+  min-height: 1px;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+.d-inline-block {
+    display: inline-block!important;
+}
+.d-block {
+    display: block!important;
+}
+.d-flex {
+    display: flex;
+}
+.justify-content-between {
+    justify-content: space-between;
+}
+.justify-content-center {
+    justify-content: center;
+}
+.flex-nowrap {
+    flex-wrap: nowrap;
+}
+.w-100 {
+    width: 100% !important;
+}
+.align-items-center {
+    align-items: center!important;
+}
+
+.color-red {
+    color: #ff0000;
+}
+
+.bg-white {
+    background-color: white;
+}
+
+.text-danger {
+    color: #dc3545!important;
+}
+.text-warning {
+    color: #ca9f1f !important;
+}
+.text-white {
+    color: #fff!important;
+}
+
+img.lrotate {
+    transform: rotate(270deg);
+}
+img.rrotate {
+    transform: rotate(90deg);
+}
+
+ 

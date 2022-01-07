@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" data-ng-app="myApp" lang="en">
+  <head>
+    <!-- <link rel="manifest" href="manifest.json"> -->
+    <meta name="theme-color" content="#E3D11D" />
+    <!-- <script src="../servicework.js" async></script> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title>777sports</title>
+    <!--  <link rel="stylesheet"  href="css/style.css"> 
+         <link rel="stylesheet"  href="css/cricket.css">  -->
+    <link rel="SHORTCUT ICON" href="images/favicon.png" />
+
+    <link rel="stylesheet" href="css/toast.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+ 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular-aria.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular-cookies.js"></script> -->
+    <script src="js/common.js"></script>
+
+    <script
+      data-require="ui-bootstrap@*"
+      data-semver="0.12.1"
+      src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.min.js"
+    ></script>
+
+    <link rel="stylesheet" href="v2.css" />
+    <script src="v1.js"></script>
+
+    <style>
+      .table-responsive {
+        display: inline-table;
+
+        width: 100%;
+
+        min-height: 0%;
+
+        overflow-x: auto;
+      }
+
+      .borderDiv {
+        border-radius: 20px;
+
+        border: 2px solid #00c0ef;
+
+        padding: 1rem;
+      }
+
+      tr,
+      th {
+        text-align: center;
+
+        white-space: nowrap;
+      }
+
+      .dt-buttons {
+        float: right;
+      }
+
+      .dataTables_filter {
+        float: left;
+      }
+
+      @media screen and (max-width: 767px) {
+        .top_marg {
+          margin-top: 10px;
+        }
+
+        .buttons-print {
+          margin-top: 6px;
+        }
+      }
+    </style>
+  </head>
+  <body data-ng-controller="FancybookController" data-ng-init="GetFancyBook()">
+    <div id="logWrap" class="log-wrap" style="width: 600px">
+      <table class="game-team">
+        <tbody>
+          <tr>
+            <td class="game-name">
+              Runs Position
+              <a
+                class="pop-close"
+                onclick="window.open('', '_self', ''); window.close();"
+              >
+                <img
+                  class="icon-back"
+                  src="/images/transparent.gif"
+                  alt="back"
+                />Close</a
+              >
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="pop-content">
+        <span
+          style="
+            font-weight: bolder;
+            text-align: center;
+            font-size: 15px;
+            vertical-align: super;
+          "
+          >{{fname}}</span
+		>
+        <table id="table" class="table01 tab-depth">
+          <tbody>
+            <tr>
+              <th style="width: 50%" class="align-L">Runs</th>
+              <th style="width: 50%" class="border-l">Amount</th>
+            </tr>
+
+            <tr
+              id="trTemp"
+              style="display: table-row"
+              data-ng-repeat="book in fancyDatabookList track by $index"
+              data-ng-cloak
+            >
+              <td
+                id="runs"
+                class="align-L"
+                data-ng-class="(book[1]<0)? 'lay':'back'"
+              >
+                {{book[0]}}
+              </td>
+              <td
+                id="exposure"
+                class=""
+                data-ng-class="(book[1]<0)? 'lay':'back'"
+              >
+                <span class="" data-ng-class="(book[1]<0)? 'red':''"
+                  >({{book[1]}})</span
+                >
+              </td>
+            </tr>
+            <!-- <tr id="trTemp" style="display: table-row;">
+						<td id="runs" class="align-L">244</td>
+						<td id="exposure" class="back"> 2.00</td>
+					</tr>
+					<tr id="trTemp" style="display: table-row;">
+						<td id="runs" class="align-L back">245</td>
+						<td id="exposure" class="back"> 2.00</td>
+					</tr>
+ -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 	<div id="logWrap" class="log-wrap" style="width: 600px">
+		<table class="game-team">
+			<tbody><tr>
+				<td class="game-name">
+					Runs Position
+					<a class="pop-close" onclick="window.open('', '_self', ''); window.close();">
+					<img class="icon-back" src="/images/transparent.gif">Close</a>
+				</td>
+			</tr>
+		</tbody></table>
+		<div class="pop-content">
+			<table id="table" class="table01 tab-depth">
+				<tbody><tr>
+					<th width="50%" class="align-L">Runs</th>
+					<th width="50%" class="border-l">Amount</th>
+				</tr>
+				<tr id="trTemp" style="display: none;">
+					<td id="runs" class="align-L"></td>
+					<td id="exposure" class=""></td>
+				</tr>
+				
+			<tr id="trTemp" style="display: table-row;">
+					<td id="runs" class="align-L back">3</td>
+					<td id="exposure" class="back"> 10.00</td>
+				</tr><tr id="trTemp" style="display: table-row;">
+					<td id="runs" class="align-L lay">4</td>
+					<td id="exposure" class="lay"><span class="red">( 11.50)</span></td>
+				</tr><tr id="trTemp" style="display: table-row;">
+					<td id="runs" class="align-L lay">5</td>
+					<td id="exposure" class="lay"><span class="red">( 11.50)</span></td>
+				</tr></tbody></table>
+		</div>
+	</div> -->
+
+    <!-- <script src="script/routing.js"></script> -->
+    <script src="script/angular.js"></script>
+  </body>
+</html>

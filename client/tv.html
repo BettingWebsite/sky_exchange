@@ -1,0 +1,280 @@
+  <!DOCTYPE html>
+  <html xmlns="http://www.w3.org/1999/xhtml" data-ng-app="myApp" lang="en">
+
+  <head>
+    <!-- <link rel="manifest" href="manifest.json"> -->
+    <meta name="theme-color" content="#E3D11D" />
+    <!-- <script src="../servicework.js" async></script> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>Duoexchange</title>
+
+           <link rel="SHORTCUT ICON" href="images/favicon.png">
+           <link rel="SHORTCUT ICON" href="images/favicon.png">
+    <link rel="stylesheet" href="css/toast.css">
+    <link rel="stylesheet"  href="css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+   <!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular-aria.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular-cookies.js"></script> -->
+
+    <script src="js/common.js"></script>
+    <script data-require="ui-bootstrap@*" data-semver="0.12.1" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.min.js"></script>
+    
+    <link rel="stylesheet" href="v2.css">
+    <!-- <script src="v1.js" ></script> -->
+    <style >
+      .table-responsive {
+      
+          display: inline-table;
+      
+          width: 100%;
+      
+          min-height: 0%;
+      
+          overflow-x: auto;
+      
+      }
+      
+          .borderDiv{
+      
+            border-radius: 20px;
+      
+            border: 2px solid #00c0ef;
+      
+            padding: 1rem;
+      
+          }
+      
+          tr,th{
+      
+            text-align: center;
+      
+            white-space: nowrap;
+      
+          }
+      
+            .dt-buttons{
+      
+              float: right;
+      
+            }
+      
+            .dataTables_filter{
+      
+              float: left;
+      
+            }
+      
+            @media screen and (max-width: 767px ){
+      
+            .top_marg{
+      
+              margin-top: 10px;
+      
+            }
+      
+            .buttons-print{
+      
+                margin-top: 6px;
+      
+              }
+      
+          }
+
+
+          #csb-loading-screen-container {
+  background-color: #000;
+  background-position-y: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  z-index: 999;
+}
+
+#csb-loading-screen-container .loading-screen-animation {
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  width: 100%;
+}
+
+#csb-loading-screen-container svg.loader {
+  height: 75%;
+  transform: translate(6.5%, -9%);
+}
+
+#csb-loading-screen-container svg.loader .spike-0 {
+  animation: path-hiding 1s linear 0s infinite;
+  opacity: 1;
+}
+
+#csb-loading-screen-container svg.loader .spike-1 {
+  animation: path-hiding 1s linear 0.1s infinite;
+  opacity: 0.9;
+}
+
+#csb-loading-screen-container svg.loader .spike-2 {
+  animation: path-hiding 1s linear 0.2s infinite;
+  opacity: 0.8;
+}
+
+#csb-loading-screen-container svg.loader .spike-3 {
+  animation: path-hiding 1s linear 0.3s infinite;
+  opacity: 0.7;
+}
+
+#csb-loading-screen-container svg.loader .spike-4 {
+  animation: path-hiding 1s linear 0.4s infinite;
+  opacity: 0.6;
+}
+
+#csb-loading-screen-container svg.loader .spike-5 {
+  animation: path-hiding 1s linear 0.5s infinite;
+  opacity: 0.5;
+}
+
+#csb-loading-screen-container svg.loader .spike-6 {
+  animation: path-hiding 1s linear 0.6s infinite;
+  opacity: 0.4;
+}
+
+#csb-loading-screen-container svg.loader .spike-7 {
+  animation: path-hiding 1s linear 0.7s infinite;
+  opacity: 0.30000000000000004;
+}
+
+#csb-loading-screen-container svg.loader .spike-8 {
+  animation: path-hiding 1s linear 0.8s infinite;
+  opacity: 0.19999999999999996;
+}
+
+#csb-loading-screen-container svg.loader .spike-9 {
+  animation: path-hiding 1s linear 0.9s infinite;
+  opacity: 0.09999999999999998;
+}
+
+#csb-loading-screen-container svg.loader .spike-10 {
+  animation: path-hiding 1s linear 1s infinite;
+  opacity: 0;
+}
+
+@-moz-keyframes path-hiding {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes path-hiding {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@-o-keyframes path-hiding {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes path-hiding {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+    </style>
+  </head>
+
+  <body data-ng-controller="tvController" data-ng-init="Gettv()">
+    <div class="modal-body row">
+      <h3>
+                    <a id="eventType" class="to-expand" style="cursor:pointer;">Live Video</a>
+                 </h3>
+      <div class="divvideochanel">
+        <div class="channelvideoInner">
+          <!--  <span ng-repeat="item in runeerdataList" class="spanchannel " data-ng-init="setchannel(item.channelIp,item.channelNo,item.program,item.hdmi);"></span> -->
+        </div>
+      </div>
+      <div id="loading" style="margin-top: 10px;text-align: center;width: 370px;height: 250px;display: none;">
+          <div id="csb-loading-screen-container">
+              <div class="loading-screen-animation"><svg class="loader" viewBox="0 0 496 496" xmlns="http://www.w3.org/2000/svg">
+                  <g fill="#FFF" fill-rule="evenodd">
+                    <path
+                      d="M251.924 223.133l26.166-86.98c3.122-10.359 1.829-10.855-2.872-1.062l-39.317 81.908a76.97 76.97 0 0 1 16.023 6.134z"
+                      class="spike-0"></path>
+                    <path
+                      d="M275.728 242.176l83.865-111.657c6.528-8.673 5.485-9.58-2.306-1.97L257.22 226.14a77.899 77.899 0 0 1 18.508 16.035z"
+                      class="spike-1"></path>
+                    <path
+                      d="M287.758 261.78l76.85-50.132c9.155-5.968 8.506-7.134-1.474-2.626l-83.741 37.87a77.376 77.376 0 0 1 8.365 14.888z"
+                      class="spike-2"></path>
+                    <path
+                      d="M293.877 291.337c5.952-1.424 121.274-29.025 135.913-33.377 15.014-4.468.065-4.423.065-4.423l-139.987 13.806a77.38 77.38 0 0 1 4.01 23.994z"
+                      class="spike-3"></path>
+                    <path
+                      d="M290.71 314.027c7.52.696 86.317 7.979 86.028 7.66 14.776.567.065-3.457.065-3.457L293.7 297.348a77.25 77.25 0 0 1-2.99 16.68z"
+                      class="spike-4"></path>
+                    <path
+                      d="M276.497 340.934l123.477 63.504c9.825 4.843 10.534 3.677 1.591-2.594L288.703 319.93a77.424 77.424 0 0 1-12.206 21.005z"
+                      class="spike-5"></path>
+                    <path
+                      d="M259.173 356.644l62.33 64.904c7.532 7.874 8.607 6.992 2.363-1.886l-51.692-73.853a77.889 77.889 0 0 1-13.001 10.835z"
+                      class="spike-6"></path>
+                    <path
+                      d="M154.84 244.828L72.333 204.17c-9.818-4.842-10.533-3.67-1.571 2.601l75.193 52.68c2.845-4.011 7.805-10.211 8.885-14.623z"
+                      class="spike-7"></path>
+                    <path
+                      d="M177.668 224.866L80.819 123.973c-7.533-7.848-8.601-6.993-2.37 1.9l80.202 114.438a77.849 77.849 0 0 1 19.017-15.445z"
+                      class="spike-8"></path>
+                    <path
+                      d="M199.268 216.416l-36.617-83.192c-4.379-9.94-5.66-9.51-2.884.973l23.254 87.85a76.93 76.93 0 0 1 16.247-5.631z"
+                      class="spike-9"></path>
+                    <path
+                      d="M205.305 215.305l13.038-138.158c.52-5.383 1.12-8.08 1.673-8.075.547 0 1.049 2.703 1.351 8.118l8.52 138.503a77.984 77.984 0 0 0-13.507-1.173c-3.76 0-7.458.268-11.075.785z"
+                      class="spike-10"></path>
+                    <path
+                      d="M216.38 370.76c43.487 0 78.74-35.253 78.74-78.74 0-43.487-35.253-78.74-78.74-78.74-43.487 0-78.74 35.253-78.74 78.74 0 43.487 35.253 78.74 78.74 78.74zm0-32.24c25.681 0 46.5-20.819 46.5-46.5s-20.819-46.5-46.5-46.5-46.5 20.819-46.5 46.5 20.819 46.5 46.5 46.5z">
+                    </path>
+                  </g>
+                </svg>
+              </div>
+
+            </div>
+      </div>
+      <div id="player_preview" style="margin-top: 10px;text-align: center;"></div>
+    </div>
+    <!--  <script >
+                                  if ("MediaSource" in window && "WebSocket" in window)
+                                      RunPlayer("p1", 344, 200, "93.115.26.162", 5119, false, "HDMI", "", true, true, 0.01, "", false);
+                                  else
+                                      document.getElementById("p1").innerHTML = "Websockets are not supported in your browser.";
+                                </script>  -->
+    <script src="script/routing.js"></script>
+    <script src="script/angular.js"></script>
+  </body>
+
+  </html>

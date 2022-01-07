@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html data-ng-app="accountApp" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <title data-ng-bind="'777sports &mdash; ' + title"></title>
+    <link rel="SHORTCUT ICON" href="images/favicon.png" />
+    <!-- <link rel="bookmark" href="favicon_skyEX.ico"> -->
+    <!-- <link rel="stylesheet" type="text/css" href="css/style.css"> -->
+    <!-- <link rel="stylesheet" href="css/toast.css">  -->
+    <!-- <link rel="stylesheet" href="jquery.datetimepicker.css"> -->
+    <!-- <link rel="stylesheet" href="css/toast.css">  -->
+    <link rel="stylesheet" type="text/css" href="css/Account_style.css" />
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script> -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script> -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular-cookies.js"></script> -->
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+  </head>
+
+  <body
+    class="sports777"
+    data-ng-controller="homeAccountController"
+    data-ng-init="userDescription()"
+  >
+    <!-- Change password pop start -->
+
+    <!-- pop start -->
+
+    <!-- <div id="loginBox" class="overlay" style="display: none;">
+    <div class="dialog-wrap-w login_to_go">
+        <div class="kv"></div>
+        <dl class="login-panel">
+            <dt>Please login to continue</dt>
+			<dd><input id="loginBoxLoginName" type="text" placeholder="Username"></dd>
+			<dd><input id="loginBoxPassword" type="password" placeholder="Password"></dd>
+			<dd class="valid-code"><input id="loginBoxValidCode" type="text" placeholder="Validation Code" maxlength="4"><img id="loginBoxAuthenticateImage" src="/verifycode.gr"></dd>
+			<dd><input id="loginBoxValid" name="valid" type="hidden" value="5082ea08-4e26-4895-8970-d0827f5a63db" maxlength="4"></dd>
+			<dd><a id="loginBoxLoginBtn" onclick="javascript: return LoginHandler.loginBoxCheck(event);" style="cursor: pointer" class="btn-send">Login<img class="icon-login" src="images/transparent.gif"></a></dd>
+            <dd id="loginBoxErrorMsg" class="error"></dd>
+        </dl>
+		<a id="close" style="cursor: pointer" class="close" onclick="javascript: LoginHandler.hideLoginBox();"></a>
+    </div>
+</div> -->
+
+    <!-- <div id="announcementBox" class="overlay">
+	<div class="announce-wrap news-wrap">
+		<div class="announce-header"></div>
+		<div class="announce-content">
+			<h2>Announcement</h2>
+			<p>We would like to inform all our partners that we will honour the winnings on FK Proleter v Radnicki Nis on the match odds market. This is a one off and a gesture of goodwill from us as Betfair has not paid us on the winnings. We need to stress that if this should happen again in the future, we will NOT pay out. From now on, we will stick to that policy regardless of what other skins decide or outcome on individual players account. Thank you for your understanding.</p>
+		</div>
+		<ul class="announce-footer">
+			<li><a id="announcementBox_close" href="#" class="btn-send">OK</a></li>
+		</ul>
+	</div>
+</div> -->
+
+    <!-- Top start -->
+    <div id="changePasswordModal" class="pop_bg" style="display: none">
+      <div class="pop_box">
+        <a class="close_pop" href="#" data-ng-click="Closepopup();"
+          >close_pop</a
+        >
+
+        <h3>Change Password</h3>
+
+        <dl class="form_list">
+          <dt>New Password</dt>
+          <dd>
+            <input
+              id="newPassword"
+              data-ng-model="NewPassword"
+              type="password"
+              placeholder="Enter"
+            />
+            <span class="must">＊</span>
+            <span id="newPasswordErrorText" class="error-text"></span>
+          </dd>
+          <dt>Confirm Password</dt>
+          <dd>
+            <input
+              id="newPasswordConfirm"
+              data-ng-model="ConfirmPassword"
+              type="password"
+              placeholder="Enter"
+            />
+            <span class="must">＊</span>
+            <span id="newPasswordConfirmErrorText" class="error-text"></span>
+          </dd>
+          <dt>Your Password</dt>
+          <dd>
+            <input
+              id="changePassword"
+              data-ng-model="YourPassword"
+              type="password"
+              placeholder="Enter"
+            />
+            <span class="must">＊</span>
+          </dd>
+          <dd>
+            <a
+              id="changePasswordBtn"
+              class="btn-send"
+              data-ng-click="ChangePwd()"
+              >Change</a
+            >
+          </dd>
+        </dl>
+      </div>
+    </div>
+    <div class="top">
+      <div class="header full-wrap">
+        <h1>
+          <!-- <a href="index.html" style="background-image: url(images/logo.png); height: 65px;  margin-top: -5px; background-repeat: no-repeat; background-size: contain;">Skyexchange365
+			</a> -->
+          <a href="#">777sports</a>
+        </h1>
+
+        <div id="searchWrap" class="search-wrap" style="display: none">
+          <div>
+            <input
+              id="searchInput"
+              class="search-input"
+              type="text"
+              placeholder="Search Events"
+            />
+            <button
+              id="searchClear"
+              class="search-clear"
+              style="display: none"
+            ></button>
+          </div>
+          <div id="searchResult" class="suggestion-wrap" style="display: none">
+            <ul id="searchList">
+              <li id="noMatching" style="display: none">
+                <p class="no-matching">No events found matching ...</p>
+              </li>
+              <li id="resultTemplate" style="display: none"><a></a></li>
+            </ul>
+          </div>
+        </div>
+
+        <ul class="account-wrap">
+          <li id="accountCredit">
+            Main :
+            <strong id="betCredit">{{currencyCode}} &nbsp;{{availBal | number: 2}}</strong>
+            &nbsp;Exposure
+            <strong id="totalExposure" class="red">{{exposure | number: 2}}</strong>
+          </li>
+          <li id="menuRefreshIcon" style="display: none">
+            <img
+              class="refresh-bar"
+              src="images/transparent.gif"
+              alt="Refresh"
+            />
+          </li>
+          <li class="head-refresh">
+            <a id="menuRefresh" data-ng-click="getBalance()" style="cursor: pointer"
+              >Refresh</a
+            >
+          </li>
+          <li class="account">
+            <a id="accountPopup" style="cursor: pointer">My Account</a>
+
+            <ul id="account_pop" style="display: none">
+              <li>
+                <h4>
+                  {{currentUser.name}} ({{currentUser.userName}})
+                  <span class="gmt" title="Time Zone">GMT+5:30</span>
+                </h4>
+              </li>
+
+              <li><a href="#!homeAccount" target="_blank">My Profile</a></li>
+
+              <li>
+                <a href="#!balance_Overview" target="_blank"
+                  >Balance Overview</a
+                >
+              </li>
+
+              <li>
+                <a href="#!accountStatement" target="_blank"
+                  >Account Statement</a
+                >
+              </li>
+
+              <!-- <li>
+                <a href="#!casinoreport" target="_blank">Casino Report</a>
+              </li> -->
+
+              <li><a href="#!mybets" target="_blank">My Bets</a></li>
+              <li><a href="#!betsHistory" target="_blank">Bets History</a></li>
+
+              <li>
+                <a href="#!profitLoss" target="_blank">Profit &amp; Loss </a>
+              </li>
+
+              <li><a href="#!loghistory" target="_blank">Activity Log </a></li>
+
+              <li class="logout">
+                <a id="logout" href="index.html"
+                  >LOGOUT<img src="images/transparent.gif" alt="LOGOUT"
+                /></a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Menu Wrap -->
+      <div class="menu-wrap">
+        <div class="full-wrap">
+          <ul id="tabMenu" class="menu">
+            <li>
+              <a href="index.html"
+                ><i
+                  class="fa fa-home"
+                  aria-hidden="true"
+                  style="margin-top: 2px"
+                ></i
+                >&nbsp; Home</a
+              >
+            </li>
+            <li>
+              <a href="index.html#!/inplay"
+                ><i
+                  class="fa fa-play"
+                  aria-hidden="true"
+                  style="margin-top: 2px"
+                ></i
+                >&nbsp; In-Play</a
+              >
+            </li>
+            <li>
+              <a href="index.html#!/multi-market"
+                ><i
+                  class="fa fa-thumb-tack"
+                  aria-hidden="true"
+                  style="margin-top: 2px"
+                ></i
+                >&nbsp; Multi Markets</a
+              >
+            </li>
+            <li>
+              <a href="index.html#!/cricket"
+                ><i
+                  class="fa fa-trophy"
+                  aria-hidden="true"
+                  style="margin-top: 2px"
+                ></i
+                >&nbsp; Cricket</a
+              >
+            </li>
+            <li>
+              <a href="index.html#!/soccer"
+                ><i
+                  class="fa fa-futbol-o"
+                  aria-hidden="true"
+                  style="margin-top: 2px"
+                ></i
+                >&nbsp; Soccer</a
+              >
+            </li>
+            <li>
+              <a href="index.html#!/tennis"
+                ><i
+                  class="fa fa-dribbble"
+                  aria-hidden="true"
+                  style="margin-top: 2px"
+                ></i
+                >&nbsp; Tennis</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!--    <div class="menu-wrap">
+        <div class="full-wrap">
+
+            <ul id="tabMenu" class="menu">
+                <li><a id="menu_Home" href="/exchange/member/index.jsp">Home
+                </a></li>
+				<li><a id="menu_InPlay" href="/exchange/member/inplay/index.jsp">In-Play</a></li>
+				<li><a id="menu_MultiMarkets" href="/exchange/member/multiMarkets">Multi Markets</a></li>
+
+                
+	                
+	                	<li><a id="menu_CRICKET" href="/exchange/member/index.jsp?eventType=4">Cricket</a></li>
+	                
+	                
+	                
+	                	<li><a id="menu_SOCCER" href="/exchange/member/index.jsp?eventType=1">Soccer</a></li>
+	                
+	                
+	                
+	                	<li><a id="menu_TENNIS" href="/exchange/member/index.jsp?eventType=2">Tennis</a></li>
+	                
+	                
+	                
+						
+							<li><a id="menu_ELECTION" href="/exchange/member/fullMarket?eventType=2378962&amp;eventId=-2378962&amp;marketId=-2378962">Election</a></li>
+						
+	                
+	                
+
+            </ul>
+
+            <ul class="setting-wrap">
+                
+                
+				<li><a id="oneClickSetting" class="one_click" style="cursor:pointer; display: none;"><img src="images/transparent.gif">One Click Bet</a></li>
+                
+                
+				<li><a id="openStreaming" class="live-menu"><img src="images/transparent.gif">Live Streaming</a></li>
+				<li><a id="slipSet" class="setting" style="cursor: pointer">Setting <img src="images/transparent.gif"></a></li>
+            </ul>
+
+            
+            <div id="set_pop" class="slip_set-pop" style="display: none;">
+                <div id="coinList" class="set-content">
+
+                    
+
+                    
+                    <dl class="odds-set">
+                        <dd class="col-defult">
+							<label for="defult_stake"><strong>Default stake</strong></label>
+							<input id="userCoin" class="stake-input" type="text" maxlength="7" value="">
+                        </dd>
+                    </dl>
+                    
+
+                    
+                    <dl id="stakeSet" class="stake-set">
+						<dt>Stake</dt>
+                        <dd><a id="coin_1" style="cursor:pointer;" class="btn select">10</a></dd>
+                        <dd><a id="coin_2" style="cursor:pointer;" class="btn select">30</a></dd>
+                        <dd><a id="coin_3" style="cursor:pointer;" class="btn select">50</a></dd>
+                        <dd><a id="coin_4" style="cursor:pointer;" class="btn">100</a></dd>
+                        <dd><a id="coin_5" style="cursor:pointer;" class="btn select">200</a></dd>
+                        <dd><a id="coin_6" style="cursor:pointer;" class="btn">300</a></dd>
+                        <dd><a id="coin_7" style="cursor:pointer;" class="btn select">500</a></dd>
+                        <dd><a id="coin_8" style="cursor:pointer;" class="btn select">1000</a></dd>
+						<dd class="col-edit"><a id="edit" class="btn-edit">Edit <img src="images/transparent.gif"></a></dd>
+                    </dl>
+                    <dl id="editCustomizeStakeList" class="stake-set" style="display: none;">
+						<dt>Stake</dt>
+						<dd><input id="stakeEdit_1" class="stake_edit-input" type="text" value="" maxlength="7"></dd>
+						<dd><input id="stakeEdit_2" class="stake_edit-input" type="text" value="" maxlength="7"></dd>
+						<dd><input id="stakeEdit_3" class="stake_edit-input" type="text" value="" maxlength="7"></dd>
+						<dd><input id="stakeEdit_4" class="stake_edit-input" type="text" value="" maxlength="7"></dd>
+						<dd><input id="stakeEdit_5" class="stake_edit-input" type="text" value="" maxlength="7"></dd>
+						<dd><input id="stakeEdit_6" class="stake_edit-input" type="text" value="" maxlength="7"></dd>
+						<dd><input id="stakeEdit_7" class="stake_edit-input" type="text" value="" maxlength="7"></dd>
+						<dd><input id="stakeEdit_8" class="stake_edit-input" type="text" value="" maxlength="7"></dd>
+                        <dd class="col-edit"><a id="ok" class="btn-send">OK</a></dd>
+                    </dl>
+                    
+
+                    <dl class="odds-set">
+						<dt>Odds</dt>
+                        <dd>
+							<input id="enableSparkCheck" type="checkbox"><label for="enableSparkCheck">Highlight when odds change</label>
+                        </dd>
+                    </dl>
+                    <ul class="btn-wrap">
+						<li><a id="closeSet" class="btn" style="cursor:pointer;">Cancel</a></li>
+						<li class="col-send"><a id="coinSave" class="btn-send" style="cursor:pointer;">Save</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            
+        </div>
+    </div> -->
+    </div>
+    <!-- Top end -->
+
+    <div class="main_wrap">
+      <!-- Left Column -->
+      <div class="col-left">
+        <!-- Sub Menu and Path -->
+        <div class="sub_path">
+          <!-- Path -->
+          <div class="path">
+            <a href="#path-pop" class="path-back">...</a>
+
+            <ul>
+              <li class="path-last"><a href="#">My Account</a></li>
+            </ul>
+          </div>
+          <!-- Path Pop Up-->
+          <ul id="path-pop" class="path-pop"></ul>
+
+          <!-- Sub Menu -->
+          <ul class="menu-list">
+			<li><a id="sub_menu_detail" href="#!homeAccount" class="select">My Profile</a></li>
+			<li><a id="sub_menu_summary" href="#!balance_Overview">Balance Overview</a></li>
+			<li><a id="sub_menu_accountCashStatement_log" href="#!accountStatement">Account Statement
+			   </a>
+			</li>
+			 <!-- <li><a id="sub_menu_casino_resport" href="#!casinoreport">Casino Report</a></li> -->
+			<li><a id="sub_menu_my_bets" href="#!mybets">My Bets</a></li>
+			<li><a id="sub_menu_activity_log" href="#!loghistory">Activity Log</a></li>
+		 </ul>
+        </div>
+      </div>
+
+      <!-- Center Column -->
+      <ng-view></ng-view>
+    </div>
+    <!-- <script  src="jquery.datetimepicker.full.js"></script> -->
+    <!-- <script src="js/jquery.toast.js"></script> -->
+    
+    <script src="js/Account_common.js"></script>
+    <script src="script/Account_routing.js"></script>
+    <script src="app/filters/titlecase.js"></script>
+    <script src="app/filters/pagination.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("#accountPopup").on("click", function (event) {
+          event.stopPropagation();
+          $("#account_pop").toggle();
+        });
+        $(document).on("click", function () {
+          $("#account_pop").hide();
+        });
+      });
+    </script>
+  </body>
+</html>

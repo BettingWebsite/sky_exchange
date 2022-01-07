@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="17px" height="4px" viewBox="0 0 17 4" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.2 (39069) - http://www.bohemiancoding.com/sketch -->
+    <title>icon-minus</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="17" height="3" rx="1.5"></rect>
+        <filter x="-2.9%" y="-16.7%" width="105.9%" height="166.7%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 1 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="main" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="markets-odds" transform="translate(-21.000000, -330.000000)">
+            <g id="pop-up" transform="translate(-1.000000, 302.000000)">
+                <g id="odds" transform="translate(8.000000, 10.000000)">
+                    <g id="btn_decrese">
+                        <g id="Group-2" transform="translate(14.000000, 18.000000)">
+                            <g id="icon-minus">
+                                <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                                <use fill="#1F72AC" fill-rule="evenodd" xlink:href="#path-1"></use>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

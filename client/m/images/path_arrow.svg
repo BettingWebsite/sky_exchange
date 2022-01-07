@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="7px" height="25px" viewBox="0 0 7 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+    <title>path_arrow</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#2F424D" offset="0%"></stop>
+            <stop stop-color="#141E21" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="9wickets-mobile" transform="translate(-67.000000, -56.000000)">
+            <g id="Group" transform="translate(0.000000, 56.000000)">
+                <g id="path_arrow">
+                    <g transform="translate(67.000000, 0.000000)">
+                        <polygon fill="url(#linearGradient-1)" points="0 12.5 0 0 1.18672985 0 7.04085603 12.5 1.18672985 25 0 25"></polygon>
+                        <polygon fill="#7E97A7" points="5.85412618 12.5 0 0 1.18672985 0 7.04085603 12.5 1.18672985 25 0 25"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

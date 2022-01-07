@@ -1,0 +1,169 @@
+<style type="text/css">
+  table {
+    font-size: 12px;
+  }
+</style>
+
+<!-- Left Column -->
+<div class="col-left">
+  <!-- Sub Menu and Path -->
+  <div class="sub_path">
+    <!-- Path -->
+    <div class="path">
+      <!--<a href="#path-pop" class="path-back">...</a>-->
+      <ul>
+        <li class="path-last"><a href="javascript:void(0)">My Account</a></li>
+      </ul>
+    </div>
+    <!-- Path Pop Up-->
+    <ul id="path-pop" class="path-pop"></ul>
+    <!-- Sub Menu -->
+    <ul class="menu-list">
+      <li><a id="sub_menu_detail" href="#!homeAccount">My Profile</a></li>
+      <li>
+        <a id="sub_menu_summary" href="#!balance_Overview">Balance Overview</a>
+      </li>
+      <li>
+        <a id="sub_menu_accountCashStatement_log" href="#!accountStatement"
+          >Account Statement
+        </a>
+      </li>
+      <!-- <li><a id="sub_menu_casino_resport" href="#!casinoreport">Casino Report</a></li> -->
+      <li><a id="sub_menu_my_bets" href="#!mybets">My Bets</a></li>
+      <li>
+        <a id="sub_menu_activity_log" href="#!loghistory" class="select"
+          >Activity Log</a
+        >
+      </li>
+    </ul>
+  </div>
+</div>
+<!-- Center Column -->
+<!-- Center Column -->
+<div class="col-center report" data-ng-init="getActivityLog()">
+  <!-- Loading Wrap -->
+  <!--  <div id="loading" class="loading-wrap" style="display: none;margin-top: 100px">
+               <ul class="loading">
+                  <li><img src="images/loading40.gif" alt="load"></li>
+                  <li>Loading...</li>
+               </ul>
+            </div> -->
+  <div id="loading" class="overlay" style="display: none; margin-top: 100px">
+    <div class="loading-wrap">
+      <div class="loading">
+        <div class="loader">
+          <div class="ball ball-1"></div>
+          <div class="ball ball-2"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Message -->
+  <div id="message" class="message-wrap success">
+    <a class="btn-close">Close</a>
+    <p></p>
+  </div>
+  <!-- <script language="JavaScript" type="text/javascript">
+               (function () {
+                 $j('.btn-close').click(function () {
+                   $j('#message').hide();
+                 });
+               })();
+            </script> -->
+  <h2>Activity Log</h2>
+  <table style="display: none">
+    <tbody>
+      <tr>
+        <td class="align-L" id="loginDate"></td>
+        <td class="align-L"><span class="green"></span></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- Report Table -->
+  <table class="table01">
+    <tbody>
+      <tr>
+        <th style="width: 18%" class="align-L">Login Date &amp; Time</th>
+        <th style="width: 20%" class="align-L">Login Status</th>
+        <th style="width: 10%">IP Address</th>
+        <th style="width: 20%">ISP</th>
+        <th style="width: 40%">City/State/Country</th>
+      </tr>
+    </tbody>
+    <tbody id="content">
+      <tr data-ng-if="ActivityDataList.length==0">
+        <td class="no-data" colspan="5">
+          <p>No Data Found</p>
+        </td>
+      </tr>
+      <!-- <tr data-ng-if="loading==true">
+                     <td class="no-data" colspan="5">
+                        <h3 style="text-align: center;">Loading....</h3>
+                     </td>
+                  </tr> -->
+      <tr
+        data-ng-repeat="ActivityData in ActivityDataList | startFrom:currentPage*pageSize | limitTo:pageSize"
+      >
+        <td class="align-L">
+          {{ActivityData.loginTime | date: 'yyyy-MM-dd HH:mm:ss'}}
+        </td>
+        <td class="align-L" data-ng-class="{'green': ActivityData.loginStatus === 1, 'red': ActivityData.loginStatus === 0}">
+          {{loginStatusMap[ActivityData.loginStatus]}}
+        </td>
+        <td>{{ActivityData.loginIp}}</td>
+        <td>
+          {{(ActivityData.ISP==null || ActivityData.ISP=="")?' - ':
+          ActivityData.ISP}}
+        </td>
+        <td>
+          {{(ActivityData.origin==null ||
+          ActivityData.origin=="")?'-':ActivityData.origin}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- Pages List -->
+  <!--  <script type="text/javascript" src="/js/util/PageUtil.js?v=20180111_1515639000000"></script> -->
+  <div>
+    <ul id="pageNumberContent" class="pages">
+      <li id="prev">
+        <a
+          href="javascript:void(0);"
+          class="disable"
+          disabled="true"
+          data-ng-if="currentPage == 0"
+          >Prev</a
+        >
+        <a
+          href="javascript:void(0);"
+          class="btn"
+          data-ng-if="currentPage !== 0"
+          ng-click="prev()"
+          >Prev</a
+        >
+      </li>
+      <li>
+        {{currentPage+1}}/{{numberOfPages()}}
+      </li>
+      <li id="next">
+        <a
+        href="javascript:void(0);"
+          data-ng-if="currentPage >= ActivityDataList.length/pageSize - 1"
+          class="disable"
+          disabled="disabled"
+          >Next</a
+        >
+        <a
+        href="javascript:void(0);"
+          data-ng-if="currentPage < ActivityDataList.length/pageSize - 1"
+          class="btn"
+          data-ng-click="next()"
+          >Next</a
+        >
+      </li>
+    </ul>
+  </div>
+</div>

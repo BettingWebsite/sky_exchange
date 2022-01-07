@@ -1,0 +1,1938 @@
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="myApp">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<script async="" src="https://www.google-analytics.com/analytics.js"></script><script>document.domain = 'skyexch.com';</script>
+<title>SKYEXCH9</title>
+
+<link rel="SHORTCUT ICON" href="favicon_skyEX.ico">
+<link rel="bookmark" href="favicon_skyEX.ico">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" href="css/toast.css"> 
+ <!-- <link href="css/toastr.min.css" rel="stylesheet"> -->
+   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/> -->
+  <!-- <link rel="stylesheet" href="jquery.datetimepicker.css"> -->
+ <!-- <link rel="stylesheet" type="text/css" href="css/terms_conditions.css"> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular-aria.min.js"></script>
+<script data-require="ui-bootstrap@*" data-semver="0.12.1" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular-cookies.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular-sanitize.js"></script>
+ <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> -->
+
+ <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+</head>
+<style>
+  .skyexchange .header h1 {
+    margin-top: -30px;
+    margin-left: -10px;
+}
+
+.skyexchange .header h1 {
+    width: 158px;
+    height: 83px;
+    background: url() no-repeat;
+}
+</style>
+<body class="skyexchange" ng-controller="mainController" ng-init="userDescription();Fund();SportsList();GetSettings();getStakeSettings();GetBets()">
+
+
+<!-- Top start -->
+<div class="top">
+
+    <div class="header full-wrap">
+
+        <h1><a href="#" style="background-image: url('images/skyexchange/logo.png');">SKYEXCH9
+        </a></h1>
+        
+        <ul class="login-wrap" ng-class="showLoginDetails ? 'showLogin' : 'hideLogin'">
+      <li class="user error">
+        <input id="loginName" type="text" placeholder="Username" ng-model="logininfo.username"></li>
+      <li>
+        <input id="password" type="password" placeholder="Password" ng-model="logininfo.pwd"></li>
+            <li class="valid-code">
+        <input id="validCode" type="text" placeholder="Validation" maxlength="4">
+                <img id="authenticateImage" src="https://bxawscf.skyexch.com/verifycode.gr?v=1548052714485">
+            </li>
+      <li><input id="valid" name="valid" type="hidden" value="1af3fcd7-a5d3-4b01-876e-d336fb343a85"></li>
+            <li>
+        <a  id="loginBtn" class="btn-login" ng-click="login();">Login
+                    <img class="icon-login" src="images/transparent.gif?v=1548051109718">
+                </a>
+            </li>
+            <li><a class="btn-signup" ng-click="logout()">Sign up</a></li>
+            <li id="errorMsg" class="error" style="display:none"></li>
+        </ul>
+
+      
+        
+
+    </div>
+
+    <!-- Menu Wrap -->
+    <div class="menu-wrap">
+        <div class="full-wrap">
+
+         <ul id="tabMenu" class="menu">
+            <li><a class="select" href="#!">Home</a></li>
+        <li><a href="#!inplay">In-Play</a></li>
+        <li><a href="#!multiMarkets">Multi Markets</a></li>
+            <li><a href="#!cricket">Cricket</a></li>
+          <li><a  href="#!soccer">Soccer</a></li>
+          <li><a href="#!tennis">Tennis</a></li>
+         </ul>
+
+            <ul class="setting-wrap">     
+        <li><a id="oneClickSetting" class="one_click" style="cursor: pointer;"><img src="/images/transparent.gif">One Click Bet</a></li>
+        <li><a id="openStreaming" class="live-menu"><img src="/images/transparent.gif">Live Streaming</a></li>
+        <li><a id="login-trigger" class="setting" style="cursor: pointer">Setting <img src="/images/transparent.gif"></a></li>
+            </ul>
+
+            
+            <div id="login-content" class="slip_set-pop" style="display: none;">
+                <div id="coinList" class="set-content">
+                    
+                    <dl class="odds-set">
+                        <dd class="col-defult">
+              <label for="defult_stake"><strong>Default stake</strong></label>
+              <input id="userCoin" class="stake-input" type="text" maxlength="7" min="0" ng-model="default_stake">
+                        </dd>
+                    </dl>
+                   <dl id="stakeSet" class="stake-set" ng-if="show_close">
+                     <dt>Stake</dt>
+                     <dd ng-repeat="stake in stakeList track by $index"><a ng-model="stakeList[$index]" style="cursor:pointer;" class="btn select">{{stake}}</a></dd>
+                     <!--  <dd><a  style="cursor:pointer;" class="btn select" ng-model="stake2">{{stake2}}</a></dd>
+                        <dd><a  style="cursor:pointer;" class="btn select" ng-model="stake3">{{stake3}}</a></dd>
+                        <dd><a  style="cursor:pointer;" class="btn" ng-model="stake4">{{stake4}}</a></dd>
+                        <dd><a  style="cursor:pointer;" class="btn select" ng-model="stake5">{{stake5}}</a></dd>
+                        <dd><a  style="cursor:pointer;" class="btn" ng-model="stake6">{{stake6}}</a></dd>
+                        <dd><a  style="cursor:pointer;" class="btn select" ng-model="stake7">{{stake7}}</a></dd>
+                        <dd><a  style="cursor:pointer;" class="btn select" ng-model="stake8">{{stake8}}</a></dd>
+                        <dd><a  style="cursor:pointer;" class="btn select" ng-model="stake9">{{stake9}}</a></dd>
+                        <dd><a  style="cursor:pointer;" class="btn select" ng-model="stake10">{{stake10}}</a></dd> -->
+                     <!--  <dd class="col-edit"><a id="ok" class="btn-send" style="display: none;" ng-click="editStakeSettings()">OK
+                        <img src="/images/transparent.gif" alt="ok"></a>
+                        </dd> -->
+                     <dd class="col-edit" style="padding-top: 5px;"><a id="edit" class="btn-edit" ng-click="showEditDiv()" >Edit <img src="/images/transparent.gif" alt="edit" style="text-align: center;"></a></dd>
+                  </dl>
+                    <dl  id="editCustomizeStakeList" class="stake-set" ng-if="!show_close">
+                     <dt>Stake</dt>
+                     <dd ng-repeat="stake in stakeList track by $index"><input id="stake{{$index}}" class="stake_edit-input" type="text" maxlength="7" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57" value="{{stake}}"></dd>
+                     <!--   <dd><input  class="stake_edit-input" type="text" value="{{stake2}}" maxlength="7" ng-model="stake2"></dd>
+                        <dd><input  class="stake_edit-input" type="text" value="{{stake3}}" maxlength="7" ng-model="stake3"></dd>
+                        <dd><input  class="stake_edit-input" type="text" value="{{stake4}}" maxlength="7" ng-model="stake4"></dd>
+                        <dd><input  class="stake_edit-input" type="text" value="{{stake5}}" maxlength="7" ng-model="stake5"></dd>
+                        <dd><input  class="stake_edit-input" type="text" value="{{stake6}}" maxlength="7" ng-model="stake6"></dd>
+                        <dd><input  class="stake_edit-input" type="text" value="{{stake7}}" maxlength="7" ng-model="stake7"></dd>
+                        <dd><input  class="stake_edit-input" type="text" value="{{stake8}}" maxlength="7" ng-model="stake8"></dd>
+                        <dd><input  class="stake_edit-input" type="text" value="{{stake9}}" maxlength="7" ng-model="stake9"></dd>
+                        <dd><input  class="stake_edit-input" type="text" value="{{stake10}}" maxlength="7" ng-model="stake10"></dd>-->
+                     <dd class="col-edit"><a id="ok" class="btn-send" ng-click="editStakeSettings()">OK<img src="/images/transparent.gif" alt="ok"></a></dd>
+                  </dl>
+                  <dl class="odds-set">
+                     <dt>Odds</dt>
+                     <dd>
+                        <input id="odds" type="checkbox" ng-model="oddsval"><label for="enableSparkCheck">Highlight when odds change</label>
+                     </dd>
+                  </dl>
+                  <ul class="btn-wrap">
+                     <li><a id="cancel1" class="btn" ng-click="cancelSetting()" style="cursor:pointer;">Cancel</a></li>
+                     <li class="col-send" ng-click="SaveSetting()"><a id="coinSave" class="btn-send" style="cursor:pointer;">Save</a></li>
+                  </ul>
+                </div>
+            </div>
+
+            
+        </div>
+    </div>
+<!-- Top end -->
+<div class="full-wrap">
+
+  <!-- Left Column -->
+  <div class="col-left" style="">
+
+
+
+    <!-- Sub Menu and Path -->
+
+    <div class="sub_path" style="height: calc(100% - 0px);">
+
+      <!-- Path -->
+       <div class="path">
+                  <a class="path-back" id="gott">...</a>
+                  <ul id="pathBackUl">
+               
+                     <li class=""  ng-click="SportsList()">
+                        <a  href="">Sports</a>
+                     </li>
+                     <li class="" ng-repeat="item in pathList track by $index">
+                        <a ng-if="item.level==1" ng-click="TournamentList(item.id,item.name)">{{item.name}}</a>
+                        <a ng-if="item.level==2" ng-click="eventList(item.id,item.name)">{{item.name}}</a>
+                        <a ng-if="item.level==3" ng-click="MarketList(item.id,item.name)">{{item.name}}</a>
+                     </li>
+                    
+                  </ul>
+               </div>
+
+      <!-- Path Pop Up-->
+      <ul class="path-pop" id="show">
+                  <li class="node"><a  href="" ng-click="SportsList()">Sports</a></li>
+                  <li class="" ng-repeat="item in pathList track by $index">
+                     <a ng-if="item.level==1" ng-click="TournamentList(item.id,item.name)">{{item.name}}</a>
+                     <a ng-if="item.level==2" ng-click="eventList(item.id,item.name)">{{item.name}}</a>
+                     <a ng-if="item.level==3" ng-click="MarketList(item.id,item.name)">{{item.name}}</a>
+                  </li>
+                  <!--  <li class="path-last" ng-repeat="item in pathList" ng-click="eventList()">
+                     <a>{{item.event}}</a>
+                     </li>
+                     <li class="path-last" ng-repeat="item in pathList" ng-click="MarketList()">
+                     <a>{{item.market}}</a>
+                     </li> -->
+               </ul>
+
+      <!-- Sub Menu -->
+      <ul id="listBoardLoading" class="loading" style="display:none;">
+        <li><img src="/images/loading40.gif"></li>
+        <li>Loading...</li>
+      </ul>
+
+      <!-- Sub Menu -->
+       <ul  class="menu-list">
+                  <li  style="display:none">
+                     <a  class="Go" style="cursor: pointer;display: none;">Go</a>
+                     <a  style="cursor: pointer"></a>
+                  </li>
+                  <li  style="display: list-item;" istodayscard="0" todayscardgroup="1" title="{{item.name}}" ng-repeat="item in sport track by $index" ng-click="TournamentList(item.id,item.name)" ng-if="showSportList">
+                     <a  class="Go" style="cursor: pointer;display: none;" type="EVENT_TYPE">Go</a>
+                     <a  style="cursor: pointer" type="EVENT_TYPE">{{item.name}}</a>
+                  </li>
+                  <li  style="display: list-item;" istodayscard="0" todayscardgroup="1" title="{{item.name}}" ng-repeat="item in tournament track by $index" ng-click="eventList(item.id,item.name)" ng-if="showTournamentList">
+                     <a  class="Go" style="cursor: pointer;display: none;" type="EVENT_TYPE">Go</a>
+                     <a  style="cursor: pointer" type="EVENT_TYPE">{{item.name}}</a>
+                  </li>
+                  <li  style="display: list-item;" istodayscard="0" todayscardgroup="1" title="{{item.name}}" ng-repeat="item in Event track by $index" ng-click="MarketList(item.id,item.name)" ng-if="showEventList">
+                     <a  class="Go" style="cursor: pointer;display: none;" type="EVENT_TYPE">Go</a>
+                     <a  style="cursor: pointer" type="EVENT_TYPE" >{{item.name}}</a>
+                  </li>
+                  <li  style="display: list-item;" istodayscard="0" todayscardgroup="1" title="{{item.name}}" ng-repeat="item in Market track by $index"  ng-if="showMarketList">
+                     <a  class="Go" style="cursor: pointer;display: none;" type="EVENT_TYPE">Go</a>
+                     <a href="#!full-market" style="cursor: pointer" type="EVENT_TYPE">{{item.name}}</a>
+                  </li>
+               </ul>
+
+
+
+    </div>
+  </div>
+
+<!-- index start -->
+  <!-- Center Column -->
+  <div id="centerColumn" class="col-center">
+
+    <!-- Message -->
+    
+
+<!-- Loading Wrap -->
+<div id="loading" class="loading-wrap" style="display:none">
+  <ul class="loading">
+    <li><img src="/images/loading40.gif"></li>
+    <li>Loading...</li>
+  </ul>
+</div>
+
+<!-- Message -->
+<div id="message" class="message-wrap success">
+  <a class="btn-close">Close</a>
+  <p></p>
+</div>
+
+<!-- <script language="JavaScript" type="text/javascript">
+  (function () {
+    $j('.btn-close').click(function () {
+      $j('#message').hide();
+    });
+  })();
+</script> -->
+    
+    <div id="oneClickLoading" class="loading-wrap" style="display:none">
+      <ul class="loading">
+        <li><img src="/images/loading40.gif"></li>
+        <li id="oneClickTime">Place Bets</li>
+      </ul>
+    </div>
+      
+<!-- Game Head -->
+
+    <div id="overWrap" class="over-wrap" style="height: calc(100% - 0px)">
+
+      <ng-view></ng-view>
+
+      <div class="footer">
+        
+        <!-- Support Info -->
+        <div class="support-wrap">
+          <h3>Support</h3>
+          <dl class="support-mail">
+            <dt><img src="images/transparent.gif" title="Email"></dt>
+            <dd><a href="mailto:info@skyexchange.com">info@skyexchange.com</a></dd>
+          </dl>
+          <dl class="support-app">
+            <dt><img src="images/transparent.gif" title="WhatsApp"></dt>
+            <dd><span>WhatsApp</span> <a href="https://wa.me/14238133005"> +1 (423) 813-3005</a></dd>
+          </dl>
+          <dl class="support-telegram">
+            <dt><img src="images/transparent.gif" title="Telegram"></dt>
+            <dd><span>Telegram</span><a href="https://t.me/live777sports">https://t.me/live777sports</a></dd>
+          </dl>
+        </div>
+
+        <!-- Sky Power by -->
+        <div class="power-wrap">
+          <h3><span>Powered by</span><img src="images/transparent.gif"></h3>
+          <p><a href="http://www.gaming-curacao.com/validation/sky-infotech-limited/" target="_blank">Sky Infotech Limited</a> is licensed and regulated by Government of Curacao under license no 365/JAZ Sub-License GLH-OCCHKTW0707072017.</p>
+        </div>
+        
+        
+                
+        <!-- Browser Support -->
+        <!-- <div class="browser-wrap">
+          <img src="/images/transparent.gif"><br>
+          Our website works best in the newest and last prior version of these browsers: <br>Google Chrome. Firefox
+        </div> -->
+        
+        <!-- Policy and TC link -->
+        <ul class="policy-link">
+          <li><a onclick="window.open('Privacy_Policy.html','_blank', config='height=600,width=800,location=no');">Privacy Policy</a></li>
+          <li><a onclick="window.open('terms_conditions.html','_blank', config='height=600,width=800,location=no');">Terms and Conditions</a></li>
+          <li><a onclick="window.open('rules_regulations.html','_blank', config='height=600,width=800,location=no');">Rules and Regulations</a></li>
+        </ul>
+        
+        <ul class="RnR-link">
+          <li><a onclick="window.open('/exchange/member/rulesAndRegulations.jsp','_blank', config='height=600,width=800,location=no');">Rules and Regulations</a></li>
+        </ul>
+        
+        
+        
+      </div>
+
+    </div>
+    
+    
+   <div class="one_click-wrap">
+               <div class="overlay" name="oneClickBetDialog" style="display: none;"></div>
+               <div id="oneClickBetDialog" class="dialog-wrap white-halo" style="display: none;">
+                  <h4>One Click Bet ON</h4>
+                  <div class="dialog-content">
+                     <p>Stake selected will be placed immediately once you click on the market odds.
+                        <br><span class="attention">
+                        Attention: Back/Lay at your own risk</span>
+                     </p>
+                  </div>
+                  <ul class="btn-wrap break">
+                     <li><a id="ok" class="btn-send" style="cursor:pointer;">OK</a></li>
+                  </ul>
+                  <img class="arrow-dialog" src="/images/transparent.gif">
+               </div>
+               <div id="oneClickBetStakeBox" class="one_click-setting" style="display: none;">
+                  <h4>One Click Bet Stake</h4>
+                  <ul class="one_click-stake">
+                     <li ng-repeat="oneStake in oneClickStake track by $index"><a class="btn" ng-class="{'select':$index==selected_Stake_btn}" name="betStake" index="{{$index}}" ng-click="selectStakeButton($index)" style="cursor:pointer;">{{oneStake}}</a></li>
+                     <!-- <li><a class="btn" name="betStake" index="1" style="cursor:pointer;">200</a></li>
+                        <li><a class="btn" name="betStake" index="2" style="cursor:pointer;">300</a></li>
+                        <li><a class="btn" name="betStake" index="3" style="cursor:pointer;">500</a></li> -->
+                  </ul>
+                  <a id="one_click_edit" ng-click="showOneClickEdit()" class="a-edit" style="cursor:pointer;">Edit<img src="/images/transparent.gif"></a>
+               </div>
+               <div id="editOneClickBetStakeBox" class="one_click-setting" style="display:none;">
+                  <h4>Edit One Click Bet Stake</h4>
+                  <ul class="one_click-stake">
+                     <li ng-repeat="oneStake in oneClickStake track by $index"><input type="text" ng-model="oneStake" name="editBetStake" ng-change="changeStakeVal(oneStake,$index)" index="{{$index}}" value="{{oneStake}}" maxlength="6"></li>
+                     <!-- <li><input type="text" name="editBetStake" index="1" value=""></li> -->
+                     <!-- <li><input type="text" name="editBetStake" index="2" value=""></li> -->
+                     <!-- <li><input type="text" name="editBetStake" index="3" value=""></li> -->
+                  </ul>
+                  <a id="one_click_save" ng-click="saveOneClickStake()" class="btn-send" style="cursor:pointer;">Save</a>
+               </div>
+            </div>
+    
+
+  </div>
+
+<!-- index end -->
+
+  <!-- Right Column -->
+  <div class="col-right">
+
+ <div class="slip-wrap live_tv close" style="display: block;" ng-show="showLiveTv">
+               <h3>
+                  <a id="livetv" class="to-expand" toggle-class style="cursor:pointer;">Live TV</a>
+               </h3>
+               <ul class="livetvs" ng-if="liveTvContent">
+                  <div class="bet-dtl" id="sprt-nws">
+                     <!-- player --> 
+                     <div style="margin-top:0px" class="featured-box featured-box-secundary default">
+                        <div id="showLiveTvPro" style="padding-left:0px;padding-top:0px;" align=center>
+                           <!-- <u1 id="p2"></u1>
+                              <script>
+                                if ( "MediaSource" in window && "WebSocket" in window ){
+                                  RunPlayer( "p2", 350, 250, "93.115.26.162", "5119", false, "HDMI1", "", true, true, 0.01, "", false );
+                                }
+                                else
+                               {
+                                   document.getElementById( "p2" ).innerHTML = "Websockets are not supported in your browser.";
+                               }
+                              </script> -->
+                        </div>
+                     </div>
+                     <!-- end of player !-->
+                  </div>
+               </ul>
+            </div>
+             <div id="betslip_open" class="slip-wrap no-open-bet_slip close" style="display: block;">
+               <h3>
+                  <a id="eventType" class="to-expand" toggle-class style="cursor:pointer;">Bet Slip</a>
+               </h3>
+               <ul id="loading_place_bet" class="loading" style="display: none">
+                  <li><img src="images/loading40_39941.gif"></li>
+                  <li >Placing bet please wait...</li>
+               </ul>
+               <div class="message-bet">
+                  <h4  class="error" style="display: none"></h4>
+                  <p id="betMsg" class="warning" style="display: none"></p>
+               </div>
+               <div  ng-if="backBetSlipDataArray.length < 1 && layBetSlipDataArray.length < 1">
+                  <p  style="display: block;">Click on the odds to add selections to the betslip.</p>
+               </div>
+               <div  class="bet_slip" style="display: block;">
+                  <div  class="slip-list" style="max-height: calc(100% - 60px);">
+                     <dd  class="col-stake_list" style="display: none;">
+                        <ul>
+                           <li><a class="btn"  stake="100" style="cursor:pointer;">100</a></li>
+                           <li><a class="btn"  stake="200" style="cursor:pointer;">200</a></li>
+                           <li><a class="btn"  stake="300" style="cursor:pointer;">300</a></li>
+                           <li><a class="btn"  stake="1000" style="cursor:pointer;">1000</a></li>
+                           <li><a class="btn"  stake="5000" style="cursor:pointer;">5000</a></li>
+                           <li><a class="btn"  stake="10000" style="cursor:pointer;">10000</a></li>
+                        </ul>
+                     </dd>
+                     <div  class="tips-popup" style="display: none">min 1.01</div>
+                     <div  class="tips-popup" style="display: none">Min 4.00</div>
+                     <ul ng-if="backBetSlipDataArray.length > 0 || yesBetSlipData.length > 0 || noBetSlipData.length > 0"  class="slip-head" name="slipHeader" style="display: block;">
+                        <li class="col-bet">Back (Bet For)</li>
+                        <li  class="col-odd">Odds</li>
+                        <li  class="col-odd" style="display: none">Unit:Runs</li>
+                        <li class="col-stake">Stake</li>
+                        <li class="col-profit">Profit</li>
+                     </ul>
+                     <!--   <ul id="laySlipHeader" class="slip-head" name="slipHeader" style="">
+                        <li class="col-bet">Lay (Bet Against)</li>
+                        <li id="oddsHeader" class="col-odd">Odds</li>
+                        <li id="runsHeader" class="col-odd" style="display: none">Unit:Runs</li>
+                        <li class="col-stake">Stake</li>
+                        <li class="col-profit">Liability</li>
+                        </ul> -->
+                     <div ng-repeat="BetSlipData in backBetSlipDataArray track by $index">
+                        <h4><img ng-class="BetSlipData.isInplay==1?'icon-in_play':'icon-no_play'" src="images/transparent.gif" alt="in-play">{{BetSlipData.matchname}}</h4>
+                        <dl class="slip-back" ng-repeat="backBet in BetSlipData.backBetSlipData track by $index">
+                           <dt>
+                              <!-- <a ng-click="closeBetSlip($index, 'back',$parent.$index)"  class="delete" style="cursor:pointer;">delete</a> -->
+                              <a ng-click="closeBetSlip($index, 'back',$parent.$index)"  class="delete" style="cursor:pointer; background: none;text-indent: 0;width: 23px;" title="Remove Bet"><i class="fa fa-close" style="font-size: 15px;color: #f9f5f5;background:  red;padding: 0px 2px;margin-top: 9px;"></i></a>
+                              <span class="short-amount">{{backBet.runnerName}}</span> 
+                              <span >Match Odds</span>
+                           </dt>
+                           <!-- <br> -->
+                           <dd class="col-odd">
+                              <label class="Label text" for="input"></label>
+                              <input type="text" min="1.0" step="0.01" ng-model="backBet.odds" id="oddsBack" ng-value="{{backBet.odds}}" min="1" ng-keyup="onKeyUp(backBet.odds,backBet.backlay,$index,$parent.$index)" ng-focus="onFocus($index)" floatnumber-only="" class="ng-pristine ng-untouched ng-valid ng-not-empty" aria-invalid="false">
+                              <ul class="odd-add">
+                                 <li ng-click="incrementOdd(backBet.odds,backBet.backlay,$index,$parent.$index)"><a  class="up" style="cursor:pointer;">up</a></li>
+                                 <li ng-click="decrementOdd(backBet.odds,backBet.backlay,$index,$parent.$index)"><a  class="down" style="cursor:pointer;">down</a></li>
+                              </ul>
+                              <ul ></ul>
+                           </dd>
+                           <dd class="col-stake">
+                              <label class="Label text" for="input-2"></label>
+                              <input min="1" placeholder="Stake" id="input-2" type="text" value="" maxlength="7" tabindex="0" ng-value="{{backBet.stake}}" ng-model="backBet.stake" ng-change="updateStake(backBet)" ng-focus="stakeFocus(backBet,$index)" ng-blur="stakeBlur(backBet,$index)">
+                              <ul ></ul>
+                           </dd>
+                           <dd class="col-profit">${{backBet.profit}}</dd>
+                           <dd id="stake_back_{{backBet.matchId}}_{{$index}}" class="col-stake_list" style="display: none;">
+                              <ul>
+                                 <li ng-repeat="stake in stakeList track by $index"><a class="btn" ng-click="stakeValue(stake,backBet)" style="cursor:pointer;">{{stake}}</a></li>
+                                 <li><a class="btn" ng-click="clearStake(backBet)" style="cursor:pointer;">Clear</a></li>
+                              </ul>
+                           </dd>
+                           <!-- <table  class="table slip-back">
+                              <thead>
+                              </thead>
+                              <tbody>
+                                 <tr style="background-color: #BEDDF4;">
+                                    <td colspan="5" style="padding-left:5px;">
+                                       <button class="nopadding btn-new btncustom primary btn_dyn" style="margin-top:2px;margin-bottom:2px; class="stakeButton" ng-repeat="stake in stakeList track by $index" ng-click="stakeValue(stake,backBet)">{{stake}}</button>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                              </table> -->
+                           <dd  class="inn_runs" style="display: none;">
+                              <dl>
+                                 <dt ></dt>
+                                 <dd><span  class="green"></span></dd>
+                                 <dt ></dt>
+                                 <dd><span  class="green"></span></dd>
+                              </dl>
+                           </dd>
+                        </dl>
+                        <dl class="slip-back" ng-repeat="backBet in BetSlipData.yesBetSlipData track by $index">
+                           <dt>
+                              <!-- <a ng-click="closeBetSlip($index, 'back',$parent.$index)"  class="delete" style="cursor:pointer;">delete</a> -->
+                              <a ng-click="closeBetSlip($index, 'yes',$parent.$index)"  class="delete" style="cursor:pointer; background: none;text-indent: 0;width: 23px;" title="Remove Bet"><i class="fa fa-close" style="font-size: 15px;color: #f9f5f5;background:  red;padding: 0px 2px;margin-top: 9px;"></i></a>
+                              <span class="short-amount">{{backBet.runnerName}}</span> 
+                              <span> @ {{backBet.rate}}</span>
+                           </dt>
+                           <!-- <br> -->
+                           <dd class="col-odd">
+                              <label class="Label text" for="input"></label>
+                              <input type="text" min="1.0" step="0.01" ng-model="backBet.score" id="oddsBack" ng-value="{{backBet.score}}" min="1" floatnumber-only readonly>
+                              <!-- <ul class="odd-add">
+                                 <li ng-click="incrementOdd(backBet.odds,backBet.backlay,$index,$parent.$index)"><a  class="up" style="cursor:pointer;">up</a></li>
+                                 <li ng-click="decrementOdd(backBet.odds,backBet.backlay,$index,$parent.$index)"><a  class="down" style="cursor:pointer;">down</a></li>
+                              </ul> -->
+                              <ul ></ul>
+                           </dd>
+                           <dd class="col-stake">
+                              <label class="Label text" for="input-2"></label>
+                              <input min="1" placeholder="Stake" id="input-2" type="text" value="" maxlength="7" tabindex="0" ng-value="{{backBet.stake}}" ng-model="backBet.stake" ng-change="updateStake(backBet)" ng-focus="stakeFocus(backBet,$index)" ng-blur="stakeBlur(backBet,$index)">
+                              <ul ></ul>
+                           </dd>
+                           <dd   class="col-profit">${{backBet.profit}}</dd>
+                           <dd id="stake_yes_{{backBet.matchId}}_{{$index}}" class="col-stake_list" style="display: none;">
+                              <ul>
+                                 <li ng-repeat="stake in stakeList track by $index"><a class="btn" ng-click="stakeValue(stake,backBet)" style="cursor:pointer;">{{stake}}</a></li>
+                                 <li><a class="btn" ng-click="clearStake(backBet)" style="cursor:pointer;">Clear</a></li>
+                              </ul>
+                           </dd>
+                           <dd  class="inn_runs" style="display: none;">
+                              <dl>
+                                 <dt ></dt>
+                                 <dd><span  class="green"></span></dd>
+                                 <dt ></dt>
+                                 <dd><span  class="green"></span></dd>
+                              </dl>
+                           </dd>
+                        </dl>
+                        <dl class="slip-back" ng-repeat="backBet in BetSlipData.backBookBetSlipData track by $index">
+                           <dt>
+                              <!-- <a ng-click="closeBetSlip($index, 'back',$parent.$index)"  class="delete" style="cursor:pointer;">delete</a> -->
+                              <a ng-click="closeBetSlip($index, 'backBook',$parent.$index)"  class="delete" style="cursor:pointer; background: none;text-indent: 0;width: 23px;" title="Remove Bet"><i class="fa fa-close" style="font-size: 15px;color: #f9f5f5;background:  red;padding: 0px 2px;margin-top: 9px;"></i></a>
+                              <span class="short-amount" style="margin-top: 8px;">{{backBet.runnerName}}</span> 
+                              <span>Book Maker</span>
+                           </dt>
+                           <!-- <br> -->
+                           <dd class="col-odd">
+                              <label class="Label text" for="input"></label>
+                              <input type="text" min="1.0" step="0.01" ng-model="backBet.odds" id="oddsBack" ng-value="{{backBet.odds}}" min="1" floatnumber-only readonly>
+                              <!-- <ul class="odd-add">
+                                 <li ng-click="incrementOdd(backBet.odds,backBet.backlay,$index,$parent.$index)"><a  class="up" style="cursor:pointer;">up</a></li>
+                                 <li ng-click="decrementOdd(backBet.odds,backBet.backlay,$index,$parent.$index)"><a  class="down" style="cursor:pointer;">down</a></li>
+                              </ul> -->
+                              <ul ></ul>
+                           </dd>
+                           <dd class="col-stake">
+                              <label class="Label text" for="input-2"></label>
+                              <input min="1" placeholder="Stake" id="input-2" type="text" value="" maxlength="7" tabindex="0" ng-value="{{backBet.stake}}" ng-model="backBet.stake" ng-change="updateStake(backBet)" ng-focus="stakeFocus(backBet,$index)" ng-blur="stakeBlur(backBet,$index)">
+                              <ul ></ul>
+                           </dd>
+                           <dd class="col-profit">${{backBet.profit}}</dd>
+                           <dd id="stake_backBook_{{backBet.eventId}}_{{$index}}" class="col-stake_list" style="display: none;">
+                              <ul>
+                                 <li ng-repeat="stake in stakeList track by $index"><a class="btn" ng-click="stakeValue(stake,backBet)" style="cursor:pointer;">{{stake}}</a></li>
+                                 <li><a class="btn" ng-click="clearStake(backBet)" style="cursor:pointer;">Clear</a></li>
+                              </ul>
+                           </dd>
+                           <dd  class="inn_runs" style="display: none;">
+                              <dl>
+                                 <dt ></dt>
+                                 <dd><span  class="green"></span></dd>
+                                 <dt ></dt>
+                                 <dd><span  class="green"></span></dd>
+                              </dl>
+                           </dd>
+                        </dl>
+                     </div>
+                     <ul ng-if="layBetSlipDataArray.length > 0 || yesBetSlipData.length > 0 || noBetSlipData.length > 0" id="laySlipHeader" class="slip-head" name="slipHeader" style="">
+                        <li class="col-bet">Lay (Bet Against)</li>
+                        <li id="oddsHeader" class="col-odd">Odds</li>
+                        <li id="runsHeader" class="col-odd" style="display: none">Unit:Runs</li>
+                        <li class="col-stake">Stake</li>
+                        <li class="col-profit">Liability</li>
+                     </ul>
+                     <div ng-repeat="BetSlipData in layBetSlipDataArray track by $index">
+                        <h4><img ng-class="BetSlipData.isInplay==1?'icon-in_play':'icon-no_play'" src="images/transparent.gif" alt="in-play">{{BetSlipData.matchname}}</h4>
+                        <dl class="slip-lay" ng-repeat="layBet in BetSlipData.layBetSlipData track by $index">
+                           <dt>
+                              <!-- <a ng-click="closeBetSlip($index, 'lay',$parent.$index)"  class="delete" style="cursor:pointer;">delete</a> -->
+                              <a ng-click="closeBetSlip($index, 'lay',$parent.$index)"  class="delete" style="cursor:pointer; background: none;text-indent: 0;width: 23px;" title="Remove Bet"><i class="fa fa-close" style="font-size: 15px;color: #f9f5f5;background:  red;padding: 0px 2px;margin-top: 9px;"></i></a>
+                              <span class="short-amount">{{layBet.runnerName}}</span> 
+                              <span >Match Odds</span>
+                           </dt>
+                           <!-- <br> -->
+                           <dd class="col-odd">
+                              <label class="Label text" for="input"></label>
+                              <input type="text" min="1.0" step="0.01" ng-model="layBet.odds" id="oddsBack" ng-value="{{layBet.odds}}" ng-keyup="onKeyUp(layBet.odds,layBet.backlay,$index,$parent.$index)" ng-focus="onFocus($index)" floatnumber-only="" class="ng-pristine ng-untouched ng-valid ng-not-empty" aria-invalid="false">
+                              <ul class="odd-add">
+                                 <li ng-click="incrementOdd(layBet.odds,layBet.backlay,$index,$parent.$index)"><a  class="up" style="cursor:pointer;">up</a></li>
+                                 <li ng-click="decrementOdd(layBet.odds,layBet.backlay,$index,$parent.$index)"><a  class="down" style="cursor:pointer;">down</a></li>
+                              </ul>
+                              <ul ></ul>
+                           </dd>
+                           <dd class="col-stake">
+                              <label class="Label text" for="input-2"></label>
+                              <input placeholder="Stake" ng-model="layBet.stake" ng-change="updateStake(layBet)" id="backStake{{$index}}" type="text" maxlength="7" ng-focus="stakeFocus(layBet,$index)" ng-blur="stakeBlur(layBet,$index)">
+                              <ul ></ul>
+                           </dd>
+                           <dd id="profitLiability" class="col-profit">${{layBet.profit}}</dd>
+                           <dd id="stake_lay_{{layBet.matchId}}_{{$index}}" class="col-stake_list" style="display: none;">
+                              <ul>
+                                 <li ng-repeat="stake in stakeList track by $index"><a class="btn" ng-click="stakeValue(stake,layBet)" style="cursor:pointer;">{{stake}}</a></li>
+                                 <li><a class="btn" ng-click="clearStake(layBet)" style="cursor:pointer;">Clear</a></li>
+                              </ul>
+                           </dd>
+                           <dd  class="inn_runs" style="display: none;">
+                              <dl>
+                                 <dt ></dt>
+                                 <dd><span  class="green"></span></dd>
+                                 <dt ></dt>
+                                 <dd><span  class="green"></span></dd>
+                              </dl>
+                           </dd>
+                           <!--  <table  class="table slip-lay">
+                              <thead>
+                              </thead>
+                              <tbody>
+                                 <tr style="background-color: #F3DCE2;">
+                                    <td colspan="5" style="padding-left:5px;">
+                                       <button style="margin-top:2px;margin-bottom:2px;" class="nopadding btn-new btncustom primary btn_dyn" ng-repeat=" stake in stakeList track by $index" ng-click="stakeValue(stake,layBet)">{{stake}}</button> 
+                                    </td>
+                                 </tr>
+                              </tbody>
+                              </table> -->
+                        </dl>
+                        <dl class="slip-lay" ng-repeat="layBet in BetSlipData.noBetSlipData track by $index">
+                           <dt>
+                              <!-- <a ng-click="closeBetSlip($index, 'lay',$parent.$index)"  class="delete" style="cursor:pointer;">delete</a> -->
+                              <a ng-click="closeBetSlip($index, 'no',$parent.$index)"  class="delete" style="cursor:pointer; background: none;text-indent: 0;width: 23px;" title="Remove Bet"><i class="fa fa-close" style="font-size: 15px;color: #f9f5f5;background:  red;padding: 0px 2px;margin-top: 9px;"></i></a>
+                              <span class="short-amount">{{layBet.runnerName}}</span> 
+                              <span >@ {{layBet.rate}}</span>
+                           </dt>
+                           <!-- <br> -->
+                           <dd class="col-odd">
+                              <label class="Label text" for="input"></label>
+                              <input type="text" min="1.0" step="0.01" ng-model="layBet.score" id="oddsBack" ng-value="{{layBet.score}}" floatnumber-only readonly>
+                             <!--  <ul class="odd-add">
+                                 <li ng-click="incrementOdd(layBet.odds,layBet.backlay,$index,$parent.$index)"><a  class="up" style="cursor:pointer;">up</a></li>
+                                 <li ng-click="decrementOdd(layBet.odds,layBet.backlay,$index,$parent.$index)"><a  class="down" style="cursor:pointer;">down</a></li>
+                              </ul>
+                              <ul ></ul> -->
+                           </dd>
+                           <dd class="col-stake">
+                              <label class="Label text" for="input-2"></label>
+                              <input placeholder="Stake" ng-model="layBet.stake" ng-change="updateStake(layBet)" id="backStake{{$index}}" type="text" value="" maxlength="7" ng-focus="stakeFocus(layBet,$index)" ng-blur="stakeBlur(layBet,$index)">
+                              <ul ></ul>
+                           </dd>
+                           <dd id="profitLiability" class="col-profit">${{layBet.profit}}</dd>
+                           <dd id="stake_no_{{layBet.matchId}}_{{$index}}" class="col-stake_list" style="display: none;">
+                              <ul>
+                                 <li ng-repeat="stake in stakeList track by $index"><a class="btn" ng-click="stakeValue(stake,layBet)" style="cursor:pointer;">{{stake}}</a></li>
+                                 <li><a class="btn" ng-click="clearStake(layBet)" style="cursor:pointer;">Clear</a></li>
+                              </ul>
+                           </dd>
+                           <dd  class="inn_runs" style="display: none;">
+                              <dl>
+                                 <dt ></dt>
+                                 <dd><span  class="green"></span></dd>
+                                 <dt ></dt>
+                                 <dd><span  class="green"></span></dd>
+                              </dl>
+                           </dd>
+                        </dl>
+                        <dl class="slip-lay" ng-repeat="layBet in BetSlipData.layBookBetSlipData track by $index">
+                           <dt>
+                              <!-- <a ng-click="closeBetSlip($index, 'lay',$parent.$index)"  class="delete" style="cursor:pointer;">delete</a> -->
+                              <a ng-click="closeBetSlip($index, 'layBook',$parent.$index)"  class="delete" style="cursor:pointer; background: none;text-indent: 0;width: 23px;" title="Remove Bet"><i class="fa fa-close" style="font-size: 15px;color: #f9f5f5;background:  red;padding: 0px 2px;margin-top: 9px;"></i></a>
+                              <span class="short-amount" style="margin-top: 8px;">{{layBet.runnerName}}</span> 
+                              <span >Book Maker</span>
+                           </dt>
+                           <!-- <br> -->
+                           <dd class="col-odd">
+                              <label class="Label text" for="input"></label>
+                              <input type="text" min="1.0" step="0.01" ng-model="layBet.odds" id="oddsBack" ng-value="{{layBet.odds}}" floatnumber-only readonly>
+                             <!--  <ul class="odd-add">
+                                 <li ng-click="incrementOdd(layBet.odds,layBet.backlay,$index,$parent.$index)"><a  class="up" style="cursor:pointer;">up</a></li>
+                                 <li ng-click="decrementOdd(layBet.odds,layBet.backlay,$index,$parent.$index)"><a  class="down" style="cursor:pointer;">down</a></li>
+                              </ul>
+                              <ul ></ul> -->
+                           </dd>
+                           <dd class="col-stake">
+                              <label class="Label text" for="input-2"></label>
+                              <input placeholder="Stake" ng-model="layBet.stake" ng-change="updateStake(layBet)" id="backStake{{$index}}" type="text" value="" maxlength="7" ng-focus="stakeFocus(layBet,$index)" ng-blur="stakeBlur(layBet,$index)">
+                              <ul ></ul>
+                           </dd>
+                           <dd id="profitLiability" class="col-profit">${{layBet.profit}}</dd>
+                           <dd id="stake_layBook_{{layBet.eventId}}_{{$index}}" class="col-stake_list" style="display: none;">
+                              <ul>
+                                 <li ng-repeat="stake in stakeList track by $index"><a class="btn" ng-click="stakeValue(stake,layBet)" style="cursor:pointer;">{{stake}}</a></li>
+                                 <li><a class="btn" ng-click="clearStake(layBet)" style="cursor:pointer;">Clear</a></li>
+                              </ul>
+                           </dd>
+                           <dd  class="inn_runs" style="display: none;">
+                              <dl>
+                                 <dt ></dt>
+                                 <dd><span  class="green"></span></dd>
+                                 <dt ></dt>
+                                 <dd><span  class="green"></span></dd>
+                              </dl>
+                           </dd>
+                        </dl>
+                     </div>
+
+
+
+                     <ul  class="slip-head" name="slipHeader" style="display: none">
+                        <li class="col-bet">Lay (Bet Against)</li>
+                        <li  class="col-odd">Odds</li>
+                        <li  class="col-odd" style="display: none">Unit:Runs</li>
+                        <li class="col-stake">Stake</li>
+                        <li class="col-profit">Liability</li>
+                     </ul>
+                     <div id="headerTemplate" style="display: none">
+                        <h4>
+                           <img class="icon-in_play" src="images/transparent.gif" alt="play">Team a v Team b
+                        </h4>
+                     </div>
+                     <dl  class="slip-back" style="display: none" market selection>
+                        <dt>
+                           <a  class="delete" style="cursor:pointer;">delete</a> 
+                           <span id="marketName">Match Odds</span>
+                        </dt>
+                        <dd class="col-odd">
+                           <input  type="text" maxlength="6">
+                           <ul class="odd-add">
+                              <li ng-click="incrementOdd(layBet.odds,layBet.backlay,$index,$parent.$index)"><a  class="up" style="cursor:pointer;">up</a></li>
+                              <li ng-click="decrementOdd(layBet.odds,layBet.backlay,$index,$parent.$index)"><a  class="down" style="cursor:pointer;">down</a></li>
+                           </ul>
+                           <ul id="oddsTipsPoint"></ul>
+                        </dd>
+                        <dd class="col-stake">
+                           <input  type="text" value="" maxlength="7">
+                           <ul ></ul>
+                        </dd>
+                        <dd  class="col-profit"></dd>
+                        <dd  class="inn_runs" style="display: none;">
+                           <dl>
+                              <dt ></dt>
+                              <dd><span  class="green"></span></dd>
+                              <dt ></dt>
+                              <dd><span  class="green"></span></dd>
+                           </dl>
+                        </dd>
+                     </dl>
+                  </div>
+                  <div  class="full_btn">
+                     <dl class="sum" ng-if="backBetSlipDataArray.length > 0 || layBetSlipDataArray.length > 0">
+                        <dt>Liability</dt>
+                        <dd>
+                           <span  class="red">${{liabilities}}</span>
+                        </dd>
+                     </dl>
+                     <ul class="btn-wrap" ng-if="backBetSlipDataArray.length > 0 || layBetSlipDataArray.length > 0 || yesBetSlipData.length > 0 || noBetSlipData.length > 0">
+                        <li ng-click="removeAllBetSlip()"><a  class="btn" style="cursor:pointer;" tabindex="0">Cancel All</a></li>
+                        <!--  <button class="btn-send" ng-click="placeBet()" ng-disabled="placedButton">Place Bet</button> -->
+                        <li ng-click="placeBet()">
+                           <button  class="btn-send disable" style="cursor:pointer;" tabindex="0"  ng-disabled="placedButton">Place Bets</button>
+                        </li>
+                     </ul>
+                      <ul class="slip-option">
+            <li><input id="comfirmBets" type="checkbox" checked="checked"><label for="comfirmBets">Please confirm your bets.</label></li>
+         </ul>
+                  </div>
+               </div>
+               <div  class="slip-list" style="max-height: calc(100% - 96px); display: none">
+                  <div class="message-bet">
+                     <h4 class="warning">Please confirm your bets.</h4>
+                     <p>A commission is charged on your net profit from each market.</p>
+                  </div>
+                  <ul  class="slip-head" style="display: none">
+                     <li class="col-bet">Back (Bet For)</li>
+                     <li class="col-odd">Odds</li>
+                     <li class="col-stake">Stake</li>
+                     <li class="col-profit">Profit</li>
+                  </ul>
+                  <ul  class="slip-head" style="display: none">
+                     <li class="col-bet">Lay (Bet Against)</li>
+                     <li class="col-odd">Odds</li>
+                     <li class="col-stake">Stake</li>
+                     <li class="col-profit">Liability</li>
+                  </ul>
+                  <div  style="display: none">
+                     <h4>
+                        <img class="icon-in_play" src="images/transparent.gif" alt="icon-in_play">
+                     </h4>
+                  </div>
+                  <dl  class="slip-back" style="display: none">
+                     <dt>
+                        <span  class="slip-type">--</span> 
+                        <span >--</span> 
+                        <span >--</span>
+                     </dt>
+                     <dd  class="col-odd">--</dd>
+                     <dd  class="col-stake">--</dd>
+                     <dd  class="col-profit">--</dd>
+                  </dl>
+               </div>
+               <div  class="full_btn" style="display: none">
+                  <dl class="sum">
+                     <dt></dt>
+                     <dd>
+                        <span></span>
+                     </dd>
+                  </dl>
+                  <ul class="btn-wrap">
+                     <li><a  class="btn" style="cursor:pointer;">Edit Bets</a></li>
+                     <li><a  class="btn-send" style="cursor:pointer;">Confirm Bets</a></li>
+                  </ul>
+                  <ul class="slip-option">
+                     <li><input  type="checkbox" checked="checked"><label>Confirm bets before placing</label></li>
+                  </ul>
+               </div>
+            </div>
+         <!--    <div class="matched-wrap" style="height: calc(100% - 30px);">
+               <h3>
+                  <a id="openBetsRefresh" class="slip_refresh" style="cursor:pointer;">Refresh</a>
+                  <a class="to-expand" style="cursor:pointer;" ng-click="GetBets()">Open Bets</a>
+               </h3>
+               <div class="message-bet">
+                  <h4 id="oneClickMsg" class="" style="display: none"></h4>
+               </div>
+               <div id="oneClickLoadingWrap" class="one_click-loading" style="display: none">
+                  <div id="loadPending" class="load-pending" style="display: none">
+                     <strong id="pendingNum"></strong>
+                     pending...
+                  </div>
+                  <ul class="loading">
+                     <li><img src="/images/loading40_39941.gif"></li>
+                     <li id="oneClickTime">Place Bets</li>
+                  </ul>
+               </div>
+               <div class="message-bet">
+                  <h4 id="editErrorMsg" class="error" style="display: none"></h4>
+                  <p id="editBetMsg" class="warning" style="display: none"></p>
+               </div>
+               <ul id="processingImg_OneClickBet" class="loading" style="display: none">
+                  <li><img src="/images/loading40_39941.gif"></li>
+                  <li>Placing bet...</li>
+               </ul>
+               <div id="matchSection" style="height: calc(100% - 25px)">
+                  <div id="openBetSelectionBox" class="slip-sort slip-back">
+                     <select ng-model="foundMatchId" name="">
+                        <option value="0">All Matches</option>
+                        <option ng-repeat="match in StoreMatches" value="{{match.matchId}}">{{match.matchName}} - Match Odds</option>
+                     </select>
+                     <option id="optionTemplate" value="" event market style="display: none;"></option>
+                  </div>
+                  <div id="openBetSlip" class="bet_slip over-wrap" style="height: calc(100% - 70px);">
+                     <ul id="unMatchTicketHead" class="slip-head">
+                        <li class="col-bet"><strong>Unmatched</strong></li>
+                     </ul>
+                     <div id="unMatchTicketList" class="slip-list" style="display: block;">
+                        <ul id="backSlipHeader" class="matched-head" ng-if="backUnmatchedBet">
+                           <li class="col-bet">Back (Bet For)</li>
+                           <li class="col-odd">Odds</li>
+                           <li class="col-stake">Stake</li>
+                           <li class="col-profit">Profit</li>
+                        </ul>
+                        <dl class="slip-back" style="display: block;" ng-repeat="item in unMatchedData track by item.id" ng-if="item.backLay == 'BACK'">
+                           <dt id="marketNameDt">
+                              <a ng-click="cancelBet(item.id,$index)"  class="delete" style="cursor:pointer; background: none;text-indent: 0;width: 23px;" title="Cancel Bet"><i class="fa fa-close" style="font-size: 15px;color: #f9f5f5;background:  red;padding: 0px 2px;margin-top: 9px;"></i></a>
+                              <span id="slipType" class="slip-type">Back</span>
+                              <span class="short-amount">{{item.runnerName}}</span> 
+                              <span id="marketName">{{item.marketName}}</span>
+                           </dt>
+                           <dd id="price" class="col-odd">{{item.odds}}</dd>
+                           <dd id="size" class="col-stake" title="$50">{{item.stake}}</dd>
+                           <dd id="profitLiability" class="col-profit">{{((item.odds-1)*item.stake) | number:2}}</dd>
+                           <dd id="inningsRuns" class="inn_runs" style="display: none;">
+                              <dl>
+                                 <dt id="ifRuns"></dt>
+                                 <dd><span id="runsPL" class="green">$0.00</span></dd>
+                                 <dt id="ifLess"></dt>
+                                 <dd><span id="lessPL" class="green">$0.00</span></dd>
+                              </dl>
+                           </dd>
+                        </dl>
+                        <ul id="laySlipHeader" class="matched-head" ng-if="layUnmatchedBet">
+                           <li class="col-bet">Lay (Bet Against)</li>
+                           <li class="col-odd">Odds</li>
+                           <li class="col-stake">Stake</li>
+                           <li class="col-profit">Liability</li>
+                        </ul>
+                        <dl id="unMatchTicketTemplate" class="slip-lay" style="display: block;" ng-repeat="item in unMatchedData track by item.id" ng-if="item.backLay == 'LAY'">
+                           <dd id="betInfo" class="refer" style="display: none;">
+                              <span id="betId">Ref: --</span> 
+                              <span id="placeDate">xx-xx-2016 --:--</span>
+                           </dd>
+                           <dt id="marketNameDt">
+                              <a ng-click="cancelBet(item.id,$index)"  class="delete" style="cursor:pointer; background: none;text-indent: 0;width: 23px;" title="Cancel Bet"><i class="fa fa-close" style="font-size: 15px;color: #f9f5f5;background:  red;padding: 0px 2px;margin-top: 9px;"></i>
+                              </a>
+                              <span id="slipType" class="slip-type">Back</span>
+                              <span class="short-amount">{{item.runnerName}}</span> 
+                              <span id="marketName">{{item.marketName}}</span>
+                           </dt>
+                           <dd id="price" class="col-odd">{{item.odds}}</dd>
+                           <dd id="size" class="col-stake" title="$50">{{item.stake}}</dd>
+                           <dd id="profitLiability" class="col-profit">{{((item.odds-1)*item.stake) | number:2}}</dd>
+                           <dd id="inningsRuns" class="inn_runs" style="display: none;">
+                              <dl>
+                                 <dt id="ifRuns"></dt>
+                                 <dd><span id="runsPL" class="green">$0.00</span></dd>
+                                 <dt id="ifLess"></dt>
+                                 <dd><span id="lessPL" class="green">$0.00</span></dd>
+                              </dl>
+                           </dd>
+                        </dl>
+                     </div>
+                     <div id="unMatchFullBtn" class="full_btn" style="display: block;">
+                        <dl class="sum">
+                        </dl>
+                     </div>
+                     <ul id="stakePopupList" class="stake-popup" style="display: none;">
+                        <li><a id="selectStake_1" stake="50" style="cursor:pointer;">50</a></li>
+                        <li><a id="selectStake_2" stake="100" style="cursor:pointer;">100</a></li>
+                        <li><a id="selectStake_3" stake="200" style="cursor:pointer;">200</a></li>
+                        <li><a id="selectStake_4" stake="500" style="cursor:pointer;">500</a></li>
+                        <li><a id="selectStake_5" stake="3000" style="cursor:pointer;">3000</a></li>
+                        <li><a id="selectStake_6" stake="5000" style="cursor:pointer;">5000</a></li>
+                     </ul>
+                     <div id="oddsTipsPopup" class="tips-popup" style="display: none">min 1.01</div>
+                     <div id="stakeTipsPopup" class="tips-popup" style="display: none">Min 4.00</div>
+                     <div id="editUnMatchedList" class="slip-list" style="display: none;">
+                        <dd id="stakePopupList" class="col-stake_list" style="display: none;">
+                           <ul>
+                              <li><a class="btn" id="selectStake_1" stake="50" style="cursor:pointer;">50</a></li>
+                              <li><a class="btn" id="selectStake_2" stake="100" style="cursor:pointer;">100</a></li>
+                              <li><a class="btn" id="selectStake_3" stake="200" style="cursor:pointer;">200</a></li>
+                              <li><a class="btn" id="selectStake_4" stake="500" style="cursor:pointer;">500</a></li>
+                              <li><a class="btn" id="selectStake_5" stake="3000" style="cursor:pointer;">3000</a></li>
+                              <li><a class="btn" id="selectStake_6" stake="5000" style="cursor:pointer;">5000</a></li>
+                           </ul>
+                        </dd>
+                        <ul id="backSlipHeader" class="matched-head" style="display: none">
+                           <li class="col-bet">Back (Bet For)</li>
+                           <li class="col-odd">Odds</li>
+                           <li class="col-stake">Stake</li>
+                           <li class="col-profit">Profit</li>
+                        </ul>
+                        <ul id="laySlipHeader" class="matched-head" style="display: none">
+                           <li class="col-bet">Lay (Bet Against)</li>
+                           <li class="col-odd">Odds</li>
+                           <li class="col-stake">Stake</li>
+                           <li class="col-profit">Liability</li>
+                        </ul>
+                        <dl id="editUnMatchedTemplate" class="slip-lay" style="display: none;">
+                           <dd id="betInfo" class="refer" style="display: none;">
+                              <span id="betId">Ref: --</span> 
+                              <span id="placeDate">xx-xx-2016 --:--</span>
+                           </dd>
+                           <dt id="marketNameDt">
+                              <a ng-click="cancelBet(item.id,$index)" id="delete" class="delete" style="cursor:pointer;">delete</a> 
+                              <span id="slipType" class="slip-type">--</span> 
+                              <span id="marketName">--</span>
+                           </dt>
+                           <dd id="price" class="col-odd">
+                              <input id="odds" type="text" maxlength="6">
+                              <ul class="odd-add">
+                                 <li><a id="oddsUp" class="up" style="cursor:pointer;">up</a></li>
+                                 <li><a id="oddsDown" class="down" style="cursor:pointer;">down</a></li>
+                              </ul>
+                              <ul id="oddsTipsPoint"></ul>
+                           </dd>
+                           <dd id="size" class="col-stake">
+                              <input id="inputStake" type="text" value="" maxlength="10">
+                              <ul id="listPoint"></ul>
+                           </dd>
+                           <dd id="profitLiability" class="col-profit">--</dd>
+                           <dd id="inningsRuns" class="inn_runs" style="display: none;">
+                              <dl>
+                                 <dt id="ifRuns"></dt>
+                                 <dd><span id="runsPL" class="green">$0.00</span></dd>
+                                 <dt id="ifLess"></dt>
+                                 <dd><span id="lessPL" class="green">$0.00</span></dd>
+                              </dl>
+                           </dd>
+                        </dl>
+                     </div>
+                     <div id="editUnMatchFullBtn" class="full_btn" style="display: none;">
+                        <dl class="sum">
+                        </dl>
+                        <ul class="btn-wrap">
+                           <li>
+                              <a ng-click="removeAllBetSlip()" id="cancelAllUnMatch" class="btn" style="cursor:pointer;" tabindex="0">Cancel All Bets</a>
+                           </li>
+                           <li class="edit-function">
+                              <a id="okBtn" class="btn-send" style="cursor:pointer;" tabindex="0">OK</a>
+                              <a id="resetBtn" class="btn" style="cursor:pointer;" tabindex="0">Reset</a>
+                           </li>
+                        </ul>
+                     </div>
+                     <ul id="txnHead" class="slip-head" style="">
+                        <li class="col-bet"><strong>Matched</strong></li>
+                        <li class="col-bet" style="float: right;width: auto;font-weight: bold;"><input id="avgBetsChecked" type="checkbox" name="openOption" ng-click="averageBet()"><label for="averageOdds">Average Odds</label></li>
+                     </ul>
+                     <div id="txnList" class="slip-list slip-back" name="txn" style="overflow: hidden;">
+                        <ul id="backSlipHeader" class="matched-head" ng-if="backMatchedBet">
+                           <li class="col-bet">Back (Bet For)</li>
+                           <li class="col-odd">Odds</li>
+                           <li class="col-stake">Stake</li>
+                           <li class="col-profit">Profit</li>
+                        </ul>
+                        <dl ng-repeat="item in matchedData track by item.id" class="slip-back" ng-if="item.backLay == 'BACK' || item.backLay == 'YES'">
+                           <dd id="betInfo" class="refer" style="display: none;">
+                              <span id="betId">Ref: --</span> 
+                              <span id="placeDate">xx-xx-2016 --:--</span>
+                           </dd>
+                           <dt>
+                              <span id="slipType" class="slip-type">{{item.backLay=='BACK'?'Back':'Yes'}}</span><span class="short-amount">{{item.runnerName}}</span> 
+                              <span id="marketName">{{item.marketName}}</span>
+                           </dt>
+                           <dd id="price" class="col-odd">{{(item.isFancy==1)?item.score+'/'+item.odds:item.odds}}</dd>
+                           <dd id="size" class="col-stake">{{item.stake}}</dd>
+                           <dd id="profitLiability" class="col-profit">{{(item.isFancy==0)?((item.odds-1)*item.stake): ((item.isFancy==1)?((item.odds*item.stake)/100):((item.odds/100)*item.stake)) | number:2}}</dd>
+                        </dl>
+                        <dl id="txnTemplate" class="slip-back" style="display: none;">
+                           <dd id="betInfo" class="refer" style="display: none;">
+                              <span id="betId">Ref: --</span> 
+                              <span id="placeDate">xx-xx-2016 --:--</span>
+                           </dd>
+                           <dt>
+                              <span id="slipType" class="slip-type">--</span> 
+                              <span id="marketName">--</span>
+                           </dt>
+                           <dd id="price" class="col-odd">--</dd>
+                           <dd id="size" class="col-stake">--</dd>
+                           <dd id="profitLiability" class="col-profit">--</dd>
+                        </dl>
+                     </div>
+                     <div id="txnList" class="slip-list slip-lay" name="txn" style="" >
+                        <ul id="laySlipHeader" class="matched-head" ng-if="layMatchedBet">
+                           <li class="col-bet">Lay (Bet Against)</li>
+                           <li class="col-odd">Odds</li>
+                           <li class="col-stake">Stake</li>
+                           <li class="col-profit">Liability</li>
+                        </ul>
+                        <dl class="slip-lay" ng-repeat="item in matchedData track by item.id" ng-if="item.backLay == 'LAY' || item.backLay == 'NO'">
+                           <dd id="betInfo" class="refer" style="display: none;">
+                              <span id="betId">Ref: --</span> 
+                              <span id="placeDate">xx-xx-2016 --:--</span>
+                           </dd>
+                           <dt>
+                              <span id="slipType" class="slip-type">{{item.backLay=='LAY'?'Lay':'No'}}</span><span class="short-amount">{{item.runnerName}}</span> 
+                              <span id="marketName">{{item.marketName}}</span>
+                           </dt>
+                           <dd id="price" class="col-odd">{{(item.isFancy==1)?item.score+'/'+item.odds:item.odds}}</dd>
+                           <dd id="size" class="col-stake" title="$50">{{item.stake}}</dd>
+                           <dd id="profitLiability" class="col-profit">{{(item.isFancy==0)?((item.odds-1)*item.stake): ((item.isFancy==1)?((item.odds*item.stake)/100):((item.odds/100)*item.stake)) | number:2}}</dd>
+                        </dl>
+                     </div>
+                  </div>
+               </div>
+            </div> -->
+    
+    
+  </div>
+
+</div>
+ <div class="modal fade" id="myMarketModal" tabindex="-1" role="dialog" aria-labelledby="myMarketModalLabel" aria-hidden="true" style="display: none;">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <button ng-click="myMarketClose()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true"> ×</span></button>
+                  <h4 class="modal-title" id="myMarketModalLabel">My Markets </h4>
+               </div>
+               <div class="modal-body">
+                  <button class="accordion" ng-repeat-start="market in MyMarketData track by market.matchId" accordion-toggle>{{market.matchName}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size: 15px;padding-right: 10px;float: right;" ng-style="{ color:market.liability >0 ? 'green' : 'red' }">Exposure -&nbsp;&nbsp;{{market.liability}}</span></button>
+                  <div class="panel" ng-repeat-end>
+                     <!-- <p style="margin: 10px">MATCH ODDS <span style="font-size: 15px;font-weight: bold;">-1000</span></p> -->
+                     <table class="bets" id="myMarketTable" style="margin-top: 0">
+                        <thead>
+                           <tr style="border-bottom: 1px solid #67afe5;background: #d9dcd491;">
+                              <th style="text-align: center;">Market Name</th>
+                              <th style="text-align: center;">Liability</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr ng-repeat="mkt in market.mktLiability">
+                              <td style="height: 30px;">{{mkt.marketName}}</td>
+                              <td style="height: 30px;" ng-style="{ color:mkt.liability >0 ? 'green' : 'red' }">{{mkt.liability}}</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- <table class="table table-bordered table-condensed table-hover table-striped" id="myMarketTable">
+                     <thead>
+                       <tr>
+                         <th>Market ID</th>
+                         <th>Market Name <a class="btn btn-xs btn-azure pull-right" onclick=" getMyMarkets(); return false; " href="#"><i class="fa fa-refresh"></i> Reload</a></th>
+                         <th>Liability</th>
+                       </tr>
+                     </thead>
+                     <tbody></tbody>
+                     </table> -->
+               </div>
+            </div>
+         </div>
+      </div>
+
+<!-- <div class="modal" id="fancyBook" aria-hidden="true" >
+         <div class="modal-dialog" style="top: 2px">
+            <div class="modal-content">
+               <div class="modal-header">
+                 
+                  <h4 class="modal-title">{{fancyNamedisplay}}</h4>
+               </div>
+               <div class="modal-body">
+                  <div ng-if="fancyDatabookList.length==0" style="visibility: visible; text-align: center; vertical-align: middle; background: powderblue; padding: 5px; border-radius: 10px;">
+                     <h3>No fancy book found</h3>
+                  </div>
+                  <div ng-if="fancyDatabookList.length!=0" style="vertical-align: middle;">
+                     <table class="table bets" style="text-align:center;margin-top: 0">
+                        <thead>
+                           <tr>
+                              <th style="border: 1px solid #969696;text-align: center;">Score</th>
+                              <th style="border: 1px solid #969696;text-align: center;">Amount</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr ng-repeat="fancy in fancyDatabookList" ng-class="{'back-1':fancy.Value>=0,'lay-1':fancy.Value<0}">
+                              <td style="height: 30px;">{{fancy.Key}}</td>
+                              <td style="height: 30px;">{{fancy.Value}}</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+               <div class="modal-footer">
+                  <a id="close" class="btn btn-primary" ng-click="ModalClose()" data-dismiss="modal" style="cursor: pointer;width: 20%">Close</a>
+               </div>
+            </div>
+         </div>
+      </div> -->
+      <script src="jquery.signalR.min.js"></script>
+      <script src="js/jquery.toast.js"></script>
+      <!-- <script src="jquery.datetimepicker.full.js"></script> -->
+<!-- <script type="text/javascript" src="js/jquery.signalR.min.js"></script> -->
+<script src="main.js"></script>
+ <!-- <script src="js/toastr.min.js"></script> -->
+ 
+<!--  <script>
+      toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": true,
+        "positionClass": "toast-bottom-right",
+        "preventDuplicates": true,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+      }
+   </script> -->
+ <script>
+         $(document).ready(function(){
+         $('#login-trigger').click(function(){
+          $(this).next('#login-content').slideToggle();
+          $(this).toggleClass('active');          
+          
+            if ($(this).hasClass('active')==true) {
+               $('#login-content').css('display','block');
+               
+             }
+             else{
+               $('#login-content').css('display','none');
+               
+             }
+          })
+         });
+          $('#cancel1').click(function(){ 
+           $('#login-content').css('display','none');
+         });
+         
+      </script>
+       <script>
+         $("#live").click(function()
+         { 
+         window.open("tv.html", "_blank", "resizable=yes,top=700,left=900,width=700,height=500");
+         });
+      </script>
+<script>
+         $('#edit').click(function (e) {
+             e.stopPropagation();
+             $('#ok').show();
+             $('#edit').hide();
+         });
+         $('#ok').click(function (e) {
+             e.stopPropagation();
+             $('#edit').show();
+             $('#ok').hide();
+         });
+         
+         // $('#Refresh').click(function (e) {
+         //     e.stopPropagation();
+         //     location.reload(true);
+         // });
+         $('#cancel1').click(function(){ 
+           $('#login-content').css('display','none');
+         });
+         
+         
+         $('#coinSave').click(function(){ 
+           $('#login-content').css('display','none');
+         });
+      </script>
+       <script>
+         $(document).ready(function(){
+         // $("#eventType").on('click',function(){
+         //    $(".slip-wrap").toggleClass("close");
+         // })
+         
+         var oneClicked=localStorage.getItem('oneclick');
+         if (oneClicked!=undefined) {
+            $('#oneClickSetting').addClass("select")
+            $('#oneClickBetStakeBox').css('display','block');
+         }
+         
+         $('#oneClickSetting').on('click',function(){
+         
+             $(this).toggleClass("select");
+             // $(this).hasClass('select')
+         
+             var okClicked=localStorage.getItem('OK');
+         
+             if (okClicked==undefined) {
+               if ($(this).hasClass('select')==true) {
+                  
+                  $('#editOneClickBetStakeBox').css('display','none');
+                  $('.overlay').css('display','block');
+                  $('#oneClickBetStakeBox').css('display','block');
+                  $('#oneClickBetDialog').css('display','block');
+                  localStorage.removeItem('oneclick');
+               }
+               else{
+                  $('#oneClickBetStakeBox').css('display','none');
+                  $('#oneClickBetDialog').css('display','none');
+                  $('#editOneClickBetStakeBox').css('display','none');
+
+                  localStorage.setItem('oneclick','true');
+               }
+             }
+             else{
+               if ($(this).hasClass('select')==true) {
+                  // $('.overlay').css('display','block');
+                  $('#oneClickBetStakeBox').css('display','block');
+                  $('#editOneClickBetStakeBox').css('display','none');
+
+                  localStorage.setItem('oneclick','true');
+         
+                  // localStorage.removeItem('oneclick');
+                  // $('#oneClickBetDialog').css('display','block');
+               }
+               else{
+                  $('#oneClickBetStakeBox').css('display','none');
+                  $('#editOneClickBetStakeBox').css('display','none');
+
+                  localStorage.removeItem('oneclick');
+         
+                  // localStorage.setItem('oneclick','true');
+                  // $('#oneClickBetDialog').css('display','none');
+               }
+             }
+             
+           })
+         
+           $(document).on('click','#ok',function(){
+               $('#oneClickBetDialog').css('display','none');
+               $('.overlay').css('display','none');
+               localStorage.setItem('OK','true');
+               localStorage.setItem('oneclick','true');
+               
+           })
+         })
+         
+      </script>
+<script>
+    $(document).ready(function(){
+      $('#tabMenu').on('click','li a',function(){
+         $('#tabMenu li a').removeClass('select')
+         $(this).addClass('select')
+      })
+   })
+
+      $(document).ready(function(){
+               $('#accountPopup').on('click',function(event) {
+                  event.stopPropagation();
+                 $("#account_pop").toggle();
+               });
+               $(document).on('click',function() {
+                 $("#account_pop").hide();
+               });
+         })
+</script>
+
+ <!--  <script>
+         $("#close1").click(function(){
+           $("#TermsNConditions").hide();
+         });
+      </script> -->
+      
+<!-- <div id="TermsNConditions"  class="modal fade" role="dialog" style="display: none;">
+  <div class="modal-dialog">
+  
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">
+          <h1>Rules & Terms</h1>
+        </h4>
+      </div>
+      <div class="modal-body" style="overflow-y: auto;height: 500px;">
+        <h3>Rules :</h3>
+        <div ng-bind-html="rules"></div>
+        <br><br>
+        <h3>Terms :</h3>
+        <div ng-bind-html="terms"></div>
+      </div>
+      <div class="modal-footer">
+        <div style="text-align: left;">
+          <button type="button" class="btn btn-default" data-dismiss="modal" id="close1" ng-click="accept('true')">Accept Terms & Conditions</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+</body>
+</html>
+
+<script>
+   $(document).ready(function(){
+      $('#tabMenu').on('click','li a',function(){
+         $('#tabMenu li a').removeClass('select')
+         $(this).addClass('select')
+      })
+   })
+   function focusFunction() {
+       // Focus = Changes the background color of input to yellow
+       document.getElementById("myInput").style.background = "yellow";
+   }
+   
+   function blurFunction() {
+       // No focus = Changes the background color of input to red
+       document.getElementById("myInput").style.background = "red";
+   }
+     $(document).ready(function(){
+               $('#gott').on('click',function(event) {
+                  event.stopPropagation();
+                 $("#show").toggle();
+               });
+               $(document).on('click',function() {
+                 $("#show").hide();
+               });
+         })
+</script>
+<script>
+  var app = angular.module('myApp', ['ngRoute' , 'ngCookies'])
+app.config(['$routeProvider', function($routeProvider) {
+    $routeProvider
+        .when('/', {
+
+            // controller: 'homeController',
+            templateUrl: 'home1.html'
+        })
+         .when('/termsconditions', {
+
+            controller: 'terms_condition_Controller',
+            templateUrl: 'termsconditions.html'
+        })
+        .when('/inplay', {
+
+            controller: 'inplayController',
+            templateUrl: 'inplay.html'
+        })
+        .when('/today', {
+            controller: 'todayController',
+            templateUrl: 'today.html'
+        })
+         .when('/tomorrow', {
+            controller: 'tomorrowController',
+            templateUrl: 'tomorrow.html'
+        })
+         .when('/multiMarkets', {
+
+            controller: 'multiMarketController',
+            templateUrl: 'multiMarkets.html'
+        })
+        .when('/cricket', {
+
+            controller: 'cricketController',
+            templateUrl: 'cricket.html'
+        })
+        .when('/soccer', {
+
+            controller: 'soccerController',
+            templateUrl: 'soccer.html'
+        })
+        .when('/tennis', {
+
+            controller: 'tennisController',
+            templateUrl: 'tennis.html'
+        })
+        .when("/full-market", {
+            // controller: "fullMarket",
+            templateUrl: "full-market.html"
+        })
+        // .when("/full-market/:bfid/:matchid/:marketid/:event/:mbfId", {
+        //     // controller: "fullMarket",
+        //     templateUrl: "full-market.html"
+        // })
+
+    // .otherwise({
+    //  redirectTo: '/'
+    // });
+}]);
+  app.controller('mainController', function($location, $scope, $http, $timeout, $routeParams,$interval,$cookieStore,$rootScope) {
+    console.log("testing")
+    $scope.showSportList = true;
+    $scope.show_close = true;
+     $scope.eventsList = []
+
+    $scope.SportsList = function() {
+        // $scope.isLastElement = true;
+        $('#loadingTree').css('display', 'block');
+        // alert('asdfj')
+        $scope.pathList = [];
+        $http({
+                url: "https://www.lotusbook.com/api/exchange/odds/menu",
+
+                method: "GET",
+
+                 headers: {
+                "Content-Type": "application/json",
+              
+            }
+               
+            })
+
+            .then(function mySuccess(response) {
+                $scope.showSportList = true
+                $scope.showTournamentList = false
+                $scope.showEventList = false
+                $scope.showMarketList = false
+
+                $scope.sport = response.data.result;
+                console.log($scope.sport)
+                $('#loadingTree').css('display', 'none');
+
+                if ($cookieStore.get('tNc') != 'true') {
+                    // $scope.TermsNConditions();
+                }
+
+            }, function myError(error) {
+                if (error.status==401) {
+                    //$.removeCookie("auth-token");
+                    window.location.href="login.html"
+                }
+            });
+    }
+       $scope.TournamentList = function(id, name) {
+        console.log('1111111111');
+        console.log(id,name);
+        $scope.isLastElement = false;
+        $('#loadingTree').css('display', 'block');
+
+        $scope.level = 1;
+
+        $scope.tourid = id
+        $scope.tourname = name
+        $http({
+                url: "https://www.lotusbook.com/api/exchange/odds/menu",
+
+                method: "GET",
+                 headers: {
+                "Content-Type": "application/json",
+                
+            }
+               
+            })
+
+            .then(function mySuccess(response) {
+                // console.log(response);
+                $scope.showSportList = false
+                $scope.showTournamentList = true
+                $scope.showEventList = false
+                $scope.showMarketList = false
+
+                $scope.tournament = response.data.result;
+                console.log($scope.tournament)
+                 $scope.tournament.forEach(function(item) {
+                    if ($scope.tourid == item.id) {
+                        $scope.tournament = item.children
+                    }
+                })
+
+                $('#loadingTree').css('display', 'none');
+
+                $scope.pathList.splice(0, 1);
+                $scope.pathList.splice(0, 1);
+                $scope.pathList.splice(0, 1);
+                $scope.pathList.push({
+                    "name": name,
+                    "id": id,
+                    "level": $scope.level
+                })
+                // console.log($scope.pathList)
+
+            }, function myError(error) {
+                if (error.status==401) {
+                    //$.removeCookie("auth-token");
+                    window.location.href="login.html"
+                }
+            });
+    }
+        $scope.eventList = function(id, name) {
+         console.log('--->>', id)
+        $('#loadingTree').css('display', 'block');
+
+        $scope.level = 2;
+
+        $scope.ename = name
+        $scope.eventid = id
+
+        $scope.arrayid;
+
+
+        $http({
+                url: "https://www.lotusbook.com/api/exchange/odds/menu",
+
+                method: "GET",
+                 headers: {
+                "Content-Type": "application/json",  
+            }  
+            })
+
+            .then(function mySuccess(response) {
+                $scope.showSportList = false
+                $scope.showTournamentList = false
+                $scope.showEventList = true
+                $scope.showMarketList = false
+                  if (id == 4) {
+                    console.log(id)
+                    $scope.arrayid = 0
+                    console.log($scope.arrayid)
+                }
+                if (id == 1) {
+                    $scope.arrayid = 1
+                }
+                if (id == 2) {
+                    $scope.arrayid = 2
+                }
+                $scope.eventList = response.data.result
+                console.log($scope.eventList)
+                $scope.eventList = response.data.result[arrayid].children;
+
+                $scope.eventList.forEach(function(item, index) {
+                    if ($scope.eventid == item.id)
+                        $scope.eventList = item.children
+                })
+
+                // $scope.Event = response.data.data;
+                $('#loadingTree').css('display', 'none');
+
+                $scope.pathList.splice(1, 1);
+                $scope.pathList.splice(1, 1);
+                $scope.pathList.push({
+                    "name": name,
+                    "id": id,
+                    "level": $scope.level
+                })
+
+
+            }, function myError(error) {
+                if (error.status==401) {
+                    //$.removeCookie("auth-token");
+                    window.location.href="login.html"
+                }
+            });
+    }
+        $scope.MarketList = function(id, name) {
+
+        $('#loadingTree').css('display', 'block');
+
+        $scope.level = 3
+        $scope.marketid = id
+        $scope.mname = name
+
+        $http({
+       
+                url: "https://www.lotusbook.com/api/exchange/odds/group/" + $scope.marketid,
+
+                method: "GET",
+                 headers: {
+                "Content-Type": "application/json",
+               
+            }
+              
+            })
+
+            .then(function mySuccess(response) {
+                $scope.showSportList = false
+                $scope.showTournamentList = false
+                $scope.showEventList = false
+                $scope.showMarketList = true
+                // console.log(response);
+                // $scope.pathList.push('Sport')
+                $scope.Market = response.data.data;
+                $('#loadingTree').css('display', 'none');
+                console.log($scope.Market)
+                //  console.log($scope.sport);
+                // $scope.marketname = event.target.text
+                // $scope.pathList.push({
+                //     "market": $scope.marketname,
+                //     "id": $scope.marketid
+                // })
+                $scope.pathList.splice(2, 1);
+                $scope.pathList.push({
+                    "name": name,
+                    "id": id,
+                    "level": $scope.level
+                })
+                // $scope.pathList.push($scope.marketname)
+                // console.log($scope.pathList)
+
+                // console.log($scope.pathList, "tourn")
+                // $scope.pathList=[];
+
+            }, function myError(error) {
+                if (error.status==401) {
+                    //$.removeCookie("auth-token");
+                    window.location.href="login.html"
+                }
+            });
+    }
+    $scope.oldHighlightlist = []
+    $scope.Highlightlist = []
+    $scope.Highlights = function(id, index) {
+        $('#loading_page').css('display','grid');
+
+        $scope.s_id = id
+        if ($scope.s_id=='4') {
+            $scope.s_name="Cricket"
+        }
+        else if ($scope.s_id=='1') {
+            $scope.s_name="Soccer"
+        }
+        else if ($scope.s_id=='2') {
+            $scope.s_name="Tennis"
+        }
+        $scope.isInplay = false
+        $('.HLTab').removeClass('select')
+        $('#highlightTab' + index).addClass('select')
+        $scope.inplayListData = []
+        $scope.datacount = []
+        $scope.oldHighlightlist = []
+        $scope.Highlightlist = []
+        // console.log($scope.datacount)
+        $scope.matchHighlight()
+    }
+
+
+    $scope.matchHighlight = function() {
+        $('.btn-lay').removeClass('blink')
+        $('.btn-back').removeClass('blink')
+
+        if ($scope.s_id == undefined) {
+            return false
+        }
+        $http({
+                url: "https://www.lotusbook.com/api/exchange/odds/eventType/" + $scope.s_id,
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+
+            .then(function mySuccess(response) {
+
+                // console.log(response);
+                if (response.data.result.length < 1) {
+                    $scope.shoNoEvents = true;
+                } else {
+                    $scope.shoNoEvents = false;
+                }
+                $scope.Highlightlist = response.data.result;
+                $('#loading_page').css('display','none');
+
+
+                if ($scope.oldHighlightlist.length != $scope.Highlightlist.length) {
+                    $scope.oldHighlightlist = $scope.Highlightlist
+                }
+
+                angular.forEach($scope.Highlightlist, function(item, index) {
+                    // if (item.matchName == $scope.oldHighlightlist[index].matchName) {
+                    //     if (item.runner1Back != $scope.oldHighlightlist[index].runner1Back) {
+                    //         $('#hback1_' + index).addClass('blink');
+                    //     }
+                    //     if (item.runner1Lay != $scope.oldHighlightlist[index].runner1Lay) {
+                    //         $('#hlay1_' + index).addClass('blink');
+                    //     }
+                    //     if (item.runner2Back != $scope.oldHighlightlist[index].runner2Back) {
+                    //         $('#hback2_' + index).addClass('blink');
+                    //     }
+                    //     if (item.runner2Lay != $scope.oldHighlightlist[index].runner2Lay) {
+                    //         $('#hlay2_' + index).addClass('blink');
+                    //     }
+                    //     if (item.runner3Back != $scope.oldHighlightlist[index].runner3Back) {
+                    //         $('#hback3_' + index).addClass('blink');
+                    //     }
+                    //     if (item.runner3Lay != $scope.oldHighlightlist[index].runner3Lay) {
+                    //         $('#hlay3_' + index).addClass('blink');
+                    //     }
+                    // }
+                         angular.forEach($scope.Highlightlist, function(item, index) {
+                        var newdata = $scope.lhighlightData[item.id];
+                        // console.log(newdata)
+                        if (newdata != undefined) {
+                            item.status = newdata.status;
+                            if (newdata.inPlay) {
+                                item.inPlay = true;
+                            } else {
+                                item.inPlay = false;
+                            }
+                            if (newdata.runners[0].back.length != 0) {
+                                if (item.runners[0].back[0].price != newdata.runners[0].back[0].price) {
+                                    $('#hback1_' + index).addClass('blink');
+                                }
+                                item.runner1Back = newdata.runners[0].back[0].price;
+                            } else {
+                                item.runners[0].back[0].price = null;
+                            }
+                            if (newdata.runners[0].lay.length != 0) {
+                                if (item.runners[0].lay[0].price != newdata.runners[0].lay[0].price) {
+                                    $('#hlay1_' + index).addClass('blink');
+                                }
+                                item.runners[0].lay[0].price = newdata.runners[0].lay[0].price;
+                            } else {
+                                item.runners[0].lay[0].price = null;
+                            }
+                            if (newdata.runners[1].back.length != 0) {
+                                if (item.runners[1].back[0].price != newdata.runners[1].back[0].price) {
+                                    $('#hback2_' + index).addClass('blink');
+                                }
+                                item.runners[1].back[0].price = newdata.runners[1].back[0].price;
+                            } else {
+                                item.runners[1].back[0].price = null;
+                            }
+                            if (newdata.runners[1].lay.length != 0) {
+                                if (item.runners[1].lay[0].price != newdata.runners[1].lay[0].price) {
+                                    $('#hlay2_' + index).addClass('blink');
+                                }
+                                item.runners[1].lay[0].price = newdata.runners[1].lay[0].price;
+                            } else {
+                                item.runners[1].lay[0].price = null;
+                            }
+                            if (item.runner3Name != null) {
+                                if (newdata.runners[2].back.length != 0) {
+                                    if (item.runners[2].back[0].price != newdata.runners[2].back[0].price) {
+                                        $('#hback3_' + index).addClass('blink');
+                                    }
+                                    item.runners[2].back[0].price = newdata.runners[2].back[0].price;
+                                } else {
+                                    item.runners[2].back[0].price = null;
+                                }
+                                if (newdata.runners[2].lay.length != 0) {
+                                    if (item.runners[2].lay[0].price != newdata.runners[2].lay[0].price) {
+                                        $('#hlay3_' + index).addClass('blink');
+                                    }
+                                    item.runners[2].lay[0].price = newdata.runners[2].lay[0].price;
+                                } else {
+                                    item.runners[2].lay[0].price = null;
+                                }
+                            }
+                        }
+                    })
+                })
+                $scope.oldHighlightlist = $scope.Highlightlist
+
+            }, function myError(error) {
+                if (error.status==401) {
+                    //$.removeCookie("auth-token");
+                    window.location.href="login.html"
+                }
+            });
+    }
+
+    var highlightTimer
+    //  = $interval(function() {
+    //     // $scope.matchHighlight();
+    // }, 5000);
+
+    $scope.$on('$routeChangeStart', function(scope, next, current) {
+        if (next.$$route.controller != "homeController") {
+            $interval.cancel(highlightTimer); // clear interval here
+        }
+        if (next.$$route.controller == undefined) {
+            highlightTimer = $interval(function() {
+                $scope.matchHighlight()
+            }, 2000);
+        }
+    });
+
+    $scope.lotusHighlights = function() {
+        var bsHeight = $('.footer').offset().top - $('.rightPanelContent').offset().top;
+        $('.rightPanelContent').css('max-height', bsHeight + 'px');
+        var routesid = $routeParams.rsid;
+        if (routesid == 4) $scope.CurentSportSelected = 'Cricket';
+        if (routesid == 1) $scope.CurentSportSelected = 'Soccer';
+        if (routesid == 2) $scope.CurentSportSelected = 'Tennis';
+        if (sid != routesid) {
+            $scope.Highlights();
+        }
+        // var routesid = $routeParams.sid
+        if (routesid != null) {
+            sid = routesid
+        }
+
+        if (sid == undefined) {
+            return false;
+        }
+        $http({
+            method: "GET",
+            url: "https://www.lotusbook.com/api/exchange/odds/eventType/" + sid,
+        }).then(function success(response) {
+            // $scope.pending_Highlights = false
+            $scope.lhighlightData = response.data.result;
+
+            if ($rootScope.fType == 1) {
+                $('.lay').removeClass('blink')
+                $('.back').removeClass('blink')
+                angular.forEach($scope.Highlightdata, function(item, index) {
+                    var newdata = $scope.lhighlightData[item.bfId];
+                    // console.log(newdata)
+                    if (newdata != undefined) {
+                        item.status = newdata.status;
+                        if (newdata.inPlay) {
+                            item.inPlay = 1;
+                        } else {
+                            item.inPlay = 0;
+                        }
+                        if (newdata.runners[0].back.length != 0) {
+                            if (item.runner1Back != newdata.runners[0].back[0].price) {
+                                $('#hback1_' + index).addClass('blink');
+                            }
+                            item.runner1Back = newdata.runners[0].back[0].price;
+                        } else {
+                            item.runner1Back = null;
+                        }
+                        if (newdata.runners[0].lay.length != 0) {
+                            if (item.runner1Lay != newdata.runners[0].lay[0].price) {
+                                $('#hlay1_' + index).addClass('blink');
+                            }
+                            item.runner1Lay = newdata.runners[0].lay[0].price;
+                        } else {
+                            item.runner1Lay = null;
+                        }
+                        if (newdata.runners[1].back.length != 0) {
+                            if (item.runner2Back != newdata.runners[1].back[0].price) {
+                                $('#hback2_' + index).addClass('blink');
+                            }
+                            item.runner2Back = newdata.runners[1].back[0].price;
+                        } else {
+                            item.runner2Back = null;
+                        }
+                        if (newdata.runners[1].lay.length != 0) {
+                            if (item.runner2Lay != newdata.runners[1].lay[0].price) {
+                                $('#hlay2_' + index).addClass('blink');
+                            }
+                            item.runner2Lay = newdata.runners[1].lay[0].price;
+                        } else {
+                            item.runner2Lay = null;
+                        }
+                        if (item.runner3Name != null) {
+                            if (newdata.runners[2].back.length != 0) {
+                                if (item.runner3Back != newdata.runners[2].back[0].price) {
+                                    $('#hback3_' + index).addClass('blink');
+                                }
+                                item.runner3Back = newdata.runners[2].back[0].price;
+                            } else {
+                                item.runner3Back = null;
+                            }
+                            if (newdata.runners[2].lay.length != 0) {
+                                if (item.runner3Lay != newdata.runners[2].lay[0].price) {
+                                    $('#hlay3_' + index).addClass('blink');
+                                }
+                                item.runner3Lay = newdata.runners[2].lay[0].price;
+                            } else {
+                                item.runner3Lay = null;
+                            }
+                        }
+                    }
+                })
+                var defaultoldHighlightdata = $scope.Highlightdata;
+                oldHighlightdata = defaultoldHighlightdata;
+            }
+        }, function error(response) {
+
+
+        })
+    }
+
+    $scope.highlightTimer;
+    $scope.lotushighlightTimer;
+    $scope.highlightsInterval = function() {
+        $scope.Highlights();
+        if ($rootScope.fType == 1) {
+            $scope.highIntervalVal = 30000;
+        } else if ($rootScope.fType == 2) {
+            $scope.highIntervalVal = 1000;
+        }
+        if ($scope.highlightTimer) {
+            $interval.cancel($scope.highlightTimer);
+        }
+        $scope.highlightTimer = $interval(function() {
+            $scope.Highlights();
+        }, $scope.highIntervalVal);
+        if ($scope.lotushighlightTimer) {
+            $interval.cancel($scope.lotushighlightTimer);
+        }
+        $scope.lotushighlightTimer = $interval(function() {
+            $scope.lotusHighlights();
+            $scope.Highlights();
+
+        }, 1000);
+    }
+    $scope.$on('$routeChangeStart', function(event, next, prev) {
+        if (next.$$route.templateUrl != "home1.html") {
+            $interval.cancel($scope.highlightTimer);
+            $interval.cancel($scope.lotushighlightTimer);
+        }
+    });
+
+  });
+</script>

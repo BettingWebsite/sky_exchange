@@ -1,0 +1,64 @@
+
+      <div data-ng-init="showkabaddi()">
+        <div class="kv-wrap" style="">
+          <img src="images/kv/KV04.jpg" alt="">
+        </div>
+        <div  class="game-highlight-wrap col3" style="">
+          <h3>Highlights</h3>
+          <ul class="slip-head">
+            <li class="col-game"></li>
+            <li class="col-visit">1</li>
+            <li class="col-draw">x</li>
+            <li class="col-home">2</li>
+            <li class="col-info"></li>
+          </ul>
+          <!-- Event Board -->
+          <div class="game-list">
+            <div id="noDataDiv" class="no-data" data-ng-if="shoNoEvents">
+              <p>There are no events to be displayed.</p>
+            </div>
+            <div >
+              <dl data-ng-repeat="item in Highlightlist | orderBy: orderByDate:false track by $index" class="game-list-col" data-ng-class="checkDateTime(item.matchDate,curTime)?'disable':''" style="display: block;">
+                <dt>
+                  <img  class="icon-in_play" src="images/transparent.gif" alt="icon-in_play" data-ng-show="item.inPlay==1">
+                  <span  class="game-low_liq" style="display: none;">Low Liquidity</span>
+                     
+                  <img id="playIcon" class="icon-no_play" src="images/transparent.gif" alt="playIcon" data-ng-show="item.inPlay==0">
+                  <!-- <a  vsinfo="" data-ng-href="#!full-market/{{item.marketId}}/{{item.matchId}}/{{item.bfId}}/Soccer/{{item.dataMode}}">{{item.matchName}}</a> -->
+                  <a   data-ng-href="#!full-market/{{item.SportbfId}}/{{item.TourbfId}}/{{item.matchId}}/{{item.marketId}}/{{item.bfId}}">{{item.matchName}}</a>
+                  <span data-ng-show="item.inPlay==1"  class="game-list-time"><span class="in_play">In-Play</span></span>
+                   <span data-ng-show="item.inPlay==0" id="dateTimeInfo" class="game-list-time">{{item.matchDate}}</span>
+                  <a  style="cursor: pointer; display: none;"><img class="icon-live" src="images/transparent.gif" alt="icon-live"></a>
+                  <!-- <img class="icon-live" src="images/transparent.gif" /> -->
+                  <!-- <img class="icon-irun" src="images/transparent.gif" /> -->
+                </dt>
+                <dd  class="col-visit">
+                  <!-- <div class="suspend" data-ng-if="item.runner1Back==0 && item.runner1Lay==0">
+                    <span>Suspend</span>
+                  </div> -->
+                  <a data-ng-click="(item.runner1Back == null || item.runner1Back == '' || checkDateTime(item.matchDate,curTime))?'':betSlip(item.bfId,'back', item.runner1Name+$index+'back', item.runner1Name, item.matchName, item.runner1Back,item.marketId,item.matchId,item.inPlay,0,0,item.SportbfId,item.mtBfId)" id="hback1_{{$index}}" class="btn-back" data-side="Back">{{(item.runner1Back == null || item.runner1Back == "") ? '-' : item.runner1Back}}</a> 
+                  <a data-ng-click="(item.runner1Lay == null || item.runner1Lay == '' || checkDateTime(item.matchDate,curTime))?'':betSlip(item.bfId,'lay', item.runner1Name+$index+'back', item.runner1Name, item.matchName, item.runner1Lay,item.marketId,item.matchId,item.inPlay,0,0,item.SportbfId,item.mtBfId)" id="hlay1_{{$index}}" class="btn-lay" data-side="Lay">{{(item.runner1Lay == null || item.runner1Lay == "") ? '-' : item.runner1Lay}}</a>
+                </dd>
+                <dd class="col-draw" style="">
+                  <!-- <div class="suspend" data-ng-if="item.runner1Back==0 && item.runner1Lay==0 && item.runner2Back==0 && item.runner2Lay==0">
+                    <span>Suspend</span>
+                  </div> -->
+                  <a data-ng-click="(item.runner3Back == null || item.runner3Back == '' || checkDateTime(item.matchDate,curTime))?'':betSlip(item.bfId,'back', item.runner3Name+$index+'back', item.runner3Name, item.matchName, item.runner3Back,item.marketId,item.matchId,item.inPlay,0,0,item.SportbfId,item.mtBfId)" id="hback3_{{$index}}" class="btn-back" data-side="Back">{{(item.runner3Back == null || item.runner3Back == "") ? '-' : item.runner3Back}}</a> 
+                  <a data-ng-click="(item.runner3Lay == null || item.runner3Lay == '' || checkDateTime(item.matchDate,curTime))?'':betSlip(item.bfId,'lay', item.runner3Name+$index+'back', item.runner3Name, item.matchName, item.runner3Lay,item.marketId,item.matchId,item.inPlay,0,0,item.SportbfId,item.mtBfId)" id="hlay3_{{$index}}" class="btn-lay" data-side="Lay">{{(item.runner3Lay == null || item.runner3Lay == "") ? '-' : item.runner3Lay}}</a>
+                </dd>
+                <dd class="col-home">
+                 <!--  <div class="suspend" data-ng-if="item.runner2Back==0 && item.runner2Lay==0">
+                    <span>Suspend</span>
+                  </div> -->
+                  <a data-ng-click="(item.runner2Back == null || item.runner2Back == '' || checkDateTime(item.matchDate,curTime))?'':betSlip(item.bfId,'back', item.runner2Name+$index+'back', item.runner2Name, item.matchName, item.runner2Back,item.marketId,item.matchId,item.inPlay,0,0,item.SportbfId,item.mtBfId)" id="hback2_{{$index}}" class="btn-back" data-side="Back">{{(item.runner2Back == null || item.runner2Back == "") ? '-' : item.runner2Back}}</a> 
+                  <a data-ng-click="(item.runner2Lay == null || item.runner2Lay == '' || checkDateTime(item.matchDate,curTime))?'':betSlip(item.bfId,'lay', item.runner2Name+$index+'back', item.runner2Name, item.matchName, item.runner2Lay,tem.marketId,item.matchId,item.inPlay,0,0,item.SportbfId,item.mtBfId)" id="hlay2_{{$index}}" class="btn-lay" data-side="Lay">{{(item.runner2Lay == null || item.runner2Lay == "")? '-' :item.runner2Lay}}</a>
+                </dd>
+                <dd class="col-info">
+                  <a data-ng-if="item.isMulti!=1" class="add-pin" style="cursor: pointer" title="Add to Multi Markets" data-ng-click="addMultiMkt(item.marketId)">Pin</a>
+                  <a data-ng-if="item.isMulti==1" class="delete-pin" style="cursor: pointer" title="Remove from Multi Markets" data-ng-click="removeMultiMkt(item.marketId)">Pin</a>
+                </dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>

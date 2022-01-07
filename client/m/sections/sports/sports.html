@@ -1,0 +1,64 @@
+
+
+<h3 id="quickHeader" data-data-ng-if="selectedSports.name==undefined">Quick Links</h3>
+
+<ul id="quickBoard" class="quick_link" data-ng-if="selectedSports.name==undefined">
+
+    <li><a href="#!inplay"><img class="icon-inplay" src="images/transparent.gif" alt="inplay">In-Play</a></li>
+
+    <li><a href="#!multiMarket"><img class="icon-pin" src="images/transparent.gif" alt="multimarkets">Multi Markets</a></li>
+
+    <li data-ng-repeat="sport in sportsTab track by sport.id"><a id="quickLink_{{sport.id}}"  data-ng-click="getTournamentList(sport)"><img class="icon-{{sport.name | lowercase}}" src="images/transparent.gif" alt="transparent">{{sport.name}}</a></li>
+
+</ul>
+
+<div id="naviMenuBar" class="path-wrap" data-ng-if="selectedSports.name!=undefined">
+
+    <a class="go_back" data-ng-click="back()">Back</a>
+
+    <ul id="barList">
+
+        <li id="allSports" data-ng-click="back('selectedSports')">All Sports</li>
+
+        <li id="naviBar_{{selectedSports.id}}" data-ng-click="back('selectedTournament')" style="display: inline;" data-ng-if="selectedSports.name!=undefined">{{selectedSports.name}}</li>
+
+        <li id="naviBar_{{selectedTournament.id}}" data-ng-click="back('selectedMatch')" style="display: inline;" data-ng-if="selectedTournament.name!=undefined">{{selectedTournament.name}}</li>
+
+        <li id="naviBar_{{selectedMatch.id}}" style="display: inline;" data-ng-if="selectedMatch.name!=undefined">{{selectedMatch.name}}</li>
+
+    </ul>
+
+</div>
+
+<h3 id="naviMenuHeader" data-ng-if="selectedSports.name==undefined">All Sports</h3>
+
+<ul id="naviMenuList" class="menu-list">
+
+    <li id="naviMenu_{{sport.id}}" data-ng-repeat="sport in sportsData track by sport.id" data-ng-if="selectedSports.name==undefined" data-ng-click="getTournamentList(sport)" class="" style="display: list-item;" title="{{sport.name}}">
+
+        <a>{{sport.name}}</a>
+
+    </li>
+
+    <li id="naviMenu_{{tournament.id}}" data-ng-repeat="tournament in tournamentData track by tournament.id" data-ng-if="selectedTournament.name==undefined" data-ng-click="getMatchList(tournament)" class="" style="display: list-item;" title="{{tournament.name}}">
+
+        <a>{{tournament.name}}</a>
+
+    </li>
+
+    <li id="naviMenu_{{match.id}}" data-ng-repeat="match in matchData | orderBy: orderByDate:false track by match.bfId" data-ng-if="selectedMatch.name==undefined" data-ng-click="getMarketList(match)" class="" style="display: list-item;" title="{{match.name}}">
+
+        <a>{{match.name}}</a>
+
+    </li>
+
+    <li id="naviMenu_{{market.id}}" data-ng-repeat="market in marketData track by market.id" class="" style="display: list-item;" title="{{market.name}}">
+
+        <a data-ng-href="#!fullmarket/{{selectedSports.id}}/{{selectedTournament.id}}/{{selectedMatch.bfId}}/{{market.id}}/{{market.bfId}}">{{market.name}}</a>
+
+    </li>
+
+
+
+</ul>
+

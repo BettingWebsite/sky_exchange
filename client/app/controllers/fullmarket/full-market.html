@@ -1,0 +1,2291 @@
+<!-- <script type="text/javascript">
+      (function(a,b,c,d,e,f,g,h,i){a[e]||(i=a[e]=function(){(a[e].q=a[e].q||[]).push(arguments)},i.l=1*new Date,i.o=f,
+      g=b.createElement(c),h=b.getElementsByTagName(c)[0],g.async=1,g.src=d,g.setAttribute("n",e),h.parentNode.insertBefore(g,h)
+      )})(window,document,"script","https://widgets.sir.sportradar.com/sportradar/widgetloader","SIR", {
+          language: 'en',
+          matchId: '11483309', // default matchId to be used by all widgets
+      });
+      
+      // start using global SIR object
+      SIR('addWidget', '#sr-widget', 'match.scoreboard');
+      </script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"
+  integrity="sha512-nOQuvD9nKirvxDdvQ9OMqe2dgapbPB7vYAMrzJihw5m+aNcf0dX53m6YxM4LgA9u8e9eg9QX+/+mPu8kCNpV2A=="
+  crossorigin="anonymous"></script>
+<style>
+  .video-container {
+    display: flex;
+    justify-content: center;
+    height: 339px;
+    margin-top: -15px;
+    width: 100%;
+    background-color: #000;
+  }
+
+  .video-container iframe {
+    height: 100%;
+    width: 595px;
+  }
+
+  .back2 {
+    background-color: #d1eeff;
+  }
+
+  .back1,
+  .BACK1,
+  .YES1 {
+    background-color: #ace0ff;
+  }
+
+  .back {
+    background-color: #57bdf9;
+  }
+
+  .lay {
+    background-color: #fdb6ca;
+  }
+
+  .lay1,
+  .LAY1,
+  .NO1 {
+    background-color: #ffc9d8;
+  }
+
+  .lay2 {
+    background-color: #ffe6ed;
+  }
+
+  .spacer {
+    flex: 1;
+  }
+</style>
+<style>
+  .close {
+    height: 25px;
+    overflow: hidden;
+  }
+
+  .score_ball-runs {
+    background: #FFCC2F;
+    height: 26px;
+    width: 26px;
+    border-radius: 50%;
+    display: inline-block;
+    font-size: 12px;
+    line-height: 27px;
+    text-align: center;
+    color: #000;
+    font-weight: bold;
+  }
+
+  .m-l-5 {
+    margin-left: 5px;
+  }
+
+  .score_ball-runs.four {
+    background: #087F23;
+    color: #fff;
+  }
+
+  .score_ball-runs.six {
+    background: #883997;
+    color: #fff;
+  }
+
+  .score_ball-runs.wicket {
+    background: #ff0000;
+    color: #fff;
+  }
+</style>
+<style>
+  table {
+    /* width: 100%;*/
+  }
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    font-size: 12px;
+  }
+
+  .heading1 {
+    text-align: left;
+  }
+
+  th {
+    padding: 5px 10px 5px 8px;
+    /* padding: 5px 0px 5px 0px;*/
+    /*padding-top: 5px;
+   padding-right: 0px;
+   padding-bottom: 5px;
+   padding-left: 0px;*/
+    /*font-size: 15px;*/
+    font-weight: bold;
+  }
+
+  .matchOddTh {
+    border: 1px solid grey;
+    background-color: #fff;
+  }
+
+  .matchOddTh>tr {
+    background-color: inherit;
+    color: #717171;
+    border: 0px;
+  }
+
+  .sessionBook {
+    text-align: center;
+    width: 88px;
+  }
+
+  /*th {
+   padding: 5px 0px 5px 0px;
+   padding-top: 5px;
+   padding-right: 12px;
+   padding-bottom: 5px;
+   padding-left: 0px;
+   font-size: 15px;
+   }*/
+  /*tbody {
+   background-color: white;
+   }*/
+  .sesstionTable>table>tbody>tr>.teamA {
+    width: 71px;
+  }
+
+  .teamA,
+  .teamB,
+  .draw {
+    line-height: 1.3em;
+    padding: 5px 15px 5px 10px;
+    padding-top: 5px;
+    padding-right: 15px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    font-size: 15px;
+    color: #34495e;
+  }
+
+  /*td {
+   border: 1px solid #c3c3c3;
+   }*/
+  /*.teamA, .teamB, .draw {
+   line-height: 1.3em;
+   padding: 5px 15px 5px 10px;
+   font-size: 14px;
+   color: #34495e;
+   }
+   .sessionBook {
+   text-align: center;
+   width: 88px;
+   }*/
+  .bookButton {
+    background-color: #2f9289;
+    width: 65px;
+    padding: 4px;
+    padding-top: 4px;
+    padding-right: 4px;
+    padding-bottom: 4px;
+    padding-left: 4px;
+    font-size: 18px;
+    border: none;
+    border-radius: 2px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 2px;
+    color: white;
+  }
+
+  .fancyTd {
+    position: relative;
+  }
+
+  .sessionStatus {
+    position: absolute;
+    display: block;
+    /*width: 100%;*/
+    height: 100%;
+    text-align: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.6);
+    z-index: 2;
+  }
+
+  .statusText {
+    position: absolute;
+    top: 50%;
+    /*left: 48%;*/
+    width: 100%;
+    font-size: 20px;
+    font-weight: bold;
+    color: #444444;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+  }
+
+  .fancyInnerTable>table>tbody>tr>td {
+    border: 0px;
+    line-height: 22px;
+  }
+
+  .borderRight {
+    border-right: 1px solid #969696 !important;
+  }
+
+  .lay1,
+  .LAY1,
+  .NO1 {
+    background-color: #faa9ba;
+  }
+
+  .session {
+    line-height: 1.2em;
+    padding: 2px 1px 2px 1px;
+    font-size: 15px;
+    text-align: center;
+    cursor: pointer;
+    width: 70px;
+  }
+
+  .fancyInnerTable>table>tbody>tr>td {
+    border: 0px;
+    line-height: 22px;
+  }
+
+  .borderRight {
+    border-right: 1px solid #969696 !important;
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-right-color: rgb(150, 150, 150);
+  }
+
+  .back1,
+  .BACK1,
+  .YES1 {
+    background-color: #72bbef;
+  }
+
+  .fancyInnerTable>table>tbody>tr>td {
+    border: 0px;
+    line-height: 22px;
+  }
+
+  .sessionStake {
+    padding-left: 12px;
+    width: 190px;
+    font-size: 14px;
+  }
+
+  body {
+    /*font-family: Arial, sans-serif;*/
+    /*background: url(http://www.shukatsu-note.com/wp-content/uploads/2014/12/computer-564136_1280.jpg) no-repeat;*/
+    /*background-size: cover;*/
+    height: 100vh;
+  }
+
+  h1 {
+    text-align: center;
+    font-family: Tahoma, Arial, sans-serif;
+    color: #06d85f;
+    margin: 80px 0;
+  }
+
+  .box {
+    width: 40%;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 35px;
+    border: 2px solid #fff;
+    border-radius: 20px/50px;
+    background-clip: padding-box;
+    text-align: center;
+  }
+
+  .button {
+    font-size: 1em;
+    padding: 10px;
+    color: #fff;
+    border: 2px solid #06d85f;
+    border-radius: 20px/50px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease-out;
+  }
+
+  .button:hover {
+    background: #06d85f;
+  }
+
+  /*.overlay {
+   position: fixed;
+   top: 0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+   background: rgba(0, 0, 0, 0.7);
+   transition: opacity 500ms;
+   visibility: hidden;
+   opacity: 5;
+   }
+   .overlay:target {
+   visibility: visible;
+   opacity: 1;
+   }
+   .popup {
+   margin: 70px auto;
+   padding: 20px;
+   background: #fff;
+   border-radius: 5px;
+   width: 30%;
+   position: relative;
+   transition: all 5s ease-in-out;
+   }
+   .popup h2 {
+   margin-top: 0;
+   color: #333;
+   font-family: Tahoma, Arial, sans-serif;
+   }
+   .popup .close {
+   position: absolute;
+   top: 20px;
+   right: 30px;
+   transition: all 200ms;
+   font-size: 30px;
+   font-weight: bold;
+   text-decoration: none;
+   color: #333;
+   }
+   .popup .close:hover {
+   color: #06D85F;
+   }
+   .popup .content {
+   max-height: 30%;
+   overflow: auto;
+   }
+   @media screen and (max-width: 700px){
+   .box{
+   width: 70%;
+   }
+   .popup{
+   width: 70%;
+   }
+   }*/
+</style>
+<style>
+  .matchWinner {
+    float: right;
+    margin-top: -18px;
+    font-size: 14px;
+    font-weight: bold !important;
+    color: #308861;
+    letter-spacing: 2px;
+  }
+
+  .suspended {
+    background: rgba(30, 63, 90, 0.1);
+    width: 150px;
+    text-align: center;
+    font-weight: bolder;
+    line-height: 40px;
+  }
+
+  p {
+    margin-bottom: 2px;
+  }
+</style>
+<style>
+  .market-header-content {
+    padding-right: 0;
+  }
+
+  .market-header-content .price-header {
+    font-size: 12px;
+    overflow: hidden;
+  }
+
+  .market-header-content .left-side {
+    float: left;
+    height: 29px;
+    /* width: 217px; */
+  }
+
+  .market-header-content .left-side .hero-unit-data-inplay {
+    margin-top: 7px;
+  }
+
+  .hero-unit-data-inplay {
+    cursor: default;
+    padding-left: 1px;
+  }
+
+  .hero-unit-data-inplay .data-inplay-status-text {
+    /*color: #aaaaaa;*/
+    color: #717171;
+    font-size: 15px;
+    font-weight: bold;
+    padding-left: 5px;
+  }
+
+  .market-header-content .right-side {
+    float: right;
+    /* width: 404px; */
+  }
+
+  .market-header-content .right-side .hero-unit-lay-stripe {
+    float: right;
+    padding-top: 0;
+    width: 210px;
+  }
+
+  .market-header-content .right-side .layhead .side-text {
+    float: left;
+    margin-left: 21px;
+  }
+
+  .market-header-content .right-side .side-text {
+    font-weight: bold;
+    margin-top: 7px;
+    font-size: 15px;
+  }
+
+  .market-header-content .right-side .hero-unit-back-stripe {
+    float: left;
+    width: 200px;
+  }
+
+  .market-header-content .right-side .backhead .side-text {
+    float: right;
+    margin-right: 21px;
+  }
+
+  .content {
+    overflow: hidden;
+  }
+
+  .bets-table-list-template {
+    margin-right: -30px;
+  }
+
+  .list-unstyled {
+    margin-bottom: 0;
+  }
+
+  .bets-table-list-content,
+  .bets-table-list-content li {
+    padding-right: 0;
+  }
+
+  .bets-table-list-item-template {
+    margin-top: 1px;
+    padding: 0 10px 0 4px;
+  }
+
+  .bets-table-list-item-template,
+  .bets-table-prices-item-template {
+    /* border-top: 1px solid transparent; */
+    border: 2px solid #2521211a;
+    color: #3e3e3e;
+    font-size: 1.2em;
+    font-weight: bold;
+    height: 55px;
+    line-height: 1;
+    min-height: 55px;
+    position: relative;
+  }
+
+  .bets-table-list-content .runner-name {
+    float: left;
+    height: 100%;
+    width: 322px;
+    margin-left: 3px;
+  }
+
+  .runner-name .outer {
+    display: table-cell;
+    height: 50px;
+    vertical-align: middle;
+  }
+
+  .p-and-l {
+    /*font-size: 110%;*/
+    font-weight: normal;
+    margin-top: 5px;
+    /*font-weight: bold;*/
+    margin-left: 8px;
+  }
+
+  .bets-table-list-content .digit-data {
+    float: right;
+    height: 100%;
+    /* width: 405px; */
+  }
+
+  .fancyStatusDiv {
+    float: left;
+    position: relative;
+  }
+
+  .bets-table-list-content .digit-data .addBet {
+    float: left;
+    max-width: 100%;
+    width: 70px;
+  }
+
+  .bets-table-prices-item-template .addBet {
+    border: medium none;
+    height: inherit;
+    max-width: 60px;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    padding: 0;
+    width: 60px;
+  }
+
+  .green-section .bet-cell {
+    background-color: #72bbef;
+    border-color: #72bbef;
+  }
+
+  .bet-cell {
+    background-color: #fff;
+    border: 1px solid #c4d4e1;
+    color: inherit;
+    display: block;
+    height: 40px;
+    margin: 3px 1px 2px;
+    max-height: 45px;
+    overflow: hidden;
+    padding: 5px 0;
+    text-align: center;
+  }
+
+  .bet-cell:hover {
+    text-decoration: none;
+  }
+
+  .bet-section .runner-name,
+  .bet-cell .price {
+    font-weight: bold;
+    margin-bottom: 6px;
+  }
+
+  .bet-cell .price {
+    margin-bottom: 0;
+  }
+
+  .bet-cell .size {
+    font-size: 80%;
+    font-weight: normal;
+  }
+
+  .yellow-section .bet-cell {
+    background-color: #faa9ba;
+    border-color: #faa9ba;
+  }
+
+  div.suspended,
+  div.closed {
+    border: 2px solid #ef3838;
+    color: #ef3838;
+    background-color: rgba(255, 255, 255, 0.7);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 1px;
+    display: block;
+    text-align: center;
+    font-size: 22px;
+    z-index: 999;
+    line-height: 45px;
+    cursor: not-allowed;
+  }
+
+  .fancySuspended {
+    /*top: 0px !important;*/
+    position: absolute !important;
+    line-height: 42px !important;
+    background-color: #ffffff8c !important;
+    width: auto !important;
+    /*left: 320px !important;*/
+    left: 465px !important;
+    right: 140px !important;
+    font-size: 12px !important;
+  }
+
+  .video-overlay {
+    position: absolute;
+    top: 0;
+    background: rgba(255, 255, 255, 0.4);
+    height: auto;
+    left: 0;
+    content: "";
+    top: 0;
+    padding: 5px;
+  }
+
+  .clock2digit {
+    max-width: 300px;
+    bottom: -25px;
+    position: absolute !important;
+    right: -37px;
+    width: auto !important;
+    transform: scale(0.6);
+  }
+
+  .video-overlay img {
+    width: 35px;
+    height: auto;
+    margin-right: 2px;
+    margin-left: 2px;
+  }
+
+  img {
+    vertical-align: middle;
+    border-style: none;
+  }
+
+  .card-icon {
+    font-family: Card Characters;
+    display: inline-block !important;
+    text-align: right;
+    width: 30px;
+    font-size: 12px;
+  }
+
+  .card-red1 {
+    color: #ff0000 !important;
+    font-size: 14px !important;
+    display: inline-block !important;
+  }
+
+  .card-black1 {
+    color: #000 !important;
+    font-size: 14px !important;
+    display: inline-block !important;
+  }
+
+  .rules-title {
+    padding: 10px;
+    background: #333333;
+    color: white;
+  }
+
+  .bets-wrap.tp_class {
+    margin-bottom: 0px;
+    margin-top: 0px;
+  }
+
+  .ball-runs.playera {
+    background: #355e3b;
+    color: #ff4500;
+  }
+
+  .last-result {
+    cursor: pointer;
+    margin: 0px 2px 2px 0px;
+  }
+
+  .ball-runs.playerb {
+    background: #355e3b;
+    color: #ff3;
+  }
+
+  .ball-runs-T6.playerb {
+    background: #355e3b;
+    color: #ff3;
+  }
+
+  .ball-runs {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    display: inline-block;
+    line-height: 30px;
+    text-align: center;
+    font-weight: 700;
+  }
+
+  .ball-runs-T6 {
+    height: 30px;
+    width: 65px;
+    border-radius: 25%;
+    display: inline-block;
+    line-height: 30px;
+    text-align: center;
+    font-weight: 700;
+  }
+
+  .teenpatti-result-container {
+    display: flex;
+    background: #fff;
+    padding: 5px;
+    border-radius: 0px 0px 10px 10px;
+  }
+
+  .label-result {
+    flex: 1;
+  }
+
+  .results {}
+
+  .m-t-10 {
+    margin-top: 10px;
+  }
+
+  .result-view-all {
+    font-size: 14px;
+    float: right;
+    color: #fff;
+  }
+
+  .fancy-marker-title h4 {
+    padding: 10px;
+    background-color: #2c3e50d9;
+    color: #fff;
+    font-size: 14px;
+  }
+
+  a.open-tv-wrap {
+    height: 18px;
+    line-height: 18px;
+    background-image: linear-gradient(180deg, #1E5F89 0%, #194F72 100%);
+    border-radius: 3px;
+    color: #fff;
+    padding: 0 7px;
+  }
+
+  .open-tv-wrap::before {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+    background-position: -396px -2453px;
+    height: 16px;
+    width: 19px;
+    background-image: url('/images/sprite/main-s1aea395e8c.png');
+  }
+</style>
+<link rel="stylesheet" type="text/css" href="flipclock.css" />
+
+<table id="gameTeam" class="game-team" ng-if="sportId==15">
+  <tbody>
+    <tr id="noTeam" style="">
+      <td class="game-name">{{matchName}}</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="game-head" ng-if="sportId==7.1 || sportId==7.2 || sportId==4339.1 || sportId==4339.2">
+
+  <table id="gameTeam" class="game-team">
+    <tbody>
+      <tr id="noTeam" style="">
+        <td class="game-name">{{matchName}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ul class="game-info" style="display: block">
+    <li id="infoLive" class="info-live" style="display: none">
+      <a class="btn-live"><img class="icon-live" src="images/transparent.gif" alt="icon-live" />Live</a>
+    </li>
+    <li data-ng-show="inPlay===1" class="green">
+      <img class="icon-irun" src="images/transparent.gif" alt="icon-irun" />inplay
+    </li>
+    <li data-ng-show="inPlay===0" class="green">
+      <img class="icon-irun" src="images/transparent.gif" alt="gameInfoDate" />Going inplay
+    </li>
+    <!-- <li><img class="icon-live" src="images/transparent.gif" />Live</li> -->
+    <!-- <li><img class="icon-irun" src="images/transparent.gif" />In-Play</li> -->
+    <li>
+      <img class="icon-cashout" src="images/transparent.gif" alt="icon-cashout" />Bet Delay: {{(betDelay === null ||
+      betDelay === "") ? '-' : betDelay}}
+    </li>
+    <li data-ng-if="marketdata.racing">
+      Time Remaining: {{(countDown === null ||
+      countDown === "") ? '-' : countDown}}
+    </li>
+    <li data-ng-if="marketdata.racing">
+      No. of Winners: {{currentMatchData && currentMatchData.length
+      ? currentMatchData[0].state.numberOfWinners
+      : "1"}}
+    </li>
+  </ul>
+</div>
+
+<div id="gameHead" class="game-head"
+  ng-if="sportId!=15 && !(sportId==7.1 || sportId==7.2 || sportId==4339.1 || sportId==4339.2)"
+  ng-init="loadMatchData(matchName)">
+  <!-- Team Table -->
+  <!-- <a class="favor select">Add Favorite</a> -->
+
+  <!-- <a id="multiMarketPin" class="add-pin" name="gameHeadPin" style="cursor: pointer;" title="Add to Multi Markets" eventtype="4" eventid="29103973" data-marketid="1.154289690"></a> -->
+  <a data-ng-if="markets[bfId].isMulti!=1 && bfId != '1.179157300'" class="add-pin" data-ng-click="addMultiMkt(fancy.mid)"
+    style="cursor: pointer" title="Add to Multi Markets"></a>
+  <a data-ng-if="markets[bfId].isMulti==1 && bfId != '1.179157300'" class="delete-pin" data-ng-click="removeMultiMkt(fancy.mid)"
+    style="cursor: pointer" title="Remove from Multi Markets"></a>
+  <table id="gameTeam" class="game-team">
+    <tbody>
+      <tr data-ng-if="bfId == '1.179157300'" id="noTeam">
+        <td class="game-name">IPL {{currentMatchData[0].marketName}} </td>
+      </tr>
+      <tr id="twoTeam" data-ng-if="bfId != '1.179157300'">
+        <td id="gameVisit" class="game-visit">
+          {{matchName.split(' v ')[0]}}<span></span>
+        </td>
+        <td id="gameVs" class="game-vs">
+          <div>{{currentMatchData[0].marketName}}<span>v</span></div>
+        </td>
+        <td id="gameHome" class="game-home">
+          {{matchName.split(' v ')[1]}}<span></span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 
+   <a id="lineMarketRulesBtn" class="btn-rules" style="cursor:pointer; display: none;"><img src="images/transparent.gif">Rules</a>
+   <div id="lineMarketRulesWrap" class="rules-wrap" style="display: none;">
+      <h3>Line Market Rules and Information</h3>
+      <div class="rules-content">
+         <p>How many runs would be scored in mentioned overs, If <strong> 'Back/Yes' </strong> bet is made then it will be win bet if the runs scored in the mentioned overs are <strong> equal or more </strong> then the Backed Runs otherwise it will be a Lost bets. If <strong> 'Lay/No' </strong> bet is made then it will be a win bet if Runs scored in the mentioned overs are <strong> less </strong> than the lay runs otherwise it will be lost bet. All the line markets will be settled only if the mentioned stipulated overs are completed or if the Batting team is bowled out (All out) or the runs are chased, given the inning's stipulated(or reduced) overs are more than or equal to the stipulated over of that particular line Market.</p>
+         <p><strong> "Matched Tied" </strong> and <strong> "Completed Match" </strong> doesn't affect the settling of Line markets.</p>
+      </div>
+      <ul class="btn-wrap break">
+         <li><a id="lineMarketRulesOk" class="btn" style="cursor:pointer">OK</a></li>
+      </ul>
+   </div> -->
+  <table class="game-scores" data-ng-if="sportId=='4' && bfId != '1.179157300'">
+    <tbody>
+      <tr>
+        <td class="scores-space"></td>
+        <td class="scores-team">
+          <h4 data-ng-show="fullScore==undefined && bfId != '1.179157300'">
+            {{fullScore.spnnation1? fullScore.spnnation1: matchName.split('v')[0]}} &nbsp;<img
+              data-ng-if="fullScore.activenation1==1" class="its_turn" src="images/transparent.gif" alt="home" />
+            <span>&nbsp;{{fullScore.spnrunrate1}}</span>
+            <span>&nbsp;{{fullScore.spnreqrate1}}</span>
+          </h4>
+          <h4 data-ng-show="fullScore==undefined && bfId != '1.179157300'">
+            {{fullScore.spnnation2? fullScore.spnnation2: matchName.split('v')[1]}} &nbsp;<img
+              data-ng-if="fullScore.activenation2==1" class="its_turn" src="images/transparent.gif" alt="away" />
+            <span>&nbsp;{{fullScore.spnrunrate2}}</span>
+            <span>&nbsp;{{fullScore.spnreqrate2}}</span>
+          </h4>
+          <h4 data-ng-show="fullScore!=undefined">
+            {{fullScore.spnnation1? fullScore.spnnation1: matchName.split('v')[0]}} &nbsp;<img
+              data-ng-if="fullScore.activenation1==1" class="its_turn" src="images/transparent.gif" alt="home" />
+            <span>&nbsp;{{fullScore.spnrunrate1}}</span>
+            <span>&nbsp;{{fullScore.spnreqrate1}}</span>
+          </h4>
+          <h4 data-ng-show="fullScore!=undefined">
+            {{fullScore.spnnation2? fullScore.spnnation2: matchName.split('v')[1]}} &nbsp;<img
+              data-ng-if="fullScore.activenation2==1" class="its_turn" src="images/transparent.gif" alt="away" />
+            <span>&nbsp;{{fullScore.spnrunrate2}}</span>
+            <span>&nbsp;{{fullScore.spnreqrate2}}</span>
+          </h4>
+          <ul class="scores-time">
+            <li class="filter-first"></li>
+            <li>{{fullScore.dayno==''? fullScore.spnmessage.split(' |')[0]: 'Day' + fullScore.dayno}}</li>
+          </ul>
+        </td>
+        <td>
+          <div class="col-md-12">
+            <p class="ball-by-ball">
+              <span class="score_ball-runs m-l-5" ng-class="{wicket : item=='ww', four : item=='4', six : item=='6'}"
+                data-ng-repeat="item in fullScore.balls track by $index">{{item}}</span>
+            </p>
+            <p style="font-size:10px;color:#8eea29">{{fullScore.spnmessage}}</p>
+          </div>
+          <!-- <div
+            ng-show="fullScore!=undefined"
+            style="font-size: 10px"
+            class="ui-inplay ui-has-score ui-has-state-of-ball ui-event ui-29194808 state-of-ball-box ui-has-state-of-ball"
+          >
+            <div ng-show="fullScore.matchStatus!='Finished'">
+              <span class="ui-ball-box scores-now"
+                >BALL
+                <span class="ui-over-number"
+                  >{{fullScore.stateOfBall.overNumber}}</span
+                >.<span class="ui-over-ball-number"
+                  >{{fullScore.stateOfBall.overBallNumber}}</span
+                ></span
+              >
+              -
+              <span class="ui-bowler-name"
+                >{{fullScore.stateOfBall.bowlerName}}</span
+              >
+              to
+              <span class="ui-batsman-name"
+                >{{fullScore.stateOfBall.batsmanName}}</span
+              >
+              -
+              <span class="ui-event-message"
+                >{{fullScore.stateOfBall.batsmanRuns}} Run</span
+              ><br />
+
+              <span
+                class="ui-ball-box"
+                ng-show="fullScore.stateOfBall.appealTypeName=='L.B.W.' || fullScore.stateOfBall.appealTypeName=='Caught' || fullScore.stateOfBall.appealTypeName=='Bowled'"
+                >Appeal :
+                <span class="ui-over-number"
+                  >{{fullScore.stateOfBall.appealTypeName}}</span
+                ><span class="ui-over-ball-number"></span
+              ></span>
+              <span
+                class="ui-ball-box"
+                ng-if="fullScore.stateOfBall.dismissalTypeName!='Not Out'"
+                >Wicket :
+                <span class="ui-over-number"
+                  >({{fullScore.stateOfBall.dismissalTypeName}})</span
+                ><span class="ui-over-ball-number"></span
+              ></span>
+              <span
+                class="ui-ball-box"
+                ng-if="fullScore.stateOfBall.legBye!='0'"
+                >LegBye :<span class="ui-over-number"
+                  >{{fullScore.stateOfBall.legBye}}</span
+                ><span class="ui-over-ball-number"></span
+              ></span>
+              <span
+                class="ui-ball-box"
+                ng-if="fullScore.stateOfBall.noBall!='0'"
+                >NoBall :<span class="ui-over-number"
+                  >{{fullScore.stateOfBall.noBall}}</span
+                ><span class="ui-over-ball-number"></span
+              ></span>
+              <span class="ui-ball-box" ng-if="fullScore.stateOfBall.bye!='0'"
+                >BYE :<span class="ui-over-number"
+                  >{{fullScore.stateOfBall.bye}}</span
+                ><span class="ui-over-ball-number"></span
+              ></span>
+              <span class="ui-ball-box" ng-if="fullScore.stateOfBall.wide!='0'"
+                >WIDE :<span class="ui-over-number"
+                  >{{fullScore.stateOfBall.wide}}</span
+                ><span class="ui-over-ball-number"></span
+              ></span>
+            </div>
+            <div ng-show="fullScore.matchStatus=='Finished'">
+              <span>Match Over</span>
+            </div>
+          </div> -->
+
+          <div ng-show="fullScore!=undefined && fullScore!=null" style="font-size: 10px"
+            class="ui-inplay ui-has-score ui-has-state-of-ball ui-event ui-29194808 state-of-ball-box ui-has-state-of-ball">
+            <!-- <div ng-show="fullScore.spnrunrate1">
+                          <span class="ui-ball-box scores-now">Run Rate {{fullScore.spnrunrate1}}</span>
+                        </div>
+                        <div ng-show="fullScore.spnrunrate2">
+                          <span class="ui-ball-box scores-now">Run Rate {{fullScore.spnrunrate2}}</span>
+                        </div> -->
+          </div>
+        </td>
+        <td data-ng-if="fullScore==undefined" class="scores-box" style="">
+          <h4>
+            --/-
+          </h4>
+          <h4>
+            --/-
+          </h4>
+          <span class="scores-inns">Innings 1</span>
+        </td>
+        <td data-ng-if="fullScore" class="scores-box" style="">
+          <h4 data-ng-show="fullScore.score1"
+            data-ng-class="(fullScore.score1 && fullScore.activenation1==1)?'scores-now':''">
+            {{fullScore.score1}}
+          </h4>
+          <h4 data-ng-show="fullScore.score1=='' && fullScore.activenation1!=1">
+            Yet to bat
+          </h4>
+          <h4 data-ng-show="fullScore.score2"
+            data-ng-class="(fullScore.score2 && fullScore.activenation2==1)?'scores-now':''">
+            {{fullScore.score2}}
+          </h4>
+          <h4 data-ng-show="fullScore.score2=='' && fullScore.activenation2!=1">
+            Yet to bat
+          </h4>
+          <span class="scores-inns">Innings 1</span>
+        </td>
+        <!-- <td id="inningsBox2" data-ng-if="fullScore.currentSet>=2" class="scores-box" style="">
+          <h4 data-ng-show="fullScore.score.home.inning2!=undefined"
+            data-ng-class="(fullScore.score.home.highlight==true && fullScore.currentSet==2)?'scores-now':''">
+            {{fullScore.score.home.inning2.runs}}{{(fullScore.score.home.inning2.wickets=='ALL_OUT')?'':'/'}}{{(fullScore.score.home.inning2.wickets=='ALL_OUT')?'':fullScore.score.home.inning2.wickets}}&nbsp;<span>({{fullScore.score.home.inning2.overs}})</span>
+          </h4>
+          <h4 data-ng-show="fullScore.score.home.inning2==undefined"
+            data-ng-class="(fullScore.score.home.highlight==true && fullScore.currentSet==2)?'scores-now':''">
+            Yet to bat
+          </h4>
+          <h4 data-ng-show="fullScore.score.away.inning2!=undefined"
+            data-ng-class="(fullScore.score.away.highlight==true && fullScore.currentSet==2)?'scores-now':''">
+            {{fullScore.score.away.inning2.runs}}{{(fullScore.score.away.inning2.wickets=='ALL_OUT')?'':'/'}}{{(fullScore.score.away.inning2.wickets=='ALL_OUT')?'':fullScore.score.away.inning2.wickets}}&nbsp;<span>({{fullScore.score.away.inning2.overs}})</span>
+          </h4>
+          <h4 data-ng-show="fullScore.score.away.inning2==undefined"
+            data-ng-class="(fullScore.score.away.highlight==true && fullScore.currentSet==2)?'scores-now':''">
+            Yet to bat
+          </h4>
+          <span class="scores-inns">Innings 2</span>
+        </td> -->
+
+        <td id="inningsBox2" class="scores-box" data-ng-if="fullScore.score1.split('&')[1]" style="display: table-cell;"
+          eventid="29119662" name="extended">
+          <h4 data-ng-class="(fullScore.score1 && fullScore.activenation1==1)?'scores-now':''">
+            {{fullScore.score1.split('&')[1]}}</span>
+          </h4>
+          <h4 data-ng-class="(fullScore.score2 && fullScore.activenation2==1)?'scores-now':''">
+            {{fullScore.score2.split('&')[1]}}</span>
+          </h4>
+          <span id="inningsIndex" class="scores-inns">Innings 2</span>
+        </td>
+
+        <td id="inningsBoxTemplate" class="scores-box" style="display: none">
+          <span id="inningsIndex" class="scores-inns"></span>
+        </td>
+
+        <td class="scores-space"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="game-scores" style="display: none">
+    <tbody>
+      <tr>
+        <td class="scores-space"></td>
+        <td class="scores-team">
+          <h4>{{matchName}}</h4>
+          <!-- <h4 >AWAY</h4> -->
+          <ul class="scores-time">
+            <li class="filter-first"></li>
+            <li></li>
+            <h3>{{currentMatchData[0].lastMatchTime}}</h3>
+          </ul>
+        </td>
+        <!-- <td  class="scores-box" style="display: none;">
+            <h4 ><span></span></h4>
+            <h4 ><span></span></h4>
+            <span class="scores-inns">Innings 1</span>
+         </td>
+          -->
+
+        <!-- <td id="inningsBoxTemplate" class="scores-box" style="display: none;">
+            <h4 ><span></span></h4>
+            <h4 ><span></span></h4>
+            <span id="inningsIndex" class="scores-inns"></span>
+         </td> -->
+
+        <!--  <td class="scores-space"></td> -->
+        <td data-ng-if="commentary!=''" style="background: #374a5663; text-align: center">
+          <h3>{{commentary}}</h3>
+        </td>
+        <td class="scores-box" style="font-size: 17px">
+          <h6>
+            Minimum Stake:{{(minStake == null || minStake == "") ? '-' :
+            minStake}}
+          </h6>
+          <h6 class="scores-now">
+            Maximum Stake:{{(maxiStake == null || maxiStake == "") ? '-' :
+            maxiStake}}
+          </h6>
+          <h6>
+            Maximum Profit Limit:&nbsp;&nbsp; {{(maxProfit == null || maxProfit
+            == "") ? '-' : maxProfit}}
+          </h6>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table id="tennisScoreBoard" class="game-scores tennis" data-ng-if="sportId=='2'">
+    <tbody>
+      <tr>
+        <td class="scores-space"></td>
+
+        <td class="scores-team">
+          <h4 data-ng-show="fullScore==undefined">
+            {{matchName.split(' v ')[0]}}
+            <!-- &nbsp;<img  class="its_turn" src="/images/transparent.gif"> -->
+          </h4>
+          <h4 data-ng-show="fullScore==undefined">
+            {{matchName.split(' v ')[1]}}
+            <!-- &nbsp;<img  class="its_turn" src="/images/transparent.gif"> -->
+          </h4>
+          <h4 data-ng-show="fullScore!=undefined">
+            {{matchName.split(' v ')[0]}}&nbsp;<img data-ng-if="fullScore.score.home.isServing==true" class="its_turn"
+              src="images/transparent.gif" alt="home" />
+          </h4>
+          <h4 data-ng-show="fullScore!=undefined">
+            {{matchName.split(' v ')[1]}}&nbsp;<img data-ng-if="fullScore.score.away.isServing==true" class="its_turn"
+              src="images/transparent.gif" alt="away" />
+          </h4>
+          <ul class="scores-time">
+            <li id="currentSet" class="filter-first">
+              Set {{fullScore.currentSet}}
+            </li>
+            <li id="fullTimeElapsed">
+              {{fullScore.fullTimeElapsed.hour}}h&nbsp;{{fullScore.fullTimeElapsed.min}}m&nbsp;{{fullScore.fullTimeElapsed.sec}}s
+            </li>
+            <li><span id="court"></span></li>
+          </ul>
+        </td>
+
+        <td data-ng-if="fullScore.currentSet=='1'" class="scores-box">
+          <h4 class="scores-now">{{fullScore.score.home.games}}</h4>
+          <h4 class="scores-now">{{fullScore.score.away.games}}</h4>
+          <span class="scores-inns">1</span>
+        </td>
+        <td data-ng-if="fullScore.currentSet>'1'" class="scores-box">
+          <h4>{{fullScore.score.home.gameSequence[0]}}</h4>
+          <h4>{{fullScore.score.away.gameSequence[0]}}</h4>
+          <span class="scores-inns">1</span>
+        </td>
+        <td data-ng-if="fullScore.currentSet=='2'" class="scores-box">
+          <h4 class="scores-now">{{fullScore.score.home.games}}</h4>
+          <h4 class="scores-now">{{fullScore.score.away.games}}</h4>
+          <span class="scores-inns">2</span>
+        </td>
+        <td data-ng-if="fullScore.currentSet>'2'" class="scores-box">
+          <h4 data-ng-if="fullScore.score.home.gameSequence[1] != null">
+            {{fullScore.score.home.gameSequence[1]}}
+          </h4>
+          <h4 data-ng-if="fullScore.score.away.gameSequence[1] != null">
+            {{fullScore.score.away.gameSequence[1]}}
+          </h4>
+          <span class="scores-inns">2</span>
+        </td>
+        <td data-ng-if="fullScore.currentSet=='3'" class="scores-box last-box">
+          <h4 class="scores-now">{{fullScore.score.home.games}}</h4>
+          <h4 class="scores-now">{{fullScore.score.away.games}}</h4>
+          <span class="scores-inns">3</span>
+        </td>
+        <td data-ng-if="fullScore.currentSet>'3'" class="scores-box last-box">
+          <h4 data-ng-if="fullScore.score.home.gameSequence[2] != null">
+            {{fullScore.score.home.gameSequence[2]}}
+          </h4>
+          <h4 data-ng-if="fullScore.score.away.gameSequence[2] != null">
+            {{fullScore.score.away.gameSequence[2]}}
+          </h4>
+          <span class="scores-inns">3</span>
+        </td>
+
+        <td id="points" class="scores-box last-box">
+          <h4 id="pointsHome" class="scores-now">
+            {{fullScore.score.home.score}}
+          </h4>
+          <h4 id="pointsAway" class="scores-now">
+            {{fullScore.score.away.score}}
+          </h4>
+          <span class="scores-inns">Points</span>
+        </td>
+
+        <td id="aces" class="scores-box scores-other">
+          <h4 id="acesHome">{{fullScore.score.home.aces}}</h4>
+          <h4 id="acesAway">{{fullScore.score.away.aces}}</h4>
+          <span class="scores-inns">Aces</span>
+        </td>
+        <td id="faults" class="scores-box scores-other">
+          <h4 id="faultsHome">{{fullScore.score.home.doubleFaults}}</h4>
+          <h4 id="faultsAway">{{fullScore.score.away.doubleFaults}}</h4>
+          <span class="scores-inns">Faults</span>
+        </td>
+        <td id="breaks" class="scores-box scores-other last-box">
+          <h4 id="breaksHome">{{fullScore.score.home.serviceBreaks}}</h4>
+          <h4 id="breaksAway">{{fullScore.score.away.serviceBreaks}}</h4>
+          <span class="scores-inns">Breaks</span>
+        </td>
+        <td class="scores-space"></td>
+
+        <td id="setBoxTemplate" class="scores-box last-box" style="display: none">
+          <span id="setIndex" class="scores-inns"></span>
+        </td>
+
+        <td class="scores-space"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div id="soccerScoreBoard" class="game-scores" data-ng-if="sportId=='1'">
+    <ul>
+      <li class="game-visit"></li>
+      <li class="scores-box">
+        <p id="vsScores" class="scores-now">
+          {{fullScore.score.home.score}} - {{fullScore.score.away.score}}
+        </p>
+        <span id="timeElapsed" class="scores-now">{{fullScore.elapsedRegularTime}}'</span>
+      </li>
+      <li class="game-home"></li>
+    </ul>
+
+    <!-- <div class="game-progress">
+      <div class="progress-bar">
+        <div id="progressPercent" class="progress-now" style="width: 14%"></div>
+
+        <img
+          id="soccerEventTemplate"
+          class=""
+          style="left: 0%; display: none"
+          src="images/transparent.gif"
+          alt="soccerEventTemplate"
+        />
+
+        <div
+          id="popupTemplate"
+          class="score-pop"
+          style="left: 0%; display: none"
+        >
+          <ul>
+            <li id="matchTime" class="scores-now"></li>
+            <li>
+              <img class="" src="images/transparent.gif" alt="matchTime" />
+            </li>
+          </ul>
+        </div>
+
+        <span
+          id="sumTemplate"
+          class="sum-status"
+          style="left: 0%; display: none"
+        ></span>
+
+        <div
+          id="sumPopupTemplate"
+          class="score-pop-last"
+          style="left: 0%; display: none"
+        >
+          <ul id="list">
+            <li
+              id="matchTimeTemplate"
+              class="scores-now"
+              style="display: none"
+            ></li>
+            <li id="iconTemplate" style="display: none">
+              <img class="" src="images/transparent.gif" alt="iconTemplate" />
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div> -->
+  </div>
+
+
+  <!-- <iframe ng-src="https://videoplayer.betfair.com/GetPlayer.do?tr=1&amp;eID=30185870&amp;width=334&amp;height=190" width="334" height="190" scrolling="no" class="ng-scope"></iframe> -->
+
+  <!-- <div class="sr-widget" data-sr-widget="match.lmtplus" data-sr-input-props="{'matchId':'24393924'}"></div> -->
+
+  <!-- <div data-ng-repeat="item in market" id="scoresEvent" class="scores-event" style="">{{item.data-marketname}}<img src="images/transparent.gif"></div> -->
+
+  <!-- Tab Market -->
+  <ul id="tabMarketList" class="tab-HS" style="display: none"></ul>
+
+  <li id="tabMarketTemplate" style="display: none">
+    <a id="tabName" class="" style="cursor: pointer">Win</a>
+  </li>
+
+  <!-- Game Information -->
+  <ul class="game-info" style="display: flex; width: 100%;">
+    <li id="infoLive" class="info-live" style="display: none">
+      <a class="btn-live"><img class="icon-live" src="images/transparent.gif" alt="icon-live" />Live</a>
+    </li>
+    <li data-ng-show="inPlay===1" class="green">
+      <img class="icon-irun" src="images/transparent.gif" alt="icon-irun" />inplay
+    </li>
+    <li data-ng-show="inPlay===0" class="green">
+      <img class="icon-irun" src="images/transparent.gif" alt="gameInfoDate" />Going inplay
+    </li>
+    <!-- <li><img class="icon-live" src="images/transparent.gif" />Live</li> -->
+    <!-- <li><img class="icon-irun" src="images/transparent.gif" />In-Play</li> -->
+    <li>
+      <img class="icon-cashout" src="images/transparent.gif" alt="icon-cashout" />Bet Delay: {{(betDelay === null ||
+      betDelay === "") ? '-' : betDelay}}
+    </li>
+    <li data-ng-if="marketdata.racing">
+      Time Remaining: {{(countDown === null ||
+      countDown === "") ? '-' : countDown}}
+    </li>
+    <li class="spacer"></li>
+    <li class="float-left">
+      <a class="open-tv-wrap" data-ng-click="toggleTv()">Live</a>
+    </li>
+  </ul>
+  <span class="game-low_liq" style="display: none">Low Liquidity</span>
+</div>
+
+<div data-ng-if="authcookie && sportId != 7.1 && sportId != 7.2 && sportId != 4339.1 && sportId != 4339.2 && bfId != '1.179157300' && showTv">
+  <div class="video-container">
+    <iframe ng-src="{{tvUrl}}" style="border: 0px;">
+    </iframe>
+  </div>
+</div>
+<!-- 
+   <dl id="minMaxBox" class="fancy-info" style="display: none;">
+      <dt>Min/Max</dt>
+      <dd id="minMaxInfo">0 / 0</dd>
+   </dl> -->
+
+<div id="fancyBetRulesWrap" class="rules-wrap" style="display: none">
+  <h3>Rules of Fancy Bets</h3>
+  <h3 id="electionHeader" style="display: none">
+    Rules of Election Fancy Bets
+  </h3>
+  <div class="rules-content">
+    <ol id="fancyBetRules">
+      <li>
+        Once all session/fancy bets are completed and settled there will be no
+        reversal even if the Match is Tied or is Abandoned.
+      </li>
+      <li>
+        Advance Session or Player Runs and all Fancy Bets are only valid for
+        20/50 overs full match each side. (Please Note this condition is applied
+        only in case of Advance Fancy Bets only).
+      </li>
+      <li>
+        All advance fancy bets market will be suspended 45 mins prior to match
+        and will be settled after the match is over.
+      </li>
+      <li>
+        Under the rules of Session/Fancy Bets if a market gets Suspended for any
+        reason whatsoever and does not resume then all previous Bets will remain
+        Valid and become HAAR/JEET bets.
+      </li>
+      <li>
+        Incomplete Session/Fancy Bet will be cancelled but Complete Session will
+        be settled.
+      </li>
+      <li>
+        In the case of Running Match getting Cancelled/ No Result/ Abandoned but
+        the session is complete it will still be settled.
+      </li>
+      <li>
+        If a player gets Retired Hurt and one ball is completed after you place
+        your bets then all the betting till then is and will remain valid.
+      </li>
+      <li>
+        Should a Technical Glitch in Software occur, we will not be held
+        responsible for any losses.
+      </li>
+      <li>
+        Should there be a power failure or a problem with the Internet
+        connection at our end and session/fancy market does not get suspended
+        then our decision on the outcome is final.
+      </li>
+      <li>
+        All decisions relating to settlement of wrong market being offered will
+        be taken by management. Management will consider all actual facts and
+        decision taken will be full in final.
+      </li>
+      <li>
+        Any bets which are deemed of being suspicious, including bets which have
+        been placed from the stadium or from a source at the stadium maybe
+        voided at anytime. The decision of whether to void the particular bet in
+        question or to void the entire market will remain at the discretion of
+        Duo Exchange. The final decision of whether bets are suspicious will be
+        taken by Duo Exchange and that decision will be full and final.
+      </li>
+    </ol>
+    <ol id="electionRules" style="display: none">
+      <li>
+        Election result declared on 11th December by Election Commission of
+        India will be valid in our Exchange.
+      </li>
+      <li>
+        Accidental issues in Election will Not Be counted in our Exchange.
+      </li>
+    </ol>
+  </div>
+  <ul class="btn-wrap break">
+    <li><a class="btn" data-ng-click="fancyruleclose()">OK</a></li>
+  </ul>
+</div>
+
+<!-- Low Liquidity Tag -->
+<!-- <span  class="game-low_liq" style="">Low Liquidity</span>
+
+   <dl class="game-matched">
+      <dt id="gameMatchedName">Matched</dt>
+      <dd id="gameMatched">PTE 82</dd>
+   </dl>
+
+</div> -->
+<!-- </div> -->
+<div class="kv-wrap" style="display: none">
+  <img src="images/kv/KV.jpg" alt="" />
+</div>
+<!-- Horse Coming Up Start -->
+<div class="upcome-wrap" id="upcomingHorseRace" style="display: none">
+  <dl class="upcome-head" id="next">
+    <dt id="nextHeader">Next Horse Race</dt>
+  </dl>
+  <dl class="upcome" id="upcoming">
+    <dt id="upcomeHeader">Coming Up</dt>
+  </dl>
+</div>
+<dl id="upcomingRaceTempLate" style="display: none">
+  <dd>
+    <a data-ng-href="#"></a>
+    <span></span>
+  </dd>
+</dl>
+
+<!-- Horse Coming Up End -->
+
+<div id="marketTemplate" class="game-wrap" style="display: none">
+  <h3>
+    <a id="multiMarketPin" class="add-pin" style="cursor: pointer" title="Add to Multi Markets"></a>
+    <a class="to-expand" style="cursor: pointer">{market_name}</a>
+  </h3>
+
+  <ul class="slip-head">
+    <li class="col-game" id="matched">
+      <span class="game-low_liq" style="display: none">Low Liquidity</span>
+      Matched: {size}
+    </li>
+    <li class="col-home"><span>Back</span> <span>Lay</span></li>
+  </ul>
+  <div class="game-list">
+    <!-- Game Suspend -->
+    <div class="suspend" style="display: none">
+      <span>Suspend</span>
+    </div>
+
+    <!-- Game Closed -->
+    <div class="suspend" style="display: none">
+      <span>Closed</span>
+    </div>
+
+    <dl class="game-list-col" style="display: none">
+      <span style="display: none"></span>
+      <dt>
+        {runner}
+        <span class="win" style="display: none"></span>
+        <span class="win" style="display: none"></span>
+        <span class="win" style="display: none"></span>
+        <span class="win" style="display: none"></span>
+      </dt>
+      <dd class="col-home">
+        <div class="suspend" style="display: none">
+          <span>Suspend</span>
+        </div>
+        <a class="btn-back" data-side="Back">--</a>
+        <a class="btn-lay" data-side="Lay">--</a>
+      </dd>
+    </dl>
+    <a id="moreLink" class="more" style="cursor: pointer">View Full Market</a>
+  </div>
+</div>
+
+<!-- Left Event Wrap -->
+<div id="eventLeft" class="event-left" style="display: none"></div>
+
+<!-- Right Event Wrap -->
+<div id="eventRight" class="event-right" style="display: none"></div>
+
+<!-- Markets Closed Wrap -->
+<div id="marketClosedWrap" class="closed-wrap" style="display: none">
+  <div class="closed-next">
+    <h2>This race has ended</h2>
+  </div>
+</div>
+
+<!-- Game Bets Table -->
+<div id="fullMarketBetsWrap" class="bets-wrap matchOddTable" data-ng-repeat="market in currentMatchData track by $index"
+  data-ng-show="!(market.marketName.toLowerCase().includes('toss') && market.status == 'CLOSED')">
+  <h3 class="line_market-name">
+    <span>{{market.marketName}}</span>
+    <span id="selectionCounts" class="refer_only">{{market.numberOfRunners? market.numberOfRunners:
+      market.state.numberOfRunners}} selections</span>
+  </h3>
+
+  <table id="fullMarketBoard" class="bets" data-ng-class="(checkDateTime(matchDate,curTime))?'':''">
+    <tbody>
+      <tr class="bet-all">
+        <!-- data-ng-repeat="item in market" -->
+        <td style="color: green"></td>
+        <td class="refer-bet" colspan="2"></td>
+        <td>
+          <a class="back-all"><img src="images/transparent.gif" style="background: #72bbef" alt="backAll" /><span>Back
+              all</span></a>
+        </td>
+        <td>
+          <a class="lay-all"><img src="images/transparent.gif" style="background: #faa9ba" alt="layAll" /><span>Lay
+              all</span></a>
+        </td>
+        <td class="refer-book" colspan="2"></td>
+      </tr>
+      <tr id="fullSelectionTemplate" style="display: none">
+        <th>
+          <p></p>
+          <span class="win" style="display: none"></span>
+          <span class="win" style="display: none"></span>
+          <span class="win" style="display: none"></span>
+          <span class="win" style="display: none"></span>
+          <span class="win" style="display: none"></span>
+          <span class="win" style="display: none"></span>
+          <span class="win" style="display: none"></span>
+          <span class="win" style="display: none"></span>
+        </th>
+        <td colspan="6" class="suspend" style="display: none">
+          <span>Suspend</span>
+        </td>
+        <td colspan="6" class="suspend" style="display: none">
+          <span>Closed</span>
+        </td>
+        <td colspan="6" class="suspend" style="display: none">
+          <span>Non Runner</span>
+        </td>
+        <td id="back_3" class="back-3" data-side="Back">
+          <a><span></span></a>
+        </td>
+        <td id="back_2" class="back-2" data-side="Back">
+          <a><span></span></a>
+        </td>
+        <td class="back-1" data-side="Back">
+          <a><span></span></a>
+        </td>
+        <td class="lay-1" data-side="Lay">
+          <a><span></span></a>
+        </td>
+        <td id="lay_2" class="lay-2" data-side="Lay">
+          <a><span></span></a>
+        </td>
+        <td id="lay_3" class="lay-3" data-side="Lay">
+          <a><span></span></a>
+        </td>
+      </tr>
+      <tr id="selection_{{runnerData.selectionId}}" style="display: table-row; border-left: 1px solid #c3c3c3"
+        data-ng-repeat="runnerData in market.runners track by $index"
+        data-ng-show="market.status? market.status =='OPEN': market.state.status == 'OPEN'"
+        data-ng-style="{'opacity': runnerData.state.status === 'REMOVED'? 0.5: ''}">
+        <th class="predict">
+
+          <p>
+            <!-- <a><img data-ng-click="marketDepth(matchBfId,runnerData.selectionId,bfId)" class="icon-predict" src="images/transparent.gif" alt="icon-predict"></a> -->
+            <span id="saddle-{{ runnerData.selectionId }}" class="saddle saddle_{{
+              runnerData.description.metadata
+                .CLOTH_NUMBER_ALPHA
+            }}"></span>
+            {{runnerData.runnerName}}
+            <br>
+          </p>
+          <span id="{{ runnerData.description.metadata.JOCKEY_NAME }}">{{runnerData.description.metadata.JOCKEY_NAME}}
+          </span>
+          <span class="matchWinner"
+            data-ng-if="market.status? market.status =='WINNER': market.state.status === 'WINNER'">WINNER</span>
+          <!-- <span  class="win" style="display: none;"></span> -->
+          <!-- <span  class="win" style="display: none;"></span> -->
+          <!-- <span  class="win" style="display: none;"></span> -->
+          <!-- <span  class="win" style="display: none;"></span> -->
+          <span id="exposure_{{market.marketId.replace('.', '_')}}_{{runnerData.selectionId}}" class="win"
+            style="display: inline"></span>
+          <span id="exposureAfter_{{market.marketId.replace('.', '_')}}_{{runnerData.selectionId}}" class=""
+            style="display: none"></span>
+          <!-- <span  class="win" style="display: none;"></span> -->
+          <!-- <span  class="win" style="display: none;"></span> -->
+          <!-- <span  class="win" style="display: none;"></span> -->
+        </th>
+        <td colspan="6" class="suspend" style="display: none">
+          <span>Suspend</span>
+        </td>
+        <td colspan="6" class="suspend" style="display: none">
+          <span>Closed</span>
+        </td>
+        <td data-ng-show="runnerData.state.status == 'REMOVED'" colspan="6" class="suspend">
+          <span>Non Runner</span>
+        </td>
+        <td data-ng-show="runnerData.state.status != 'REMOVED'" id="runner{{$index}}back3" class="back-3 back2"
+          data-ng-class="runnerData{{$index}}-back" data-side="Back"
+          data-ng-click="(runnerData.ex.availableToBack[2].price==null || runnerData.ex.availableToBack[2].price==undefined) ? '': betSlip(bfId,'back', 'runner'+$index+'back3', runnerData.runnerName, runnerData.selectionId, matchName, runnerData.ex.availableToBack[2].price,matchid,market.marketId,0,0,market.sport,market.eventId, market.marketName)">
+          <a>{{runnerData.ex.availableToBack[2].price}}
+            <span>{{(runnerData.ex.availableToBack[2].size == null ||
+              runnerData.ex.availableToBack[2].size == "")?'-':
+              runnerData.ex.availableToBack[2].size | number}}</span>
+          </a>
+        </td>
+        <td data-ng-show="runnerData.state.status != 'REMOVED'" id="runner{{$index}}back2" class="back-2 back2"
+          data-ng-class="runnerData{{$index}}-back" data-side="Back"
+          data-ng-click="(runnerData.ex.availableToBack[1].price==null || runnerData.ex.availableToBack[1].price==undefined) ? '': betSlip(bfId,'back', 'runner'+$index+'back2', runnerData.runnerName, runnerData.selectionId, matchName, runnerData.ex.availableToBack[1].price,matchid,market.marketId,0,0,market.sport,market.eventId)">
+          <a>{{runnerData.ex.availableToBack[1].price}}
+            <span>{{(runnerData.ex.availableToBack[1].size == null ||
+              runnerData.ex.availableToBack[1].size == "")?'-':
+              runnerData.ex.availableToBack[1].size | number}}</span>
+          </a>
+        </td>
+        <td data-ng-show="runnerData.state.status != 'REMOVED'" id="runner{{$index}}back1" class="back-1 back1"
+          data-ng-class="runnerData{{$index}}-back" data-side="Back"
+          data-ng-click="(runnerData.ex.availableToBack[0].price==null || runnerData.ex.availableToBack[0].price==undefined) ? '': betSlip(bfId,'back', 'runner'+$index+'back1', runnerData.runnerName, runnerData.selectionId, matchName, runnerData.ex.availableToBack[0].price,matchid,market.marketId,0,0,market.sport,market.eventId)">
+          <a>{{runnerData.ex.availableToBack[0].price}}
+            <span>{{(runnerData.ex.availableToBack[0].size == null ||
+              runnerData.ex.availableToBack[0].size == "")?'-':
+              runnerData.ex.availableToBack[0].size | number}}</span>
+          </a>
+        </td>
+        <td data-ng-show="runnerData.state.status != 'REMOVED'" id="runner{{$index}}lay1" class="lay-1 lay1"
+          data-ng-class="runnerData{{$index}}-lay" data-side="Lay"
+          data-ng-click="(runnerData.ex.availableToLay[0].price==null || runnerData.ex.availableToLay[0].price=='') ? '':betSlip(bfId,'lay', 'runner'+$index+'lay1', runnerData.runnerName, runnerData.selectionId, matchName, runnerData.ex.availableToLay[0].price,matchid,market.marketId,0,0,market.sport,market.eventId, market.marketName)">
+          <a>{{runnerData.ex.availableToLay[0].price}}
+            <span>{{(runnerData.ex.availableToLay[0].size == null ||
+              runnerData.ex.availableToLay[0].size == "")?'-':
+              runnerData.ex.availableToLay[0].size | number}}</span>
+          </a>
+        </td>
+        <td data-ng-show="runnerData.state.status != 'REMOVED'" id="runner{{$index}}lay2" class="lay-2 lay2"
+          data-ng-class="runnerData{{$index}}-lay" data-side="Lay"
+          data-ng-click="(runnerData.ex.availableToLay[1].price==null || runnerData.ex.availableToLay[1].price=='') ? '':betSlip(bfId, 'lay', 'runner'+$index+'lay2', runnerData.runnerName, runnerData.selectionId, matchName, runnerData.ex.availableToLay[1].price,matchid,market.marketId,0,0,market.sport,market.eventId)"
+          data-side="Lay">
+          <a>{{runnerData.ex.availableToLay[1].price}}
+            <span>{{(runnerData.ex.availableToLay[1].size == null ||
+              runnerData.ex.availableToLay[1].size == "")?'-':
+              runnerData.ex.availableToLay[1].size | number}}</span>
+          </a>
+        </td>
+        <td data-ng-show="runnerData.state.status != 'REMOVED'" id="runner{{$index}}lay3" class="lay-3 lay2"
+          data-ng-class="runnerData{{$index}}-lay" data-side="Lay"
+          data-ng-click="(runnerData.ex.availableToLay[2].price==null || runnerData.ex.availableToLay[2].price=='') ? '':betSlip(bfId,'lay', 'runner'+$index+'lay3', runnerData.runnerName, runnerData.selectionId, matchName, runnerData.ex.availableToLay[2].price,matchid,market.marketId,0,0,market.sport,market.eventId)"
+          data-side="Lay">
+          <a>{{runnerData.ex.availableToLay[2].price}}
+            <span>{{(runnerData.ex.availableToLay[2].size == null ||
+              runnerData.ex.availableToLay[2].size == "")?'-':
+              runnerData.ex.availableToLay[2].size | number}}</span>
+          </a>
+        </td>
+      </tr>
+      <tr id="fullSelection" style="display: table-row" data-ng-repeat="runnerData in market.runners track by $index"
+        data-ng-show="market.status? market.status !='OPEN': market.state.status !== 'OPEN'">
+        <th>
+          <p>
+            <!-- <a><img onclick="myFunction()" class="icon-predict" src="images/transparent.gif" alt="icon-predict"></a> -->
+
+            {{runnerData.runnerName}}<br /><span id="{{runnerData.runnerName}}"></span>
+          </p>
+          <span class="matchWinner"
+            data-ng-if="market.status? market.status =='WINNER': runnerData.state.status == 'WINNER'">WINNER</span>
+          <span class="win" style="display: none"></span>
+          <span class="win" style="display: none"></span>
+          <span class="win" style="display: none"></span>
+          <span class="win" style="display: none"></span>
+          <span class="win" style="display: none"></span>
+          <span class="win" style="display: none"></span>
+          <span class="win" style="display: none"></span>
+          <span class="win" style="display: none"></span>
+        </th>
+        <td colspan="6" class="suspended">
+          <div>{{market.status}}</div>
+        </td>
+        <td colspan="6" class="suspend" style="display: none"
+          data-ng-style="{'display': runnerData.state.status === 'REMOVED'? 'table-cell': 'none'}">
+          <span>Non Runner</span>
+        </td>
+
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div id="bookMakingTableBetsWrap" data-ng-repeat="runnerBookMaker in bookmakingData track by $index"
+  class="bets-wrap bookMakingTable" style="display: block">
+  <h3 class="line_market-name" style="display: none">
+    <span>1st Innings 10 Over Line</span>
+  </h3>
+  <!-- <span id="selectionCounts" class="refer_only">2 selections</span> -->
+  <table id="fancyBoard" class="bets">
+    <tbody>
+      <tr class="bet-all" style="background: #fff; border-top: 1px solid #7e97a7">
+        <td style="text-align: left; padding-left: 10px">
+          {{runnerBookMaker[0].mname}}
+        </td>
+        <td class="refer-bet" colspan="2"></td>
+        <td>
+          <a class="back-all"><img src="images/transparent.gif" style="left: 11px !important; background: padding-box"
+              alt="back-all" /><span>Back</span></a>
+        </td>
+        <td>
+          <a class="lay-all"><img src="images/transparent.gif"
+              style="right: 11px !important; left: 0; background: padding-box" alt="lay-all" /><span>Lay</span></a>
+        </td>
+        <td class="refer-book" colspan="2"></td>
+      </tr>
+      <tr id="BookMakingTemplate" data-ng-repeat-start="runnerBook in runnerBookMaker track by $index"
+        style="padding: 2px">
+        <th class="predict">
+          <p>{{runnerBook.nat}}</p>
+          <span id="bm_{{runnerBook.sid}}" class="win" style="display: inline-block">{{runnerBook.book}}
+          </span>
+          <span id="bmAfter_{{runnerBook.sid}}" class="win" style="display: inline-block">{{runnerBook.book}}
+          </span>
+        </th>
+        <td colspan="2" style="width: 17.94872%">
+          <a> </a>
+        </td>
+        <td class="back-1">
+          <a
+            data-ng-click="(runnerBook.s=='ACTIVE')?betSlip(bfId,'backBook', 'bm'+$index+'backBook', runnerBook.nat, runnerBook.sid, matchName, runnerBook.b1, matchid, 'bm_' + runnerBook.mid):''">
+            <!-- <span style="font-weight: bold; font-size: 13px">{{(runnerBook.b1 / 100) + 1 | number: 2}}</span> -->
+            <span style="font-weight: bold; font-size: 13px">{{runnerBook.b1}}</span>
+            <span>{{runnerBook.bs1}}</span>
+          </a>
+        </td>
+        <td class="lay-1">
+          <a
+            data-ng-click="(runnerBook.s=='ACTIVE')?betSlip(bfId,'layBook', 'bm'+$index+'layBook',runnerBook.nat, runnerBook.sid, matchName, runnerBook.l1, matchid, 'bm_' + runnerBook.mid):''">
+            <!-- <span style="font-weight: bold; font-size: 13px">{{(runnerBook.l1 / 100) + 1 | number: 2}}</span> -->
+            <span style="font-weight: bold; font-size: 13px">{{runnerBook.l1}}</span>
+            <span>{{runnerBook.ls1}}</span>
+          </a>
+        </td>
+        <td colspan="2" style="width: 17.94872%">
+          <!-- <a>
+                  <p class="price">Min : {{(runnerBookMaker.minStake == undefined || runnerBookMaker.minStake == '') ? '-' : runnerBookMaker.minStake}}</p>
+                  <p class="price" style="padding-top: 5px">Max : {{(runnerBookMaker.maxStake == undefined || runnerBookMaker.maxStake == '') ? '-' : runnerBookMaker.maxStake}}</p>
+                </a> -->
+        </td>
+        <!--  <td class="td-fancy_merge" colspan="2">
+               <dl class="fancy-info">
+                  <dt>Min/Max</dt>
+                  <dd id="minMax" class="ng-binding"> {{(bookmakingData.minStake == undefined || bookmakingData.minStake == '') ? '-' : bookmakingData.minStake}} /  {{(bookmakingData.maxStake == undefined || bookmakingData.maxStake == '') ? '-' : bookmakingData.maxStake}}</dd>
+               </dl>
+               <dl class="fancy-info">
+                  <dt id="rebateName" style="display: none;">Rebate</dt>
+                  <dd id="rebate" style="display: none;"></dd>
+               </dl>
+            </td> -->
+      </tr>
+      <tr data-ng-repeat-end>
+        <td class="suspend" style="border: 0">
+          <span class="fancySuspended" data-ng-if="runnerBook.s == 'SUSPENDED'" style="border: 0"
+            data-ng-style="{{getBMTopCss($index)}}">{{runnerBook.s}}</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div id="fancyBetTable_29119662" class="bets-wrap fancy_bet" data-ng-if="marketdata.inPlay == 1 && fancyData && fancyData.length">
+  <div id="fancyBetHead" class="fancy-head">
+    <h4 class="in-play">
+      <!-- <a class="add-pin" data-ng-if="market.isMulti==1" data-ng-click="AddMultiMktFancy(mtid)" style="cursor: pointer"
+        title="Add to Multi Markets"></a>
+      <a class="delete-pin" data-ng-if="market.isMulti==1" data-ng-click="removeMultiMktFancy(mtid)"
+        style="cursor: pointer" title="Remove from Multi Markets"></a> -->
+      <span id="headerName">Fancy Bet</span>
+      <a class="btn-fancybet_rules" data-ng-click="fancyruleopen()"></a>
+    </h4>
+  </div>
+
+  <p id="fancyBetNoBet" class="no_bet" style="display: none">has no markets</p>
+
+  <table id="fancyBetMarketList" class="bets">
+    <tbody>
+      <tr id="fancyBetSpecialBet" class="special_bet">
+        <td colspan="7">
+          <h3>
+            <!-- <a id="multiMarketPin" class="add-pin" title="Add to Multi Markets">Add Pin</a> -->
+            Fancy Bet
+          </h3>
+        </td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr class="bet-all">
+        <td></td>
+        <td class="refer-bet" colspan="2"></td>
+        <td>No</td>
+        <td>Yes</td>
+        <td class="refer-book" colspan="2"></td>
+      </tr>
+    </tbody>
+    <tbody data-ng-repeat="fancy in fancyData track by fancy.sid">
+      <tr id="suspend_{{fancy.sid}}" class="fancy-suspend-tr" data-ng-if="fancy.gstatus!==''">
+        <th></th>
+        <td colspan="2"></td>
+        <td class="fancy-suspend-td" colspan="2">
+          <div id="suspendClass" class="fancy-suspend">
+            <span>{{fancy.gstatus}}</span>
+          </div>
+        </td>
+        <td colspan="2"></td>
+      </tr>
+      <tr id="fancyBetMarket_{{fancy.sid}}">
+        <th class="predict">
+          <p>{{fancy.nat | uppercase}}</p>
+          <span id="fexp_{{fancy.sid}}" class="win" style="display: block">{{fancy.book}}</span>
+          <span id="before_win_{{fancy.sid}}" class="win" style="display: none"></span>
+          <span id="after_to-win_{{fancy.sid}}" class="to-win" style="display: none">
+            0.00</span>
+          <span id="before_lose_{{fancy.sid}}" class="lose" style="display: none"></span>
+          <span id="afte_to-lose_{{fancy.sid}}" class="to-lose" style="display: none">
+            0.00</span>
+        </th>
+        <td class="td-fancy_merge" colspan="2">
+          <a id="fancyBetBookBtn_{{fancy.sid}}" data-ng-click="GetFancyBook(fancy.nat,fancy.sid,fancy.mid)"
+            style="display: none" class="btn-book">Book</a>
+        </td>
+        <td id="lay_{{fancy.sid}}" class="lay-1">
+          <a id="fancy{{$index}}no"
+            data-ng-click="(fancy.gstatus=='')?fancybetSlip('no',$index, fancy.nat, fancy.sid, matchName, fancy.l1,'df_' + fancy.mid + '_' + fancy.sid,mtid,isdata-inplayfull, fancy.ls1, fancy.sid,sportId,matchBfId,bfId):''"
+            style="cursor: pointer">{{(fancy.l1 == null || fancy.l1 == "") ? '-' : fancy.l1 |
+            number}}<span>{{(fancy.ls1 == null || fancy.ls1 == "") ? '-' : fancy.ls1 |
+              number}}</span></a>
+        </td>
+        <td id="back_{{fancy.sid}}" class="back-1">
+          <a id="fancy{{index}}yes"
+            data-ng-click="(fancy.gstatus=='')?fancybetSlip('yes',$index,fancy.nat, fancy.sid, matchName, fancy.b1,'df_' + fancy.mid + '_' + fancy.sid,mtid,isdata-inplayfull, fancy.bs1, fancy.sid,sportId,matchBfId,bfId):''"
+            style="cursor: pointer">{{(fancy.b1 == null || fancy.b1 == "") ? '-' : fancy.b1 |
+            number}}<span>{{(fancy.bs1 == null || fancy.bs1 == "") ? '-' : fancy.bs1 |
+              number}}</span></a>
+        </td>
+        <td class="td-fancy_merge" colspan="2">
+          <dl class="fancy-info">
+            <dt>Min/Max</dt>
+            <dd id="minMax">{{sessionSettings.min.toFixed(2)}} / {{sessionSettings.max.toFixed(2)}}</dd>
+          </dl>
+          <dl class="fancy-info">
+            <dt id="rebateName" style="display: none">Rebate</dt>
+            <dd id="rebate" style="display: none"></dd>
+          </dl>
+        </td>
+      </tr>
+      <tr id="fancyBetBoard_{{fancy.sid}}_back" class="fancy-quick-tr" data-ng-hide="fancy.gstatus!=''"
+        style="display: none">
+        <td colspan="7">
+          <dl class="quick_bet-wrap slip-back">
+            <dt class="">Yes</dt>
+            <dd class="col-btn">
+              <a id="cancel" class="btn" style="cursor: pointer"
+                data-ng-click="removefancybetslip(fancy.sid,'yes')">Cancel</a>
+            </dd>
+            <dd class="col-odd">
+              <ul class="quick-bet-confirm">
+                <li id="runs_YES_{{fancy.sid}}">{{fancy.b1 | number}}</li>
+                <li id="odds_YES_{{fancy.sid}}" class="quick-bet-confirm-title">
+                  {{fancy.bs1 | number}}
+                </li>
+              </ul>
+            </dd>
+            <dd class="col-stake">
+              <input id="inputStake_YES_{{fancy.sid}}" data-numbers-only data-ng-model="inputStakeYES"
+                data-ng-value="{{default_stake}}" data-ng-keyup="FancyStakechange(inputStakeYES,fancy.sid)"
+                data-ng-change="FancyStakechange(inputStakeYES,fancy.sid)" type="text" />
+            </dd>
+            <dd class="col-send">
+              <a id="placeBet_YES_{{fancy.sid}}"
+                data-ng-click="placeFancyBet('yes',$index,fancy.nat, fancy.sid, matchName, fancy.b1, 'df_' + fancy.mid + '_' + fancy.sid,mtid,isdata-inplayfull,fancy.bs1, fancy.sid,sportId,matchBfId,bfId)"
+                class="btn-send disable" style="cursor: pointer">Place Bets</a>
+            </dd>
+            <dd class="col-stake_list" style="display: block">
+              <ul>
+                <li data-ng-repeat="stake in fancystake track by $index">
+                  <a class="btn" id="selectStakeyes_{{$index}}" data-ng-click="selectStake(stake,fancy.sid,'yes')"
+                    data-stake="{{stake}}" style="cursor: pointer">{{stake}}</a>
+                </li>
+                <!-- <li><a class="btn" id="selectStake_1" data-ng-click="selectStake(10,fancy.sid,'yes')" stake="10" style="cursor:pointer;">10</a></li>
+                  <li><a class="btn" id="selectStake_2" data-ng-click="selectStake(30,fancy.sid,'yes')" stake="30" style="cursor:pointer;">30</a></li>
+                  <li><a class="btn" id="selectStake_3" data-ng-click="selectStake(50,fancy.sid,'yes')" stake="50" style="cursor:pointer;">50</a></li>
+                  <li><a class="btn" id="selectStake_4" data-ng-click="selectStake(200,fancy.sid,'yes')" stake="200" style="cursor:pointer;">200</a></li>
+                  <li><a class="btn" id="selectStake_5" data-ng-click="selectStake(500,fancy.sid,'yes')" stake="500" style="cursor:pointer;">500</a></li>
+                  <li><a class="btn" id="selectStake_6" data-ng-click="selectStake(1000,fancy.sid,'yes')" stake="1000" style="cursor:pointer;">1000</a></li> -->
+                <!-- <li><a class="btn" id="selectStake_6" data-ng-click="selectStake(null,fancy.sid,'YES')" stake="" style="cursor:pointer;">Clear</a></li> -->
+              </ul>
+            </dd>
+          </dl>
+        </td>
+      </tr>
+      <tr id="fancyBetMessage_{{fancy.sid}}" class="fancy-quick-tr" style="display: none">
+        <td colspan="7">
+          <dl class="quick_bet-wrap quick_bet-message">
+            <dd>
+              <strong id="header_{{fancy.sid}}">Bet Matched</strong>
+              <!-- at odds Profit: -->
+              <a id="close" class="btn-close" style="cursor: pointer"
+                data-ng-click="removefancybetslip(fancy.sid,'')">Close</a>
+            </dd>
+          </dl>
+        </td>
+      </tr>
+      <tr id="fancyBetBar_{{fancy.sid}}" class="fancy-quick-tr" style="display: none">
+        <td colspan="7">
+          <dl class="quick_bet-wrap quick_bet-progress">
+            <dd id="progressBar" class="progress-bar" style="width: {{progressdata.progress}}%;"></dd>
+            <dd class="progress-bar-txt">
+              Placing your bets, Please wait
+              <span id="secRemain">{{remainsecs}} sec remaining…</span>
+            </dd>
+          </dl>
+        </td>
+      </tr>
+      <tr id="fancyBetBoard_{{fancy.sid}}_lay" class="fancy-quick-tr" data-ng-hide="fancy.gstatus!=''"
+        style="display: none">
+        <td colspan="7">
+          <dl class="quick_bet-wrap slip-lay">
+            <dt class="">No</dt>
+            <dd class="col-btn">
+              <a class="btn" style="cursor: pointer" data-ng-click="removefancybetslip(fancy.sid,'no')">Cancel</a>
+            </dd>
+            <dd class="col-odd">
+              <ul class="quick-bet-confirm">
+                <li id="runs_NO_{{fancy.sid}}">{{fancy.l1 | number}}</li>
+                <li id="odds_NO_{{fancy.sid}}" class="quick-bet-confirm-title">
+                  {{fancy.ls1 | number}}
+                </li>
+              </ul>
+            </dd>
+            <dd class="col-stake">
+              <input id="inputStake_NO_{{fancy.sid}}" data-numbers-only data-ng-model="inputStakeNO"
+                data-ng-keyup="FancyStakechange(inputStakeNO,fancy.sid)"
+                data-ng-change="FancyStakechange(inputStakeNO,fancy.sid)" type="text" />
+            </dd>
+            <dd class="col-send">
+              <a id="placeBet_NO_{{fancy.sid}}"
+                data-ng-click="placeFancyBet('no',$index,fancy.nat, fancy.sid, matchName, fancy.l1,'df_' + fancy.mid + '_' + fancy.sid,mtid,isdata-inplayfull, fancy.ls1, fancy.sid,sportId,matchBfId,bfId)"
+                class="btn-send disable" style="cursor: pointer">Place Bets</a>
+            </dd>
+            <dd class="col-stake_list" style="display: block">
+              <ul>
+                <li data-ng-repeat="stake in fancystake track by $index">
+                  <a class="btn" id="selectStakeno_{{$index}}" data-ng-click="selectStake(stake,fancy.sid,'no')"
+                    data-stake="{{stake}}" style="cursor: pointer">{{stake}}</a>
+                </li>
+                <!-- <li><a class="btn" id="selectStake_1" data-ng-click="selectStake(10,fancy.sid,'no')" stake="10" style="cursor:pointer;">10</a></li>
+                  <li><a class="btn" id="selectStake_2" data-ng-click="selectStake(30,fancy.sid,'no')" stake="30" style="cursor:pointer;">30</a></li>
+                  <li><a class="btn" id="selectStake_3" data-ng-click="selectStake(50,fancy.sid,'no')" stake="50" style="cursor:pointer;">50</a></li>
+                  <li><a class="btn" id="selectStake_4" data-ng-click="selectStake(200,fancy.sid,'no')" stake="200" style="cursor:pointer;">200</a></li>
+                  <li><a class="btn" id="selectStake_5" data-ng-click="selectStake(500,fancy.sid,'no')" stake="500" style="cursor:pointer;">500</a></li>
+                  <li><a class="btn" id="selectStake_6" data-ng-click="selectStake(1000,fancy.sid,'no')" stake="1000" style="cursor:pointer;">1000</a></li> -->
+                <!-- <li><a class="btn" id="selectStake_6" data-ng-click="selectStake(null,fancy.sid,'NO')" stake="" style="cursor:pointer;">Clear</a></li> -->
+              </ul>
+            </dd>
+          </dl>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div id="bookMakingTableBetsWrap" data-ng-if="Teentype==1" class="bets-wrap bookMakingTable" style="display: block">
+  <!-- <span>Round Id:-{{teenSetting.mid}}</span> -->
+  <table id="fancyBoard" class="bets">
+    <tbody>
+      <!-- <p>Round Id: {{teenSetting.mid}}</p> -->
+      <p>
+        <!-- <span>Min: {{teenSetting.min}}</span>
+               <span>Max: {{teenSetting.max}}</span> -->
+      </p>
+      <tr class="bet-all" style="background: #fff; border-top: 1px solid #7e97a7">
+        <td style="text-align: left; padding-left: 10px"></td>
+        <td class="refer-bet" colspan="2"></td>
+        <td>
+          <a class=""><img src="images/transparent.gif" style="left: 11px !important; background: padding-box"
+              alt="back-all" /><span>Back</span></a>
+        </td>
+        <td style="width: 24.97436%">
+          <a class=""><img src="images/transparent.gif" alt="lay-all" /><span></span></a>
+        </td>
+        <td class="refer-book" colspan="1"></td>
+      </tr>
+      <tr id="BookMakingTemplate" data-ng-repeat-start="runnerBook in teenPattiData.t2 track by runnerBook.nation"
+        data-ng-if="$index==0 || $index==2" style="padding: 2px">
+        <th class="predict">
+          <p>{{runnerBook.nation}}</p>
+          <span id="Tp_{{gameid}}{{runnerBook.nation | removeSpace}}" class="win"
+            style="display: block">{{runnerBook.book}}</span>
+        </th>
+        <td colspan="2" style="width: 17.94872%">
+          <a> </a>
+        </td>
+        <td class="back-1" style="width: 27.97436%">
+          <a
+            data-ng-click="(runnerBook.gstatus=='1')?openTeenbetSlip($event,'back',runnerBook.rate,runnerBook.nation,runnerBook.sid,runnerBook.mid,Teentype,matchName,sportId):''">
+            <!-- <span style="font-weight: bold;font-size: 13px;">{{runnerBook.bs1}}</span> -->
+            <span>{{runnerBook.rate}}</span>
+          </a>
+        </td>
+        <td class="back-1">
+          <a>
+            <span style="font-weight: bold; font-size: 13px">{{teenPattiData.t2[$index+1].nation}}</span>
+          </a>
+          <!-- a data-ng-click="(runnerBook.gstatus=='1')?openTeenbetSlip($event,'back',teenPattiData.t2[$index+1].rate,teenPattiData.t2[$index+1].nation,teenPattiData.t2[$index+1].sid,runnerBook.mid,Teentype,matchName,sportId):''">
+                  <span style="font-weight: bold;font-size: 13px;">{{teenPattiData.t2[$index+1].nation}}</span>
+                  </a> -->
+        </td>
+        <td colspan="2" style="width: 17.94872%"></td>
+      </tr>
+      <tr data-ng-repeat-end>
+        <td class="suspend" style="border: 0" data-ng-if="runnerBook.gstatus=='0' && ($index==0 || $index==2)">
+          <span class="fancySuspended" data-ng-style="getTeenTopCss($index)" style="
+              border: 0;
+              top: 2px;
+              left: 400px !important;
+              right: 44px !important; ;
+            ">Suspended</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div id="bookMakingTableBetsWrap" data-ng-if="matchBfId=='5000'" class="bets-wrap bookMakingTable"
+  style="display: block">
+  <!-- <span>Round Id:-{{teenSetting.mid}}</span> -->
+  <table id="fancyBoard" class="bets">
+    <tbody>
+      <!-- <p>Round Id: {{teenSetting.mid}}</p> -->
+      <p>
+        <!-- <span>Min: {{teenSetting.min}}</span>
+              <span>Max: {{teenSetting.max}}</span> -->
+      </p>
+      <tr class="bet-all" style="background: #fff; border-top: 1px solid #7e97a7">
+        <td style="text-align: left; padding-left: 10px"></td>
+        <td class="refer-bet" colspan="2"></td>
+        <td>
+          <a class=""><img src="images/transparent.gif" style="left: 11px !important; background: padding-box"
+              alt="back-all" /><span>Back</span></a>
+        </td>
+        <td style="width: 24.97436%">
+          <a class=""><img src="images/transparent.gif" alt="lay-all" /><span></span></a>
+        </td>
+        <td class="refer-book" colspan="1"></td>
+      </tr>
+      <tr id="BookMakingTemplate" data-ng-repeat-start="runnerBook in teenPattiData.t2 track by runnerBook.nation"
+        data-ng-if="$index==0 || $index==2" style="padding: 2px">
+        <th class="predict">
+          <p>{{runnerBook.nation}}</p>
+          <span id="Tp_{{fancy.mId}}{{runnerBook.nation | removeSpace}}" class="win"
+            style="display: block">{{runnerBook.book}}</span>
+        </th>
+        <td colspan="2" style="width: 17.94872%">
+          <a> </a>
+        </td>
+        <td class="back-1" style="width: 27.97436%">
+          <a
+            data-ng-click="(runnerBook.gstatus=='1')?openTeenbetSlip($event,'back',runnerBook.rate,runnerBook.nation,runnerBook.sid,runnerBook.mid,Teentype,matchName,sportId):''">
+            <!-- <span style="font-weight: bold;font-size: 13px;">{{runnerBook.bs1}}</span> -->
+            <span>{{runnerBook.rate}}</span>
+          </a>
+        </td>
+        <td class="back-1">
+          <a
+            data-ng-click="(runnerBook.gstatus=='1')?openTeenbetSlip($event,'back',teenPattiData.t2[$index+1].rate,teenPattiData.t2[$index+1].nation,teenPattiData.t2[$index+1].sid,runnerBook.mid,Teentype,matchName,sportId):''">
+            <span style="font-weight: bold; font-size: 13px">{{teenPattiData.t2[$index+1].nation}}</span>
+          </a>
+        </td>
+        <td colspan="2" style="width: 17.94872%"></td>
+      </tr>
+      <tr data-ng-repeat-end>
+        <td class="suspend" style="border: 0" data-ng-if="runnerBook.gstatus=='0' && ($index==0 || $index==2)">
+          <span class="fancySuspended" data-ng-style="getTeenTopCss($index)"
+            style="border: 0; left: 400px !important; right: 44px !important">Suspended</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div id="bookMakingTableBetsWrap" data-ng-if="matchBfId=='5002'" class="bets-wrap bookMakingTable"
+  style="display: block">
+  <table id="fancyBoard" class="bets">
+    <tbody>
+      <tr class="bet-all" style="background: #fff; border-top: 1px solid #7e97a7">
+        <td style="text-align: left; padding-left: 10px"></td>
+        <td class="refer-bet" colspan="2"></td>
+        <td colspan="3" style="width: 16.97436%">
+          <a class="">
+            <!-- <img src="images/transparent.gif" style="left: 11px!important;background: padding-box;" alt="back-all"> -->
+            <span>Back</span>
+          </a>
+        </td>
+        <td class="refer-book" colspan="1"></td>
+      </tr>
+      <tr class="bet-all" style="background: #fff; border-top: 1px solid #7e97a7">
+        <td colspan="3" style="width: 17.94872%">
+          <a> </a>
+        </td>
+        <td class="back-1">Tiger</td>
+        <td class="back-1">Lion</td>
+        <td class="back-1">Dragon</td>
+      </tr>
+      <tr id="BookMakingTemplate" data-ng-repeat-start="runnerBook in teenPattiData.t2 track by $index"
+        style="padding: 2px">
+        <th class="predict">
+          <p>{{runnerBook.nation}}</p>
+          <span id="Tp_{{fancy.mId}}{{runnerBook.nation | removeSpace}}" class="win"
+            style="display: block">{{runnerBook.book}}</span>
+        </th>
+        <td colspan="2" style="width: 17.94872%">
+          <a> </a>
+        </td>
+        <td class="back-1" style="width: 18.97436%">
+          <a
+            data-ng-click="(runnerBook.dstatus=='True')?openTeenbetSlip($event,'back',runnerBook.trate,runnerBook.nation,runnerBook.sid,runnerBook.mid,Teentype,matchName,sportId):''">
+            <span style="font-weight: bold; font-size: 13px">{{runnerBook.trate}}</span>
+            <span>{{runnerBook.b1}}</span>
+          </a>
+        </td>
+        <td class="back-1" style="width: 18.97436%">
+          <a
+            data-ng-click="(runnerBook.gstatus=='True')?openTeenbetSlip($event,'back',runnerBook.lrate,runnerBook.nation,runnerBook.sid,runnerBook.mid,Teentype,matchName,sportId):''">
+            <span style="font-weight: bold; font-size: 13px">{{runnerBook.lrate}}</span>
+            <span>{{runnerBook.b1}}</span>
+          </a>
+        </td>
+        <td class="back-1" style="width: 18.97436%">
+          <a
+            data-ng-click="(runnerBook.tstatus=='True')?openTeenbetSlip($event,'back',runnerBook.drate,runnerBook.nation,runnerBook.sid,runnerBook.mid,Teentype,matchName,sportId):''">
+            <span style="font-weight: bold; font-size: 13px">{{runnerBook.drate}}</span>
+            <span>{{runnerBook.b1}}</span>
+          </a>
+        </td>
+
+        <td colspan="2" style="width: 17.94872%"></td>
+      </tr>
+      <tr data-ng-repeat-end>
+        <td class="suspend" style="border: 0"
+          data-ng-if="runnerBook.dstatus!='True' && runnerBook.lstatus!='True' && runnerBook.tstatus!='True'">
+          <span class="fancySuspended" data-ng-style="getTeenTopCssTest($index)" style="
+              border: 0;
+              left: 389px !important;
+              right: 39px !important;
+              line-height: 40px !important;
+            ">Suspended</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div id="bookMakingTableBetsWrap" data-ng-if="matchBfId=='5003'" class="bets-wrap bookMakingTable"
+  style="display: block">
+  <table id="fancyBoard" class="bets">
+    <tbody>
+      <tr class="bet-all" style="background: #fff; border-top: 1px solid #7e97a7">
+        <td style="text-align: left; padding-left: 10px"></td>
+        <td class="refer-bet" colspan="2"></td>
+        <td>
+          <a class=""><img src="images/transparent.gif" style="left: 11px !important; background: padding-box"
+              alt="back-all" /><span>Back</span></a>
+        </td>
+        <td style="width: 24.97436%">
+          <a class=""><span></span></a>
+        </td>
+        <td class="refer-book" colspan="1"></td>
+      </tr>
+      <tr id="BookMakingTemplate" data-ng-repeat-start="runnerBook in teenPattiData.t2 track by runnerBook.nation"
+        data-ng-if="$index<=7" style="padding: 2px">
+        <th class="predict">
+          <p>{{runnerBook.nation}}</p>
+          <span id="Tp_{{fancy.mId}}{{runnerBook.nation | removeSpace}}" class="win"
+            style="display: block">{{runnerBook.book}}</span>
+          <div class="patern-name">
+            <span class="card-icon" ng-bind-html="getCardSymbolImg(openCards[$index])"></span>
+            <span class="card-icon" ng-bind-html="getCardSymbolImg(openCards[$index+9])"></span>
+            <span class="card-icon" ng-bind-html="getCardSymbolImg(openCards[$index+18])"></span>
+          </div>
+        </th>
+        <td colspan="2" style="width: 17.94872%">
+          <a> </a>
+        </td>
+        <td class="back-1" style="width: 27.97436%">
+          <a
+            data-ng-click="(runnerBook.gstatus=='0')?openTeenbetSlip($event,'back',runnerBook.rate,runnerBook.nation,runnerBook.sid,runnerBook.mid,Teentype,matchName,sportId):''">
+            <!-- <span style="font-weight: bold;font-size: 13px;">{{runnerBook.bs1}}</span> -->
+            <span>{{runnerBook.rate}}</span>
+          </a>
+        </td>
+        <td class="back-1">
+          <a
+            data-ng-click="(runnerBook.gstatus=='0')?openTeenbetSlip($event,'back',teenPattiData.t2[$index+8].rate,teenPattiData.t2[$index+8].nation,teenPattiData.t2[$index+8].sid,teenPattiData.t2[$index+8].mid,Teentype,matchName,sportId):''">
+            <span style="font-weight: bold; font-size: 13px">{{teenPattiData.t2[$index+8].nation}}</span>
+          </a>
+        </td>
+        <td colspan="2" style="width: 17.94872%"></td>
+      </tr>
+      <tr data-ng-repeat-end>
+        <td class="suspend" style="border: 0" data-ng-if="runnerBook.gstatus==0 && $index<=7">
+          <span class="fancySuspended" data-ng-style="getBMTopCss($index)"
+            style="border: 0; left: 400px !important; right: 44px !important">Suspended</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="fancy-marker-title m-t-10" data-ng-if="resultsdata.length>0">
+  <h4>
+    Last Result
+    <a href="indexAccount.html#!/casinoreport" target="_blank" class="result-view-all">View All</a>
+  </h4>
+</div>
+<div class="teenpatti-result-container" data-ng-if="resultsdata.length>0 && (Teentype==1||Teentype==2||Teentype==5)">
+  <div class="label-result">
+    <span></span>
+  </div>
+  <div class="results">
+    <p id="last-result">
+      <span ng-repeat="resu in resultsdata track by $index"
+        data-ng-click="Teentype==1 || Teentype==2?openResult(resu):''" class="ball-runs last-result"
+        ng-class="resu.result=='A'?'playera':'playerb'">{{resu.result}}</span>
+    </p>
+  </div>
+</div>
+<div class="teenpatti-result-container" data-ng-if="resultsdata.length>0 && Teentype==6">
+  <div class="label-result">
+    <span></span>
+  </div>
+  <div class="results">
+    <p id="last-result">
+      <span ng-repeat="resu in resultsdata track by $index"
+        data-ng-click="Teentype==1 || Teentype==2?openResult(resu):''"
+        class="ball-runs-T6 last-result playerb">{{resu.result}}</span>
+    </p>
+  </div>
+</div>
+
+<div id="fancyBetRulesWrap" class="rules-wrap" style="display: none; top: 150px"
+  data-ng-style="{'display':(tp_result!=null)?'block':'none'}">
+  <h3 id="fancyBetHeader">{{matchName}} Result</h3>
+  <div class="rules-content">
+    <div class="path-wrap">
+      <h3 style="text-align: left; padding-left: 15px">Player A</h3>
+    </div>
+
+    <div class="result-image">
+      <img ng-src="https://dzm0kbaskt4pv.cloudfront.net/img/cards/{{tp_result.c1}}.png" class="mr-2" />
+      <img ng-src="https://dzm0kbaskt4pv.cloudfront.net/img/cards/{{tp_result.c2}}.png" class="mr-2" />
+      <img ng-src="https://dzm0kbaskt4pv.cloudfront.net/img/cards/{{tp_result.c3}}.png" class="mr-2" />
+      <div class="winner-icon mt-3" data-ng-if="tp_result.result=='A'" style="
+          color: green;
+          font-size: 20px;
+          vertical-align: top;
+          margin-left: 15px;
+          display: inline-block;
+          margin-top: 20px;
+        ">
+        <img src="images/winner.png" />WINNER
+      </div>
+    </div>
+
+    <div class="path-wrap">
+      <h3 style="text-align: left; padding-left: 15px">Player B</h3>
+    </div>
+
+    <div class="result-image">
+      <img ng-src="https://dzm0kbaskt4pv.cloudfront.net/img/cards/{{tp_result.c4}}.png" class="mr-2" />
+      <img ng-src="https://dzm0kbaskt4pv.cloudfront.net/img/cards/{{tp_result.c5}}.png" class="mr-2" />
+      <img ng-src="https://dzm0kbaskt4pv.cloudfront.net/img/cards/{{tp_result.c6}}.png" class="mr-2" />
+      <div class="winner-icon mt-3" data-ng-if="tp_result.result=='B'" style="
+          color: green;
+          font-size: 20px;
+          vertical-align: top;
+          margin-left: 15px;
+          display: inline-block;
+          margin-top: 20px;
+        ">
+        <img src="images/winner.png" />WINNER
+      </div>
+    </div>
+  </div>
+  <ul class="btn-wrap break">
+    <li><a class="btn" data-ng-click="closeOverlayInfo()">OK</a></li>
+  </ul>
+</div>

@@ -1,0 +1,357 @@
+
+<style>
+  .game-list {
+    padding: 0 4px;
+  }
+  .venue-list {
+    box-shadow: 0 -2px 1px #d3d3d3;
+  }
+  .country {
+    display: inline-block;
+    padding: 8px;
+    font-weight: bold;
+    margin-top: 2px;
+  }
+  .country.selected {
+    background-color: #e4e4e4;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+  }
+  .venue {
+    display: flex;
+    padding: 4px 8px;
+    font-weight: bold;
+    background-color: #eee;
+    align-items: center;
+  }
+  .venue > a {
+    flex: 0 0 150px;
+  }
+  .venue:not(:last-child) {
+    border-bottom: 1px solid #ddd;
+  }
+  .market-list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .market-list .market {
+    padding: 4px;
+    background: #fff;
+    border-radius: 4px;
+    margin: 4px;
+    box-shadow: 0 1px 1px 1px rgb(0 0 0 / 10%);
+  }
+</style>
+<!-- <div class="mian-wrap"> -->
+<!-- <div
+  id="myCarousel"
+  class="carousel slide text-center"
+  data-ride="carousel"
+  data-interval="2000"
+>
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+  </ol>
+
+  <div class="carousel-inner" role="listbox">
+    <div class="item active">
+      <img src="./images/slider/kv-all-skybook365.jpg" />
+    </div>
+    <div class="item">
+      <img src="./images/slider/kv-betgames-9livegames.png" />
+    </div>
+    <div class="item">
+      <img src="./images/slider/kv-sexy-roulette.jpg" />
+    </div>
+  </div>
+
+</div> -->
+
+<div id="highlightLabel" class="highlight-fix" data-ng-init="ShowSportsList();">
+  <!-- <a class="a-search" data-ng-click="openSearchWrap()">Search</a> -->
+
+  <div id="frame" class="wrap-highlight ps ps--theme_default ps--active-x"
+    data-ps-id="38b1e32d-3e0b-8f6a-4f7a-965522cb048e">
+    <!-- <a class="a-tab_prev" href="#" style="display: none;">prev</a> -->
+
+    <ul id="label" style="left: 0px">
+      <li id="highlightTab{{sport.id}}" data-ng-click="Highlights(sport.id)"
+        data-ng-repeat="sport in sportsTab track by sport.id" data-ng-class="sport.id==s_id?'select':''">
+        <a data-ng-if="sport.id!='15'">
+          <img class="icon-{{sport.name | removeSpace | lowercase}}" src="images/transparent.gif"
+            alt="sport" />
+          <span data-ng-if="!sport.otherSport" id="tagLive" class="tag-live"><strong></strong>{{inPlayEventsCount[sport.id] || 0}}
+          </span>
+          {{sport.name}}
+        </a>
+
+        <a data-ng-if="sport.id=='15'"><img class="icon-casino" src="images/transparent.gif"
+          alt="sport" />{{sport.name}}</a>
+      </li>
+      <li>
+        <a data-ng-href="#!/fullmarket/{{winnerMarket.sportId}}/{{winnerMarket.competitionId}}/{{winnerMarket.eventId}}/{{winnerMarket.gameId}}/{{winnerMarket.markets[0].marketId}}">IPL Winner</a>
+      </li>
+      <li id="highlightTab10" data-ng-click="Highlights(10)"
+        data-ng-if="token"
+        data-ng-class="s_id==10?'select':''"
+      >
+        <a>
+          <img class="icon-casino" src="images/transparent.gif" alt="sport">Live Casino
+        </a>
+
+      </li>
+      <!-- 
+      <li
+        id="highlightTab100"
+        data-ng-click="getHighlights('Basketball')"
+        data-ng-class="(selectedSport.id=='100')?'select':''"
+      >
+        <a
+          ><img
+            class="icon-basketball"
+            src="images/transparent.gif"
+            alt="sport"
+          />Basketball</a
+        >
+      </li>
+
+      <li
+        id="highlightTab300"
+        data-ng-click="getHighlights('Rugby')"
+        data-ng-class="(selectedSport.id=='300')?'select':''"
+      >
+        <a
+          ><img
+            class="icon-rugby"
+            src="images/transparent.gif"
+            alt="sport"
+          />Rugby Union</a
+        >
+      </li>
+
+      <li
+        id="highlightTab400"
+        data-ng-click="getHighlights('Horse Racing')"
+        data-ng-class="(selectedSport.id=='400')?'select':''"
+      >
+        <a
+          ><img class="icon-HR" src="images/transparent.gif" alt="sport" />Horse
+          Racing</a
+        >
+      </li>
+
+      <li
+        id="highlightTab500"
+        data-ng-click="getHighlights('Casino')"
+        data-ng-class="(selectedSport.id=='500')?'select':''"
+      >
+        <a
+          ><img
+            class="icon-casino"
+            src="images/transparent.gif"
+            alt="sport"
+          />Casino</a
+        >
+      </li> -->
+    </ul>
+
+    <div class="ps__scrollbar-x-rail" style="width: 360px; left: 68.8px; bottom: 0px">
+      <div class="ps__scrollbar-x" tabindex="0" style="left: 57px; width: 302px"></div>
+    </div>
+
+    <div class="ps__scrollbar-y-rail" style="top: 0px; right: -68.8px">
+      <div class="ps__scrollbar-y" tabindex="0" style="top: 0px; height: 0px"></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap-highlight_list">
+  <h3 data-ng-if="!(s_id == 7.2 || s_id == 4339.2)">Highlights</h3>
+
+  <ul id="highlightList" class="highlight-list" data-ng-if="s_id === 10">
+    <li id="noDatali" data-ng-if="Highlightlist.length==0" style="padding: 10px">
+      There are no events to be displayed.
+    </li>
+    <li 
+      data-ng-if="Highlightlist.length!=0"
+      class="inplay-on"
+      data-ng-repeat="high in Highlightlist">
+      <a data-ng-href="#!tp_market/{{high.tableName}}/{{high.tableId}}/{{StreamServer.substr(5)}}/{{high.streamUrl.slice(0, -1)}}/{{OddServer1.substr(7)}}/{{OddServer2.substr(7)}}/{{high.oddsUrl.substr(4)}}">
+        <dl>
+          <dt>
+            <span class="time ng-binding">In-Play</span>
+          </dt>
+
+          <dd>{{high.tableName}}</dd>
+        </dl>
+      </a>
+      <!-- <a data-ng-class="isMultiAdded(high.tableName)?'pin-off':'pin-on'"
+        title="{{isMultiAdded(high.tableName)?'Add to Multi Markets':'Remove from Multi Markets'}}"
+        data-ng-click="isMultiAdded(high.tableName)?addMultiMarket(high.tableName):removeMultiMarket(high.tableName)"></a> -->
+    </li>
+  </ul>
+  <ul id="highlightList" class="highlight-list" data-ng-if="!(s_id == 10 || s_id == 7.2 || s_id == 4339.2)">
+    <li id="noDatali" data-ng-if="Highlightlist.length==0" style="padding: 10px">
+      There are no events to be displayed.
+    </li>
+    <li 
+      data-ng-if="Highlightlist.length!=0"
+      id="highlightEvent_{{high.matchId}}" 
+      data-ng-class="high.inPlay==1?'inplay-on':'inplay-off'"
+      data-ng-repeat="high in Highlightlist | orderBy: orderByDate:false track by high.matchId">
+      <a id="info" data-ng-click="setCurrentHighlistTime(formatDate(high.matchDate))"
+        data-ng-href="#!{{s_id!=15?'fullmarket':'tp_market'}}/{{s_id}}/{{high.TourbfId}}/{{high.matchId}}/{{high.marketId}}/{{high.bfId}}{{high.tourId!=undefined?'/'+high.tourId:''}}">
+        <dl>
+          <dt>
+            <span class="game-fancy" data-ng-class="(high.inPlay==1)?'in-play':''" data-ng-if="high.hasFancy==1"
+              style="display: flex">
+              <pre>in-play</pre>
+
+              Fancy
+            </span>
+            <span class="game-bookmaker" data-ng-class="(high.inPlay==1)?'in-play':''" data-ng-if="high.hasBookmaker==1"
+              style="display: flex">
+              <pre>in-play</pre>
+
+              Fancy -->
+            </span>
+
+            <span class="time">{{formatDate(high.matchDate)}}</span>
+          </dt>
+
+          <dd>{{high.matchName}}</dd>
+        </dl>
+      </a>
+
+      <a data-ng-class="isMultiAdded(high.marketId)?'pin-off':'pin-on'"
+        title="{{isMultiAdded(high.marketId)?'Add to Multi Markets':'Remove from Multi Markets'}}"
+        data-ng-click="isMultiAdded(high.marketId)?addMultiMarket(high.marketId):removeMultiMarket(high.marketId)"></a>
+    </li>
+  </ul>
+</div>
+
+<div class="game-highlight-wrap col3" data-ng-if="(s_id == 7.2 || s_id == 4339.2) && todaysList.length">
+  <h3>{{s_name}} Today's Card</h3>
+  <div class="game-list">
+    <span class="country" data-ng-class="selectedTournament.day === 1 && selectedTournament.id === item.id? 'selected': ''" data-ng-repeat="item in todaysList track by $index">
+      <a href="javascript:void(0)" data-ng-click="getMatches(item, 1)">{{item.name}}</a>
+    </span>
+  </div>
+  <div class="venue-list" data-ng-if="selectedTournament && selectedTournament.day === 1">
+    <span class="venue" data-ng-if="!selectedMatch || selectedMatch.id === match.id" data-ng-repeat="match in matchesList track by $index">
+      <a href="javascript:void(0)">{{match.name}}</a>
+      <div class="market-list">
+        <span class="market" data-ng-if="s_id == 7.2" data-ng-repeat="market in match.markets track by $index">
+          <a data-ng-href="#!fullmarket/7.1/{{selectedTournament.id}}/{{match.id}}/{{market.bfId}}?o=true">{{market.startTime | date:'HH:mm'}}</a>
+        </span>
+        <span class="market" data-ng-if="s_id == 4339.2" data-ng-repeat="market in match.markets track by $index">
+          <a data-ng-href="#!fullmarket/4339.1/{{selectedTournament.id}}/{{match.id}}/{{market.bfId}}?o=true">{{market.startTime | date:'HH:mm'}}</a>
+        </span>
+      </div>
+    </div>
+    </span>
+  </div>
+</div>
+
+<div class="game-highlight-wrap col3" data-ng-if="(s_id == 7.2 || s_id == 4339.2) && tomorrowList.length">
+  <h3>{{s_name}} Tomorrow</h3>
+  <div class="game-list">
+    <span class="country" data-ng-class="selectedTournament.day === 2 && selectedTournament.id === item.id? 'selected': ''" data-ng-repeat="item in tomorrowList track by $index">
+      <a href="javascript:void(0)" data-ng-click="getMatches(item, 2)">{{item.name}}</a>
+    </span>
+  </div>
+  <div class="venue-list" data-ng-if="selectedTournament && selectedTournament.day === 2">
+    <span class="venue" data-ng-if="!selectedMatch || selectedMatch.id === match.id" data-ng-repeat="match in matchesList track by $index">
+      <a href="javascript:void(0)">{{match.name}}</a>
+      <div class="market-list">
+        <span class="market" data-ng-if="s_id == 7.2" data-ng-class="selectedMatch.id === market.id? 'selected': ''" data-ng-repeat="market in match.markets track by $index">
+          <a data-ng-href="#!fullmarket/7.2/{{selectedTournament.id}}/{{match.id}}/{{market.bfId}}?o=true">{{market.startTime | date:'HH:mm'}}</a>
+        </span>
+        <span class="market" data-ng-if="s_id == 4339.2" data-ng-class="selectedMatch.id === market.id? 'selected': ''" data-ng-repeat="market in match.markets track by $index">
+          <a data-ng-href="#!fullmarket/4339.2/{{selectedTournament.id}}/{{match.id}}/{{market.bfId}}?o=true">{{market.startTime | date:'HH:mm'}}</a>
+        </span>
+      </div>
+    </div>
+    </span>
+  </div>
+</div>
+<div class="no-data" data-ng-if="(s_id == 7.2 || s_id == 4339.2) && !tomorrowList.length && !todaysList.length">
+  <p style="text-align: center; font-size: 15px">
+    There are no events to be displayed.
+  </p>
+</div>
+
+
+<dl class="support-wrap">
+  <dt>Support</dt>
+
+  <dd>
+    <!-- <dl>
+
+              <dt>Email</dt>
+
+              <dd><a href="mailto:info@duoexchange.com">info&#64;duoexchange.com</a></dd>
+
+          </dl> -->
+
+    <dl>
+      <dt>WhatsApp</dt>
+
+      <dd>
+        <a href="https://wa.me/14238133005"> +1 (423) 813-3005</a>
+      </dd>
+    </dl>
+
+    <dl>
+      <dt>Telegram</dt>
+
+      <dd><a href="https://t.me/live777sports">https://t.me/live777sports</a></dd>
+    </dl>
+  </dd>
+</dl>
+
+<ul class="policy-link">
+  <li><a data-ng-click="showOverlayInfo('policyBigWin')">Privacy Policy</a></li>
+
+  <li>
+    <a data-ng-click="showOverlayInfo('gtcBigWin')">Terms and Conditions</a>
+  </li>
+
+  <li>
+    <a data-ng-click="showOverlayInfo('rarBigWin')">Rules and Regulations</a>
+  </li>
+
+  <li><a data-ng-click="showOverlayInfo('kyc')">KYC</a></li>
+
+  <li>
+    <a data-ng-click="showOverlayInfo('responsibleGaming')">Responsible Gaming</a>
+  </li>
+</ul>
+
+<!--  <ul class="policy-link RnR-link">
+
+      <li><a href="javascript:MobileLoginHandler.showOverlayInfo('#rulesAndRegulationsWrap');" target="_blank">Rules and Regulations</a></li>
+
+   </ul> -->
+
+<div class="extra-wrap">
+  <div class="power-wrap-b" style="display: block">
+    <span>Powered by</span><img src="images/logo-betfair.png" />
+  </div>
+
+  <div class="apkdl-link" style="display: block">
+    <a href="#"><img src="images/btn-apkdl-skyex.png" alt="" /></a>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function () {
+    //carousel options
+    $("#myCarousel").carousel({
+      pause: true,
+      interval: 2000,
+    });
+  });
+</script>

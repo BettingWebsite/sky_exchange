@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="icon" type="image/png" href="images/favicon.png">
+	<title>Market Depth</title>
+</head>
+<style>
+	html, body ,iframe{
+    width: 920px;
+    height: 600px;
+    overflow: hidden;
+    margin: 0 auto;
+    background-color: #fff;
+    border: 0
+}
+</style>
+<body style="height: 100%;width: 100%;">
+	<iframe src="https://www.skyexch.com/exchange/member/market/marketDepth.jsp?eventId=29095041&marketId=1.154132091&selectionId=10550775" style="height: 100%;width: 100%;"></iframe>
+
+</body>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+
+	function getUrlParameter(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+		var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+		var results = regex.exec(location.search);
+		return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    };
+	$(document).ready(function(){
+	  var eventId=getUrlParameter('eventId');
+	  var marketId=getUrlParameter('marketId');
+	  var selectionId=getUrlParameter('selectionId');
+
+	  $('iframe').attr('src','https://www.skyexch.com/exchange/member/market/marketDepth.jsp?eventId='+eventId+'&marketId='+marketId+'&selectionId='+selectionId);
+
+	});
+</script>
+</html>

@@ -1,0 +1,249 @@
+<style>
+   table tr td {
+     font-size: 12px;
+   }
+ </style>
+ <!-- Left Column -->
+ <div class="col-left">
+   <!-- Sub Menu and Path -->
+   <div class="sub_path">
+     <!-- Path -->
+     <div class="path">
+       <!--<a href="#path-pop" class="path-back">...</a>-->
+       <ul>
+         <li class="path-last"><a href="javascript:void(0)">My Account</a></li>
+       </ul>
+     </div>
+     <!-- Path Pop Up-->
+     <ul id="path-pop" class="path-pop"></ul>
+     <!-- Sub Menu -->
+     <ul class="menu-list">
+       <li><a id="sub_menu_detail" href="#!profile">My Profile</a></li>
+       <li>
+         <a id="sub_menu_summary" href="#!bal_overview">Balance Overview</a>
+       </li>
+       <li>
+         <a id="sub_menu_accountCashStatement_log" href="#!statement"
+           >Account Statement
+         </a>
+       </li>
+       <!-- <li><a id="sub_menu_casino_resport" href="#!casinoreport">Casino Report</a></li> -->
+       <li>
+         <a id="sub_menu_my_bets" href="#!current_bets" class="select">My Bets</a>
+       </li>
+       <li>
+         <a id="sub_menu_activity_log" href="#!activity_log">Activity Log</a>
+       </li>
+     </ul>
+   </div>
+ </div>
+ <!-- Center Column -->
+ <div class="col-center report">
+   <!-- Loading Wrap -->
+   <!--   <div id="loading" class="loading-wrap" style="display: none;">
+       <ul class="loading">
+          <li><img src="images/loading40.gif" alt="loading"></li>
+          <li>Loading...</li>
+       </ul>
+    </div> -->
+   <div id="loading" class="overlay" style="display: none; margin-top: 100px">
+     <div class="loading-wrap">
+       <div class="loading">
+         <div class="loader">
+           <div class="ball ball-1"></div>
+           <div class="ball ball-2"></div>
+         </div>
+       </div>
+     </div>
+   </div>
+   <!-- Message -->
+   <div id="message" class="message-wrap success">
+     <a class="btn-close">Close</a>
+     <p></p>
+   </div>
+   <!-- <script language="JavaScript" type="text/javascript">
+       (function () {
+         $j('.btn-close').click(function () {
+           $j('#message').hide();
+         });
+       })();
+       </script> -->
+   <h2 style="display: block;">My Bets</h2>
+   <ul class="tab col3">
+     <li><a class="select" href="#!current_bets">Current Bets</a></li>
+     <li><a href="#!bet_history">Bets History</a></li>
+     <li><a href="#!pnl">Profit &amp; Loss</a></li>
+   </ul>
+   <ul class="report-tab-wrap" style="display:block">
+    <li class="report-tab" id="reportType_exchange" data-ng-click="selectTab(0)" data-ng-class="{'select': selectedTab === 0}">
+        Exchange
+    </li>  
+    <li class="report-tab" id="reportType_casino" data-ng-click="selectTab(1)" data-ng-class="{'select': selectedTab === 1}">
+        Casino
+    </li>
+  </ul>
+   <!-- function -->
+   <div class="function-wrap">
+     <ul class="input-list">
+       <!-- <li><label>Bet Status</label></li> -->
+       <!-- <li>
+         <select data-ng-model="betStatus" data-ng-change="getCurrentBets()">
+           <option value="All">All</option>
+           <option value="matched">Matched</option>
+         </select>
+       </li> -->
+       <li></li>
+       <li><label>Order By</label></li>
+       <li>
+         <input id="orderBetPlaced" name="orderBy" type="radio" value="1" ng-model="orderByModel" checked="" data-ng-change="orderBy(orderByModel)"/><label
+           for="orderBetPlaced"
+           >Bet placed</label
+         >
+         <input id="orderMarket" name="orderBy" type="radio" value="2" ng-model="orderByModel" data-ng-change="orderBy(orderByModel)"/><label for="orderMarket"
+           >Market</label
+         >
+       </li>
+     </ul>
+   </div> 
+   <!-- function end-->
+   <table
+     id="Matched_Table"
+     class="table-s"
+     style="font-size: 13px"
+   >
+     <caption>
+       Matched
+     </caption>
+     <tbody>
+       <tr>
+         <th id="Matched_market" class="align-L">Market</th>
+         <th id="Matched_selection" style="width: 10%">Selection</th>
+         <th id="Matched_type" style="width: 3%">Type</th>
+         <th id="Matched_betId" style="width: 9%">Bet ID</th>
+         <th id="Matched_betPlaced" style="width: 8%">Bet placed</th>
+         <th id="Matched_oddsReq" style="width: 8%">Odds</th>
+         <th id="Matched_matched" style="width: 9%">Matched</th>
+         <!-- <th id="Matched_unMatched" style="width: 10%" style="display: none;">Unmatched </th> -->
+         <!-- <th id="Matched_avgOdds" style="width: 10%">Avg. odds matched</th> -->
+         <th id="Matched_dateMatched" style="width: 10%">Date matched</th>
+       </tr>
+     </tbody>
+     <tbody id="Matched_Content">
+       <tr
+         data-ng-repeat-start="matchBet in matchedbetsList | startFrom:currentPage*pageSize | limitTo:pageSize; track by matchBet.betId"
+       >
+         <td class="align-L">
+           <label
+             >{{matchBet.sportName | titlecase}}<img
+               class="fromto"
+               src="images/transparent.gif"
+               alt="matchbet"
+             />
+             <strong>{{matchBet.eventName}}</strong
+             ><img
+               class="fromto"
+               src="images/transparent.gif"
+               alt="load"
+             />{{matchBet.betType === 'yes' || matchBet.betType === 'no'? 'Fancy Bet': matchBet.marketName}}</label
+           >
+         </td>
+         <td>{{matchBet.selName}}</td>
+         <td><span class="{{matchBet.betType}}">{{matchBet.betType}}</span></td>
+         <td>
+           <a
+             data-ng-click="betDetails(matchBet.betId)"
+             href="javascript: void(0);"
+             >{{matchBet.betId}}</a
+           >
+         </td>
+         <td><span class="small-date">{{matchBet.betTime | date: 'yyyy-MM-dd HH:mm:ss'}}</span></td>
+         <td>{{matchBet.odds}}</td>
+         <td>{{matchBet.stake}}</td>
+         <!-- <td style="display: none;">Unmatched </td> -->
+         <!-- <td>{{matchBet.odds}}</td> -->
+         <td><span class="small-date">{{matchBet.betTime}}</span></td>
+       </tr>
+       <tr
+         data-ng-repeat-end
+         id="bet_{{matchBet.betId}}"
+         class="expand"
+         style="display: none"
+       >
+         <td colspan="3"></td>
+         <td colspan="7">
+           <img
+             class="expand-arrow"
+             src="images/transparent.gif"
+             alt="loading"
+           />
+           <table style="text-align: right">
+             <tbody>
+               <tr>
+                 <!-- <th>Bet taken</th> -->
+                 <th style="width: 16%">Odds</th>
+                 <th style="width: 17%">Stake</th>
+                 <th style="width: 24%">Liability</th>
+                 <th style="width: 24%">Profit</th>
+                 <!-- <th style="width: 24%">Odds</th> -->
+               </tr>
+               <tr class="even">
+                 <!-- <td>
+                   <span class="small-date">{{matchBet.betTime}}</span>
+                 </td> -->
+                 <td>{{matchBet.odds}}</td>
+                 <td>{{matchBet.stake}}</td>
+                 <td class="red">{{matchBet.potLiab.toFixed(2)}} </td>
+                 <td class="green">{{matchBet.potProf.toFixed(2)}} </td>
+                 <!-- <td>{{matchBet.odds}}</td> -->
+               </tr>
+             </tbody>
+           </table>
+         </td>
+       </tr>
+       <tr data-ng-if="matchedbetsList.length==0" style="display: table-row">
+         <td class="no-data" colspan="9">
+           <p>You have no bets in this time period.</p>
+         </td>
+       </tr>
+     </tbody>
+   </table>
+ </div>
+
+ <div>
+  <ul id="pageNumberContent" class="pages">
+    <li id="prev">
+      <a
+        href="javascript:void(0);"
+        class="disable"
+        disabled="true"
+        data-ng-if="currentPage == 0"
+        >Prev</a
+      >
+      <a
+        href="javascript:void(0);"
+        class="btn"
+        data-ng-if="currentPage !== 0"
+        ng-click="prev()"
+        >Prev</a
+      >
+    </li>
+    <li>
+      {{currentPage+1}}/{{numberOfPages()}}
+    </li>
+    <li id="next">
+      <a
+        data-ng-if="currentPage >= matchedbetsList.length/pageSize - 1"
+        class="disable"
+        disabled="disabled"
+        >Next</a
+      >
+      <a
+        data-ng-if="currentPage < matchedbetsList.length/pageSize - 1"
+        class="btn"
+        data-ng-click="next()"
+        >Next</a
+      >
+    </li>
+  </ul>
+</div>
+ 

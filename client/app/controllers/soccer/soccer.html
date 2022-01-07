@@ -1,64 +1,143 @@
-
-      <div data-ng-init="showsoccer(); ">
-        <!-- <div class="kv-wrap" style="">
+<div data-ng-init="showsoccer(); ">
+  <!-- <div class="kv-wrap" style="">
           <img src="images/kv/KV02.jpg" alt="">
         </div> -->
-        <div  class="game-highlight-wrap col3" style="">
-          <h3>Highlights</h3>
-          <ul class="slip-head">
-            <li class="col-game"></li>
-            <li class="col-visit">1</li>
-            <li class="col-draw">x</li>
-            <li class="col-home">2</li>
-            <li class="col-info"></li>
-          </ul>
-          <!-- Event Board -->
-          <div class="game-list">
-            <div id="noDataDiv" class="no-data" data-ng-if="shoNoEvents">
-              <p>There are no events to be displayed.</p>
-            </div>
-            <div >
-              <dl data-ng-repeat="item in Highlightlist track by $index" class="game-list-col" data-ng-class="checkDateTime(item.matchDate,curTime)?'':''" style="display: block;">
-                <dt>
-                  <img  class="icon-in_play" src="images/transparent.gif" alt="icon-in_play" data-ng-show="item.inPlay==1">
-                  <span  class="game-low_liq" style="display: none;">Low Liquidity</span>
-                     
-                  <img id="playIcon" class="icon-no_play" src="images/transparent.gif" alt="playIcon" data-ng-show="item.inPlay==0">
-                  <!-- <a  vsinfo="" data-ng-href="#!full-market/{{item.marketId}}/{{item.matchId}}/{{item.bfId}}/Soccer/{{item.dataMode}}">{{item.matchName}}</a> -->
-                  <a   data-ng-href="#!full-market/{{item.SportbfId}}/{{item.TourbfId}}/{{item.matchId}}/{{item.marketId}}/{{item.bfId}}">{{item.matchName}}</a>
-                  <span data-ng-show="item.inPlay==1"  class="game-list-time"><span class="in_play">In-Play</span></span>
-                   <span data-ng-show="item.inPlay==0" id="dateTimeInfo" class="game-list-time">{{formatDate(item.matchDate)}}</span>
-                  <a  style="cursor: pointer; display: none;"><img class="icon-live" src="images/transparent.gif" alt="icon-live"></a>
-                  <!-- <img class="icon-live" src="images/transparent.gif" /> -->
-                  <!-- <img class="icon-irun" src="images/transparent.gif" /> -->
-                </dt>
-                <dd  class="col-visit">
-                  <div class="suspend" data-ng-if="item.runner1Back==0 && item.runner1Lay==0">
-                    <span>Suspend</span>
-                  </div>
-                  <a id="hback1_{{$index}}" class="btn-back" data-side="Back">{{(matchDataHome[item.matchId].runners[0].backPrice == null || matchDataHome[item.matchId].runners[0].backPrice == "") ? '-' : matchDataHome[item.matchId].runners[0].backPrice}}</a> 
-                  <a  id="hlay1_{{$index}}" class="btn-lay" data-side="Lay">{{(matchDataHome[item.matchId].runners[0].layPrice == null || matchDataHome[item.matchId].runners[0].layPrice == "") ? '-' : matchDataHome[item.matchId].runners[0].layPrice}}</a>
-                </dd>
-                <dd class="col-draw" style="">
-                  <div class="suspend" data-ng-if="matchDataHome[item.matchId].runners[0].backPrice==0 && matchDataHome[item.matchId].runners[0].layPrice==0 && matchDataHome[item.matchId].runners[1].backPrice==0 && matchDataHome[item.matchId].runners[1].layPrice==0">
-                    <span>Suspend</span>
-                  </div>
-                  <a id="hback3_{{$index}}" class="btn-back" data-side="Back">{{(matchDataHome[item.matchId].runners[2].backPrice == null || matchDataHome[item.matchId].runners[2].backPrice == "") ? '-' : matchDataHome[item.matchId].runners[2].backPrice}}</a> 
-                  <a id="hlay3_{{$index}}" class="btn-lay" data-side="Lay">{{(matchDataHome[item.matchId].runners[2].layPrice == null || matchDataHome[item.matchId].runners[2].layPrice == "") ? '-' : matchDataHome[item.matchId].runners[2].layPrice}}</a>
-                </dd>
-                <dd class="col-home">
-                  <div class="suspend" data-ng-if="matchDataHome[item.matchId].runners[0].backPrice==0 && matchDataHome[item.matchId].runners[0].layPrice==0 && matchDataHome[item.matchId].runners[1].backPrice==0 && matchDataHome[item.matchId].runners[1].layPrice==0">
-                    <span>Suspend</span>
-                  </div>
-                  <a id="hback2_{{$index}}" class="btn-back" data-side="Back">{{(matchDataHome[item.matchId].runners[1].backPrice == null || matchDataHome[item.matchId].runners[1].backPrice == "") ? '-' : matchDataHome[item.matchId].runners[1].backPrice}}</a> 
-                  <a id="hlay2_{{$index}}" class="btn-lay" data-side="Lay">{{(matchDataHome[item.matchId].runners[1].layPrice == null || matchDataHome[item.matchId].runners[1].layPrice == "") ? '-' : matchDataHome[item.matchId].runners[1].layPrice}}</a>
-                </dd>
-                <dd class="col-info">
-                  <a data-ng-if="item.isMulti!=1" class="add-pin" style="cursor: pointer" title="Add to Multi Markets" data-ng-click="addMultiMkt(item.marketId)">Pin</a>
-                  <a data-ng-if="item.isMulti==1" class="delete-pin" style="cursor: pointer" title="Remove from Multi Markets" data-ng-click="removeMultiMkt(item.marketId)">Pin</a>
-                </dd>
-              </dl>
-            </div>
-          </div>
-        </div>
+  <div class="game-highlight-wrap col3" style="">
+    <h3>Highlights</h3>
+    <ul class="slip-head">
+      <li class="col-game"></li>
+      <li class="col-visit">1</li>
+      <li class="col-draw">x</li>
+      <li class="col-home">2</li>
+      <li class="col-info"></li>
+    </ul>
+    <!-- Event Board -->
+    <div class="game-list">
+      <div id="noDataDiv" class="no-data" data-ng-if="shoNoEvents">
+        <p>There are no events to be displayed.</p>
       </div>
+      <div>
+        <dl
+          data-ng-repeat="item in Highlightlist track by $index"
+          class="game-list-col"
+          data-ng-class="checkDateTime(item.matchDate,curTime)?'':''"
+          style="display: block"
+        >
+          <dt>
+            <img
+              class="icon-in_play"
+              src="images/transparent.gif"
+              alt="icon-in_play"
+              data-ng-show="item.inPlay==1"
+            />
+            <span class="game-low_liq" style="display: none"
+              >Low Liquidity</span
+            >
+
+            <img
+              id="playIcon"
+              class="icon-no_play"
+              src="images/transparent.gif"
+              alt="playIcon"
+              data-ng-show="item.inPlay==0"
+            />
+            <!-- <a  vsinfo="" data-ng-href="#!full-market/{{item.marketId}}/{{item.matchId}}/{{item.bfId}}/Soccer/{{item.dataMode}}">{{item.matchName}}</a> -->
+            <a
+              data-ng-href="#!full-market/{{item.SportbfId}}/{{item.TourbfId}}/{{item.matchId}}/{{item.marketId}}/{{item.bfId}}"
+              >{{item.event.match_name}}</a
+            >
+            <span data-ng-show="item.inPlay==1" class="game-list-time"
+              ><span class="in_play">In-Play</span></span
+            >
+            <span
+              data-ng-show="item.inPlay==0"
+              id="dateTimeInfo"
+              class="game-list-time"
+              >{{formatDate(item.event.open_date)}}</span
+            >
+            <a style="cursor: pointer; display: none"
+              ><img
+                class="icon-live"
+                src="images/transparent.gif"
+                alt="icon-live"
+            /></a>
+            <!-- <img class="icon-live" src="images/transparent.gif" /> -->
+            <!-- <img class="icon-irun" src="images/transparent.gif" /> -->
+          </dt>
+          <dd class="col-visit">
+            <div
+              class="suspend"
+              data-ng-if="item.runner1Back==0 && item.runner1Lay==0"
+            >
+              <span>Suspend</span>
+            </div>
+            <a id="hback1_{{$index}}" class="btn-back" data-side="Back"
+              >{{(matchDataHome[item.matchId].runners[0].backPrice == null ||
+              matchDataHome[item.matchId].runners[0].backPrice == "") ? '-' :
+              matchDataHome[item.matchId].runners[0].backPrice}}</a
+            >
+            <a id="hlay1_{{$index}}" class="btn-lay" data-side="Lay"
+              >{{(matchDataHome[item.matchId].runners[0].layPrice == null ||
+              matchDataHome[item.matchId].runners[0].layPrice == "") ? '-' :
+              matchDataHome[item.matchId].runners[0].layPrice}}</a
+            >
+          </dd>
+          <dd class="col-draw" style="">
+            <div
+              class="suspend"
+              data-ng-if="matchDataHome[item.matchId].runners[0].backPrice==0 && matchDataHome[item.matchId].runners[0].layPrice==0 && matchDataHome[item.matchId].runners[1].backPrice==0 && matchDataHome[item.matchId].runners[1].layPrice==0"
+            >
+              <span>Suspend</span>
+            </div>
+            <a id="hback3_{{$index}}" class="btn-back" data-side="Back"
+              >{{(matchDataHome[item.matchId].runners[2].backPrice == null ||
+              matchDataHome[item.matchId].runners[2].backPrice == "") ? '-' :
+              matchDataHome[item.matchId].runners[2].backPrice}}</a
+            >
+            <a id="hlay3_{{$index}}" class="btn-lay" data-side="Lay"
+              >{{(matchDataHome[item.matchId].runners[2].layPrice == null ||
+              matchDataHome[item.matchId].runners[2].layPrice == "") ? '-' :
+              matchDataHome[item.matchId].runners[2].layPrice}}</a
+            >
+          </dd>
+          <dd class="col-home">
+            <div
+              class="suspend"
+              data-ng-if="matchDataHome[item.matchId].runners[0].backPrice==0 && matchDataHome[item.matchId].runners[0].layPrice==0 && matchDataHome[item.matchId].runners[1].backPrice==0 && matchDataHome[item.matchId].runners[1].layPrice==0"
+            >
+              <span>Suspend</span>
+            </div>
+            <a id="hback2_{{$index}}" class="btn-back" data-side="Back"
+              >{{(matchDataHome[item.matchId].runners[1].backPrice == null ||
+              matchDataHome[item.matchId].runners[1].backPrice == "") ? '-' :
+              matchDataHome[item.matchId].runners[1].backPrice}}</a
+            >
+            <a id="hlay2_{{$index}}" class="btn-lay" data-side="Lay"
+              >{{(matchDataHome[item.matchId].runners[1].layPrice == null ||
+              matchDataHome[item.matchId].runners[1].layPrice == "") ? '-' :
+              matchDataHome[item.matchId].runners[1].layPrice}}</a
+            >
+          </dd>
+          <dd class="col-info">
+            <a
+              data-ng-if="item.isMulti!=1"
+              class="add-pin"
+              style="cursor: pointer"
+              title="Add to Multi Markets"
+              data-ng-click="addMultiMkt(item.marketId)"
+              >Pin</a
+            >
+            <a
+              data-ng-if="item.isMulti==1"
+              class="delete-pin"
+              style="cursor: pointer"
+              title="Remove from Multi Markets"
+              data-ng-click="removeMultiMkt(item.marketId)"
+              >Pin</a
+            >
+          </dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</div>
